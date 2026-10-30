@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="An introduction to NP-intermediate problems, Ladner's theorem, and candidate problems.">
+  <title>Between P and NP-Complete — A Guide to NPI</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f2eb;
+      --ink: #202b30;
+      --muted: #647278;
+      --line: #d8ded8;
+      --green: #245c4b;
+      --green-dark: #193e34;
+      --lime: #d9e7a5;
+      --orange: #e48b5c;
+      --white: #fffefa;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font: 16px/1.65 var(--sans);
+    }
+    a { color: var(--green); }
+    a:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 4px;
+    }
+    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 76px;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-decoration: none;
+    }
+    .brand span { color: var(--green); }
+    nav { display: flex; gap: 25px; }
+    nav a {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+      text-decoration: none;
+    }
+    nav a:hover { color: var(--green); }
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      align-items: center;
+      gap: 60px;
+      padding-block: 88px 82px;
+    }
+    .eyebrow {
+      margin: 0 0 15px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    h1, h2, h3, p { margin-top: 0; }
+    h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
+    h1 {
+      max-width: 650px;
+      margin-bottom: 23px;
+      font-size: clamp(46px, 6.1vw, 76px);
+      letter-spacing: -.055em;
+      line-height: 1.02;
+    }
+    h1 em { color: var(--green); font-weight: 400; }
+    .hero-copy {
+      max-width: 550px;
+      margin-bottom: 28px;
+      color: #536167;
+      font-size: 18px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      gap: 13px;
+      padding: 12px 18px;
+      border-radius: 3px;
+      background: var(--green);
+      color: white;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .button:hover { background: var(--green-dark); }
+    .diagram {
+      position: relative;
+      display: grid;
+      min-height: 310px;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #d5d9c9;
+      border-radius: 48% 48% 4px 4px;
+      background: #e9ebdd;
+    }
+    .diagram::before, .diagram::after {
+      position: absolute;
+      content: "";
+      border: 1px solid #c6cfb7;
+      border-radius: 50%;
+    }
+    .diagram::before { width: 250px; height: 250px; }
+    .diagram::after { width: 180px; height: 180px; }
+    .diagram-label {
+      z-index: 1;
+      display: grid;
+      width: 120px;
+      height: 120px;
+      place-content: center;
+      border-radius: 50%;
+      background: var(--green);
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 0 15px #e9ebdd, 0 0 0 16px #b6c4a8;
+    }
+    .diagram-label strong { font: 27px var(--serif); }
+    .diagram-label span { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
+    .orbit {
+      position: absolute;
+      z-index: 2;
+      padding: 5px 10px;
+      border: 1px solid #d5d9c9;
+      border-radius: 20px;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 750;
+    }
+    .orbit-top { top: 42px; }
+    .orbit-left { left: 18px; top: 50%; }
+    .orbit-right { right: 18px; top: 50%; }
+    .orbit-bottom { bottom: 42px; }
+    .section { padding-block: 76px; border-top: 1px solid var(--line); }
+    .section-heading {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: end;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+    h2 { margin-bottom: 0; font-size: clamp(34px, 4vw, 49px); letter-spacing: -.035em; line-height: 1.12; }
+    .section-heading > p { max-width: 480px; margin-bottom: 3px; color: var(--muted); }
+    .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .concept {
+      min-height: 210px;
+      padding: 24px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .concept .symbol { color: var(--green); font: 31px var(--serif); }
+    .concept h3 { margin: 13px 0 7px; font-size: 23px; }
+    .concept p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
+    .theorem {
+      display: grid;
+      grid-template-columns: .7fr 1.3fr;
+      gap: 50px;
+      padding: 35px;
+      background: var(--green-dark);
+      color: #f9f8ef;
+    }
+    .theorem .eyebrow { color: var(--lime); }
+    .theorem h2 { font-size: 38px; }
+    .theorem p { color: #d1dbd4; }
+    .theorem p:last-child { margin-bottom: 0; }
+    .theorem-statement {
+      margin-bottom: 17px;
+      padding: 20px 22px;
+      border-left: 3px solid var(--lime);
+      background: rgba(255,255,255,.07);
+      font: 21px/1.45 var(--serif);
+    }
+    .candidates { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    .candidate {
+      padding: 28px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+    .candidate h3 { margin-bottom: 10px; font-size: 26px; }
+    .candidate p { margin-bottom: 14px; color: var(--muted); font-size: 14px; }
+    .tag {
+      display: inline-block;
+      padding: 4px 9px;
+      border-radius: 2px;
+      background: #e8eee1;
+      color: var(--green-dark);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .caveat {
+      margin: 18px 0 0;
+      padding: 14px 17px;
+      border-left: 3px solid var(--orange);
+      background: #f1e9dd;
+      color: #535c5c;
+      font-size: 13px;
+    }
+    .resources { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .resource {
+      display: flex;
+      min-height: 165px;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 23px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      text-decoration: none;
+    }
+    a.resource:hover { border-color: var(--green); transform: translateY(-2px); }
+    .resource small { margin-bottom: 14px; color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+    .resource strong { margin-bottom: 7px; color: var(--ink); font: 20px/1.25 var(--serif); }
+    .resource span { color: var(--muted); font-size: 13px; }
+    .resource.pending { background: transparent; }
+    .closing {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 25px;
+      margin-top: 70px;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .closing p { margin: 0; }
+    .closing a { text-decoration: none; }
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 34px, 560px); }
+      .topbar { min-height: 66px; }
+      nav { gap: 13px; }
+      nav a { font-size: 11px; }
+      .hero { grid-template-columns: 1fr; gap: 36px; padding-block: 62px 54px; }
+      .diagram { min-height: 270px; }
+      .section { padding-block: 55px; }
+      .section-heading { grid-template-columns: 1fr; gap: 14px; }
+      .concepts, .resources { grid-template-columns: 1fr; }
+      .concept { min-height: 0; }
+      .theorem { grid-template-columns: 1fr; gap: 20px; padding: 25px; }
+      .candidates { grid-template-columns: 1fr; }
+      .closing { align-items: flex-start; flex-direction: column; margin-top: 45px; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 28px); }
+      .brand { font-size: 12px; }
+      nav { gap: 9px; }
+      nav a { font-size: 10px; }
+      .orbit-left { left: 8px; }
+      .orbit-right { right: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="#top">COMPLEXITY NOTES <span>/ 01</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#context">The basics</a>
+      <a href="#theorem">Ladner's theorem</a>
+      <a href="#candidates">Candidates</a>
+      <a href="#resources">Reading</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">A short guide to complexity theory</p>
+        <h1 id="page-title">Between <em>P</em> and NP-complete.</h1>
+        <p class="hero-copy">Could some problems in NP be neither efficiently solvable nor as hard as every problem in NP? Meet the NP-intermediate problems—and the theorem that says they exist if P and NP are different.</p>
+        <a class="button" href="#context">Start with the basics <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="A conceptual diagram placing NP-intermediate problems inside NP, outside P, and apart from NP-complete problems">
+        <span class="orbit orbit-top">NP</span>
+        <span class="orbit orbit-left">P</span>
+        <span class="orbit orbit-right">NP-complete</span>
+        <span class="orbit orbit-bottom">NPI?</span>
+        <div class="diagram-label"><strong>NP</strong><span>the landscape</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="context">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / The setup</p>
+            <h2>Three ideas to begin.</h2>
+          </div>
+          <p>Think of these classes as ways to group decision problems by how efficiently they can be solved or checked.</p>
+        </div>
+        <div class="concepts">
+          <article class="concept">
+            <span class="symbol" aria-hidden="true">P</span>
+            <h3>Efficiently solvable</h3>
+            <p>P contains decision problems that a deterministic algorithm can solve in polynomial time.</p>
+          </article>
+          <article class="concept">
+            <span class="symbol" aria-hidden="true">NP</span>
+            <h3>Efficiently checkable</h3>
+            <p>For problems in NP, a proposed yes-answer has a certificate that can be checked in polynomial time. P is contained in NP.</p>
+          </article>
+          <article class="concept">
+            <span class="symbol" aria-hidden="true">P ≟ NP</span>
+            <h3>The open question</h3>
+            <p>We do not know whether P = NP. If they are equal, every NP problem is efficiently solvable; if not, some are not.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="theorem">
+      <div class="wrap theorem">
+        <div>
+          <p class="eyebrow">02 / The key result</p>
+          <h2>Ladner's theorem</h2>
+        </div>
+        <div>
+          <div class="theorem-statement">If P ≠ NP, then there exists a language in NP that is neither in P nor NP-complete (under polynomial-time many-one reductions).</div>
+          <p><strong>Why it matters:</strong> NP is not forced to split neatly into just easy problems and NP-complete problems. Under the assumption P ≠ NP, at least one problem lies in between—an <em>NP-intermediate</em> problem, or NPI.</p>
+          <p><strong>Core intuition:</strong> The proof constructs a deliberately artificial language. A controlled, gradually increasing amount of computational work keeps it outside P, while diagonalization against candidate reductions prevents it from being NP-complete. The construction depends on P ≠ NP; it does not identify a familiar, natural problem as NPI.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="candidates">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 / Natural candidates</p>
+            <h2>Problems that might fit.</h2>
+          </div>
+          <p>These are often discussed as possible NP-intermediate problems. Their exact complexity status remains unknown.</p>
+        </div>
+        <div class="candidates">
+          <article class="candidate">
+            <h3>Graph isomorphism</h3>
+            <p>Given two graphs, decide whether a relabeling of one makes it identical to the other. A proposed relabeling is easy to check, so the problem is in NP. It has a quasipolynomial-time algorithm, but no polynomial-time algorithm is known.</p>
+            <span class="tag">NPI candidate</span>
+          </article>
+          <article class="candidate">
+            <h3>Integer factorization</h3>
+            <p>For a decision version, ask whether an integer N has a divisor d with 1 &lt; d ≤ k. The divisor is a polynomial-size certificate, so this problem is in NP. No classical polynomial-time factoring algorithm is known, and this decision problem is not known to be NP-complete.</p>
+            <span class="tag">NPI candidate</span>
+          </article>
+        </div>
+        <p class="caveat"><strong>Important:</strong> Neither problem is proven to be NP-intermediate. P ≠ NP guarantees that some NPI language exists, but does not tell us whether either of these natural candidates qualifies.</p>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">04 / Keep exploring</p>
+            <h2>Further reading.</h2>
+          </div>
+          <p>Start with the theorem's original paper, then use a textbook for the surrounding complexity theory.</p>
+        </div>
+        <div class="resources">
+          <a class="resource" href="https://doi.org/10.1137/0204012" target="_blank" rel="noopener noreferrer">
+            <small>Original paper</small>
+            <strong>On the structure of polynomial time reducibility</strong>
+            <span>Richard E. Ladner · SIAM Journal on Computing, 1975 ↗</span>
+          </a>
+          <a class="resource" href="https://mitpress.mit.edu/9780262046305/introduction-to-the-theory-of-computation/" target="_blank" rel="noopener noreferrer">
+            <small>Textbook</small>
+            <strong>Introduction to the Theory of Computation</strong>
+            <span>Michael Sipser · MIT Press ↗</span>
+          </a>
+          <div class="resource pending">
+            <small>Course video</small>
+            <strong>CMU UCT lecture</strong>
+            <span>Video link to be added.</span>
+          </div>
+        </div>
+        <footer class="closing">
+          <p>A student-made introduction to NP-intermediate problems.</p>
+          <p><a href="#top">Back to top ↑</a></p>
+        </footer>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
