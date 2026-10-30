@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Ladner's theorem, NP-intermediate problems, and natural NPI candidates.">
+  <title>NP-Intermediate Problems — Complexity Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="index.html">COMPLEXITY NOTES <span>/ 01</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">P vs. NP</a>
+      <a href="npi.html" aria-current="page">NPI &amp; Ladner</a>
+      <a href="mahaney.html">Mahaney's theorems</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">01 / The middle ground</p>
+        <h1 id="page-title">Not easy. Not NP-complete.</h1>
+        <p class="hero-copy">NP-intermediate problems sit between P and the NP-complete problems—if P and NP are different.</p>
+        <a class="button" href="#ladner">Read Ladner's theorem <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="NP contains P, NP-complete problems, and possible NP-intermediate problems">
+        <span class="orbit orbit-top">NP</span>
+        <span class="orbit orbit-left">P</span>
+        <span class="orbit orbit-right">NP-complete</span>
+        <span class="orbit orbit-bottom">NPI</span>
+        <div class="diagram-label"><strong>NPI</strong><span>the middle</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="ladner">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 / Ladner's theorem</p>
+            <h2>There is a middle ground.</h2>
+          </div>
+          <p>NP-complete problems are at least as hard as every problem in NP.</p>
+        </div>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">The theorem</p>
+            <h2>What it says</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">If P ≠ NP, then some problem in NP is neither in P nor NP-complete.</div>
+            <p>Such a problem is called <strong>NP-intermediate</strong>, or NPI. It is not solvable in polynomial time, but it is not as hard as every problem in NP.</p>
+            <p>The proof constructs a special problem to show that NPI problems must exist. It does not tell us whether any familiar problem is NPI.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="candidates">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 / Possible examples</p>
+            <h2>Natural candidates.</h2>
+          </div>
+          <p>These problems are in NP and are often discussed as possible NPI problems.</p>
+        </div>
+        <div class="candidates">
+          <article class="candidate">
+            <h3>Graph isomorphism</h3>
+            <p>Are two graphs the same after renaming their vertices? A proposed renaming can be checked quickly. We do not know whether the problem is in P or NP-complete.</p>
+            <span class="tag">NPI candidate</span>
+          </article>
+          <article class="candidate">
+            <h3>Integer factorization</h3>
+            <p>For example, ask whether an integer N has a divisor between 2 and k. A proposed divisor is easy to check. We do not know whether this decision problem is in P or NP-complete.</p>
+            <span class="tag">NPI candidate</span>
+          </article>
+        </div>
+        <p class="caveat"><strong>Important:</strong> Neither problem is known to be NPI. Ladner's theorem guarantees that some NPI problem exists if P ≠ NP, but these candidates may or may not be examples.</p>
+      </div>
+    </section>
+
+    <footer class="wrap closing">
+      <p>NP-intermediate problems · <a href="index.html">Back to P vs. NP</a></p>
+      <p><a href="#top">Back to top ↑</a></p>
+    </footer>
+  </main>
+</body>
+</html>

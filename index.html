@@ -1,394 +1,119 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="A simple guide to NP-intermediate problems and the theorems that describe them.">
-  <title>Between P and NP-Complete — A Simple Guide to NPI</title>
-  <style>
-    :root {
-      color-scheme: light;
-      --paper: #f5f2eb;
-      --ink: #202b30;
-      --muted: #647278;
-      --line: #d8ded8;
-      --green: #245c4b;
-      --green-dark: #193e34;
-      --lime: #d9e7a5;
-      --orange: #e48b5c;
-      --white: #fffefa;
-      --serif: Georgia, "Times New Roman", serif;
-      --sans: "Segoe UI", Arial, sans-serif;
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background: var(--paper);
-      color: var(--ink);
-      font: 16px/1.65 var(--sans);
-    }
-    a { color: var(--green); }
-    a:focus-visible {
-      outline: 3px solid var(--orange);
-      outline-offset: 4px;
-    }
-    .wrap { width: min(1120px, calc(100% - 48px)); margin-inline: auto; }
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      min-height: 76px;
-      border-bottom: 1px solid var(--line);
-    }
-    .brand {
-      color: var(--ink);
-      font-size: 14px;
-      font-weight: 750;
-      letter-spacing: .04em;
-      text-decoration: none;
-    }
-    .brand span { color: var(--green); }
-    nav { display: flex; gap: 25px; }
-    nav a {
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 650;
-      text-decoration: none;
-    }
-    nav a:hover { color: var(--green); }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      align-items: center;
-      gap: 60px;
-      padding-block: 88px 82px;
-    }
-    .eyebrow {
-      margin: 0 0 15px;
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    h1, h2, h3, p { margin-top: 0; }
-    h1, h2, h3 { font-family: var(--serif); font-weight: 500; }
-    h1 {
-      max-width: 650px;
-      margin-bottom: 23px;
-      font-size: clamp(46px, 6.1vw, 76px);
-      letter-spacing: -.055em;
-      line-height: 1.02;
-    }
-    h1 em { color: var(--green); font-weight: 400; }
-    .hero-copy {
-      max-width: 550px;
-      margin-bottom: 28px;
-      color: #536167;
-      font-size: 18px;
-    }
-    .button {
-      display: inline-flex;
-      align-items: center;
-      gap: 13px;
-      padding: 12px 18px;
-      border-radius: 3px;
-      background: var(--green);
-      color: white;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-    }
-    .button:hover { background: var(--green-dark); }
-    .diagram {
-      position: relative;
-      display: grid;
-      min-height: 310px;
-      place-items: center;
-      overflow: hidden;
-      border: 1px solid #d5d9c9;
-      border-radius: 48% 48% 4px 4px;
-      background: #e9ebdd;
-    }
-    .diagram::before, .diagram::after {
-      position: absolute;
-      content: "";
-      border: 1px solid #c6cfb7;
-      border-radius: 50%;
-    }
-    .diagram::before { width: 250px; height: 250px; }
-    .diagram::after { width: 180px; height: 180px; }
-    .diagram-label {
-      z-index: 1;
-      display: grid;
-      width: 120px;
-      height: 120px;
-      place-content: center;
-      border-radius: 50%;
-      background: var(--green);
-      color: white;
-      text-align: center;
-      box-shadow: 0 0 0 15px #e9ebdd, 0 0 0 16px #b6c4a8;
-    }
-    .diagram-label strong { font: 27px var(--serif); }
-    .diagram-label span { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; }
-    .orbit {
-      position: absolute;
-      z-index: 2;
-      padding: 5px 10px;
-      border: 1px solid #d5d9c9;
-      border-radius: 20px;
-      background: var(--white);
-      color: var(--ink);
-      font-size: 12px;
-      font-weight: 750;
-    }
-    .orbit-top { top: 42px; }
-    .orbit-left { left: 18px; top: 50%; }
-    .orbit-right { right: 18px; top: 50%; }
-    .orbit-bottom { bottom: 42px; }
-    .section { padding-block: 76px; border-top: 1px solid var(--line); }
-    .section-heading {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: end;
-      gap: 40px;
-      margin-bottom: 36px;
-    }
-    h2 { margin-bottom: 0; font-size: clamp(34px, 4vw, 49px); letter-spacing: -.035em; line-height: 1.12; }
-    .section-heading > p { max-width: 480px; margin-bottom: 3px; color: var(--muted); }
-    .concepts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .concept {
-      min-height: 210px;
-      padding: 24px;
-      border: 1px solid var(--line);
-      background: var(--white);
-    }
-    .concept .symbol { color: var(--green); font: 31px var(--serif); }
-    .concept h3 { margin: 13px 0 7px; font-size: 23px; }
-    .concept p { margin-bottom: 0; color: var(--muted); font-size: 14px; }
-    .theorem {
-      display: grid;
-      grid-template-columns: .7fr 1.3fr;
-      gap: 50px;
-      padding: 35px;
-      background: var(--green-dark);
-      color: #f9f8ef;
-    }
-    .theorem .eyebrow { color: var(--lime); }
-    .theorem h2 { font-size: 38px; }
-    .theorem p { color: #d1dbd4; }
-    .theorem p:last-child { margin-bottom: 0; }
-    .theorem-statement {
-      margin-bottom: 17px;
-      padding: 20px 22px;
-      border-left: 3px solid var(--lime);
-      background: rgba(255,255,255,.07);
-      font: 21px/1.45 var(--serif);
-    }
-    .candidates { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .candidate {
-      padding: 28px;
-      border: 1px solid var(--line);
-      background: var(--white);
-    }
-    .candidate h3 { margin-bottom: 10px; font-size: 26px; }
-    .candidate p { margin-bottom: 14px; color: var(--muted); font-size: 14px; }
-    .tag {
-      display: inline-block;
-      padding: 4px 9px;
-      border-radius: 2px;
-      background: #e8eee1;
-      color: var(--green-dark);
-      font-size: 11px;
-      font-weight: 750;
-      letter-spacing: .04em;
-      text-transform: uppercase;
-    }
-    .caveat {
-      margin: 18px 0 0;
-      padding: 14px 17px;
-      border-left: 3px solid var(--orange);
-      background: #f1e9dd;
-      color: #535c5c;
-      font-size: 13px;
-    }
-    .theorem + .theorem { margin-top: 14px; }
-    .closing {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 25px;
-      margin-top: 70px;
-      padding: 28px 0;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 12px;
-    }
-    .closing p { margin: 0; }
-    .closing a { text-decoration: none; }
-    @media (max-width: 760px) {
-      .wrap { width: min(100% - 34px, 560px); }
-      .topbar { min-height: 66px; }
-      nav { gap: 13px; }
-      nav a { font-size: 11px; }
-      .hero { grid-template-columns: 1fr; gap: 36px; padding-block: 62px 54px; }
-      .diagram { min-height: 270px; }
-      .section { padding-block: 55px; }
-      .section-heading { grid-template-columns: 1fr; gap: 14px; }
-      .concepts { grid-template-columns: 1fr; }
-      .concept { min-height: 0; }
-      .theorem { grid-template-columns: 1fr; gap: 20px; padding: 25px; }
-      .candidates { grid-template-columns: 1fr; }
-      .closing { align-items: flex-start; flex-direction: column; margin-top: 45px; }
-    }
-    @media (max-width: 420px) {
-      .wrap { width: calc(100% - 28px); }
-      .brand { font-size: 12px; }
-      nav { gap: 9px; }
-      nav a { font-size: 10px; }
-      .orbit-left { left: 8px; }
-      .orbit-right { right: 8px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      *, *::before, *::after { transition-duration: .01ms !important; }
-    }
-  </style>
+  <meta name="description" content="Learn the definitions of P and NP and explore the P versus NP question.">
+  <title>P, NP, and the P vs. NP Question</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header class="wrap topbar">
-    <a class="brand" href="#top">COMPLEXITY NOTES <span>/ 01</span></a>
+    <a class="brand" href="index.html">COMPLEXITY NOTES <span>/ 01</span></a>
     <nav aria-label="Main navigation">
-      <a href="#context">The basics</a>
-      <a href="#theorem">Ladner's theorem</a>
-      <a href="#mahaney">Mahaney</a>
-      <a href="#candidates">Candidates</a>
+      <a href="index.html" aria-current="page">P vs. NP</a>
+      <a href="npi.html">NPI &amp; Ladner</a>
+      <a href="mahaney.html">Mahaney's theorems</a>
     </nav>
   </header>
 
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">A simple guide to complexity theory</p>
-        <h1 id="page-title">Between <em>P</em> and NP-complete.</h1>
-        <p class="hero-copy">Some problems in NP may be harder than P problems, but not as hard as NP-complete problems. If P ≠ NP, Ladner's theorem says at least one such problem exists.</p>
-        <a class="button" href="#context">Start with the basics <span aria-hidden="true">↓</span></a>
+        <p class="eyebrow">Complexity theory, in brief</p>
+        <h1 id="page-title"><em>P</em>, NP, and the big question.</h1>
+        <p class="hero-copy">How hard is it to solve a problem? Complexity theory studies how the time needed grows as the input gets larger.</p>
+        <a class="button" href="#definitions">Explore the definitions <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="diagram" role="img" aria-label="A diagram of the P, NP, NP-complete, and NPI classes">
+      <div class="diagram" role="img" aria-label="P is contained in NP; whether they are equal is unknown">
         <span class="orbit orbit-top">NP</span>
         <span class="orbit orbit-left">P</span>
-        <span class="orbit orbit-right">NP-complete</span>
-        <span class="orbit orbit-bottom">NPI?</span>
-        <div class="diagram-label"><strong>NP</strong><span>the landscape</span></div>
+        <span class="orbit orbit-right">P = NP?</span>
+        <span class="orbit orbit-bottom">Open question</span>
+        <div class="diagram-label"><strong>P ⊆ NP</strong><span>always true</span></div>
       </div>
     </section>
 
-    <section class="section" id="context">
+    <section class="section" id="definitions">
       <div class="wrap">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">01 / The setup</p>
-            <h2>Three ideas to begin.</h2>
+            <p class="eyebrow">01 / The definitions</p>
+            <h2>What are P and NP?</h2>
           </div>
-          <p>P and NP describe how quickly problems can be solved or checked.</p>
+          <p>These classes describe decision problems: questions with a yes-or-no answer.</p>
         </div>
         <div class="concepts">
           <article class="concept">
             <span class="symbol" aria-hidden="true">P</span>
-            <h3>Can be solved quickly</h3>
-            <p>A problem is in P if an algorithm can solve it in polynomial time.</p>
+            <h3>Polynomial time</h3>
+            <p><strong>Definition:</strong> P is the class of decision problems that a deterministic algorithm can decide in polynomial time. This means its running time is at most O(n<sup>k</sup>) for some constant k, where n is the input length.</p>
           </article>
           <article class="concept">
             <span class="symbol" aria-hidden="true">NP</span>
-            <h3>Can be checked quickly</h3>
-            <p>For problems in NP, a short proof of a yes-answer can be checked in polynomial time. P is inside NP.</p>
+            <h3>Polynomial-time verification</h3>
+            <p><strong>Definition:</strong> NP is the class of decision problems with a deterministic polynomial-time verifier V and polynomial q such that x is a yes-instance exactly when some certificate y, with |y| ≤ q(|x|), makes V(x, y) accept. Equivalently, a nondeterministic algorithm can decide the problem in polynomial time.</p>
           </article>
           <article class="concept">
-            <span class="symbol" aria-hidden="true">P ≟ NP</span>
-            <h3>Still unknown</h3>
-            <p>We do not know whether P = NP. If they differ, some NP problems cannot be solved in polynomial time.</p>
+            <span class="symbol" aria-hidden="true">P ⊆ NP</span>
+            <h3>Why P is inside NP</h3>
+            <p>If we can solve a problem quickly, we can also check a proposed answer quickly. So every problem in P is also in NP.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section class="section" id="theorem">
-      <div class="wrap theorem">
-        <div>
-          <p class="eyebrow">02 / The key result</p>
-          <h2>Ladner's theorem</h2>
+    <section class="section" id="question">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 / The open problem</p>
+            <h2>Does P equal NP?</h2>
+          </div>
+          <p>This is one of the biggest unanswered questions in computer science.</p>
         </div>
-        <div>
-          <div class="theorem-statement">If P ≠ NP, there is a problem in NP that is neither in P nor NP-complete.</div>
-          <p>This means there is a middle ground: a problem that is not in P, but is also not NP-complete. Such a problem is called NP-intermediate, or NPI.</p>
-          <p>The proof builds a special problem that is hard enough to stay outside P, but is not hard enough to be NP-complete. It does not show that any familiar problem is NPI.</p>
+        <div class="theorem">
+          <div>
+            <p class="eyebrow">The question</p>
+            <h2>Can every quickly checked answer also be found quickly?</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">P = NP?</div>
+            <p><strong>What we know:</strong> P is contained in NP. We do not know whether every problem in NP is also in P.</p>
+            <p><strong>If P = NP:</strong> Every problem whose solutions can be checked quickly can also be solved quickly.</p>
+            <p><strong>If P ≠ NP:</strong> Some problems in NP have no polynomial-time solving algorithm.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section class="section" id="mahaney">
+    <section class="section">
       <div class="wrap">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">03 / Sparse sets</p>
-            <h2>Mahaney's theorems.</h2>
+            <div class="eyebrow">03 / Continue learning</div>
+            <h2>Explore two connected topics.</h2>
           </div>
-          <p>A sparse set has only polynomially many yes-strings of each length.</p>
-        </div>
-        <article class="theorem">
-          <div>
-            <p class="eyebrow">Mahaney's theorem</p>
-            <h2>One question</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">If a sparse set is NP-hard under polynomial-time many-one reductions, then P = NP.</div>
-            <p>If every problem in NP can be turned into one question about a sparse set, then P and NP are equal.</p>
-          </div>
-        </article>
-        <article class="theorem">
-          <div>
-            <p class="eyebrow">Stronger Mahaney's theorem</p>
-            <h2>A few questions</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">If SAT can be solved in polynomial time with a fixed number of questions to a sparse set, then P = NP.</div>
-            <p>SAT asks whether a logic formula can be made true. All questions must be chosen before seeing any answers. This strengthens Mahaney's theorem: it allows more than one question, but still only a fixed number.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section" id="candidates">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">04 / Possible examples</p>
-            <h2>Problems that might fit.</h2>
-          </div>
-          <p>These problems might be NPI, but no one knows for sure.</p>
+          <p>Learn what happens between P and NP-complete, or explore what sparse sets tell us about NP-hardness.</p>
         </div>
         <div class="candidates">
           <article class="candidate">
-            <h3>Graph isomorphism</h3>
-            <p>Are two graphs the same after renaming their points? A proposed renaming is easy to check. We do not know if the problem is in P or NP-complete.</p>
-            <span class="tag">NPI candidate</span>
+            <h3>NP-intermediate problems</h3>
+            <p>If P ≠ NP, Ladner's theorem says there are problems in NP that are neither in P nor NP-complete.</p>
+            <a class="button" href="npi.html">Explore NPI <span aria-hidden="true">→</span></a>
           </article>
           <article class="candidate">
-            <h3>Integer factorization</h3>
-            <p>Given numbers N and k, is there a divisor of N between 2 and k? A proposed divisor is easy to check. It is not known to be in P or NP-complete.</p>
-            <span class="tag">NPI candidate</span>
+            <h3>Sparse sets</h3>
+            <p>Mahaney's theorem connects sparse NP-hard sets to the question P = NP.</p>
+            <a class="button" href="mahaney.html">Explore Mahaney's theorems <span aria-hidden="true">→</span></a>
           </article>
         </div>
-        <p class="caveat"><strong>Note:</strong> We do not know if either problem is NPI. Ladner's theorem says some NPI problems exist if P ≠ NP, but these examples may or may not be among them.</p>
       </div>
     </section>
 
     <footer class="wrap closing">
-      <p>A simple introduction to NP-intermediate problems.</p>
+      <p>A short introduction to complexity theory.</p>
       <p><a href="#top">Back to top ↑</a></p>
     </footer>
   </main>

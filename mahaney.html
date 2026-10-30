@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Mahaney's theorem and the stronger sparse-set theorem.">
+  <title>Mahaney's Theorems — Complexity Notes</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="index.html">COMPLEXITY NOTES <span>/ 01</span></a>
+    <nav aria-label="Main navigation">
+      <a href="index.html">P vs. NP</a>
+      <a href="npi.html">NPI &amp; Ladner</a>
+      <a href="mahaney.html" aria-current="page">Mahaney's theorems</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">02 / Sparse sets</p>
+        <h1 id="page-title">Few yes-instances. Big consequences.</h1>
+        <p class="hero-copy">Mahaney's theorem shows that a sparse set cannot be NP-hard unless P = NP. A stronger result allows a fixed number of nonadaptive questions.</p>
+        <a class="button" href="#mahaney">Explore the theorems <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="A sparse set contains only polynomially many yes-instances at each input length">
+        <span class="orbit orbit-top">length n</span>
+        <span class="orbit orbit-left">few</span>
+        <span class="orbit orbit-right">yes-instances</span>
+        <span class="orbit orbit-bottom">polynomial</span>
+        <div class="diagram-label"><strong>S</strong><span>sparse set</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="mahaney">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">01 / One question</p>
+            <h2>Mahaney's theorem.</h2>
+          </div>
+          <p>First, what does sparse mean?</p>
+        </div>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">Definition</p>
+            <h2>A sparse set</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">A set S is sparse if, for every input length n, at most polynomially many strings of length n are in S.</div>
+            <p>There may be up to 2<sup>n</sup> strings of length n in total. A sparse set contains only a polynomial number of them.</p>
+          </div>
+        </article>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">Mahaney's theorem</p>
+            <h2>One question</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">If a sparse set is NP-hard under polynomial-time many-one reductions, then P = NP.</div>
+            <p>A many-one reduction turns an instance of one problem into a single instance of another. So if one sparse set can represent every problem in NP this way, then P and NP must be equal.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="stronger">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">02 / A fixed number of questions</p>
+            <h2>The stronger theorem.</h2>
+          </div>
+          <p>The stronger result allows several questions about the sparse set, but the number must be fixed.</p>
+        </div>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">Stronger Mahaney's theorem</p>
+            <h2>Nonadaptive questions</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">If SAT can be decided in polynomial time using a fixed constant number of nonadaptive queries to a sparse set, then P = NP.</div>
+            <p>SAT asks whether a Boolean formula can be made true. “Nonadaptive” means all questions to the sparse set are prepared before any answers are received.</p>
+            <p>This strengthens Mahaney's theorem: it permits more than one question, while keeping their number constant.</p>
+            <p>The stronger result is due to Ogiwara and Watanabe.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="wrap closing">
+      <p>Sparse sets · <a href="index.html">Back to P vs. NP</a></p>
+      <p><a href="#top">Back to top ↑</a></p>
+    </footer>
+  </main>
+</body>
+</html>
