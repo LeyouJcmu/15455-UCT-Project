@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="An introduction to NP-intermediate problems, Ladner's theorem, and candidate problems.">
-  <title>Between P and NP-Complete — A Guide to NPI</title>
+  <meta name="description" content="A simple guide to NP-intermediate problems and the theorems that describe them.">
+  <title>Between P and NP-Complete — A Simple Guide to NPI</title>
   <style>
     :root {
       color-scheme: light;
@@ -216,22 +216,7 @@
       color: #535c5c;
       font-size: 13px;
     }
-    .resources { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
-    .resource {
-      display: flex;
-      min-height: 165px;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 23px;
-      border: 1px solid var(--line);
-      background: var(--white);
-      text-decoration: none;
-    }
-    a.resource:hover { border-color: var(--green); transform: translateY(-2px); }
-    .resource small { margin-bottom: 14px; color: var(--green); font-size: 10px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
-    .resource strong { margin-bottom: 7px; color: var(--ink); font: 20px/1.25 var(--serif); }
-    .resource span { color: var(--muted); font-size: 13px; }
-    .resource.pending { background: transparent; }
+    .theorem + .theorem { margin-top: 14px; }
     .closing {
       display: flex;
       align-items: center;
@@ -254,7 +239,7 @@
       .diagram { min-height: 270px; }
       .section { padding-block: 55px; }
       .section-heading { grid-template-columns: 1fr; gap: 14px; }
-      .concepts, .resources { grid-template-columns: 1fr; }
+      .concepts { grid-template-columns: 1fr; }
       .concept { min-height: 0; }
       .theorem { grid-template-columns: 1fr; gap: 20px; padding: 25px; }
       .candidates { grid-template-columns: 1fr; }
@@ -280,20 +265,20 @@
     <nav aria-label="Main navigation">
       <a href="#context">The basics</a>
       <a href="#theorem">Ladner's theorem</a>
+      <a href="#mahaney">Mahaney</a>
       <a href="#candidates">Candidates</a>
-      <a href="#resources">Reading</a>
     </nav>
   </header>
 
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">A short guide to complexity theory</p>
+        <p class="eyebrow">A simple guide to complexity theory</p>
         <h1 id="page-title">Between <em>P</em> and NP-complete.</h1>
-        <p class="hero-copy">Could some problems in NP be neither efficiently solvable nor as hard as every problem in NP? Meet the NP-intermediate problems—and the theorem that says they exist if P and NP are different.</p>
+        <p class="hero-copy">Some problems in NP may be harder than P problems, but not as hard as NP-complete problems. If P ≠ NP, Ladner's theorem says at least one such problem exists.</p>
         <a class="button" href="#context">Start with the basics <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="diagram" role="img" aria-label="A conceptual diagram placing NP-intermediate problems inside NP, outside P, and apart from NP-complete problems">
+      <div class="diagram" role="img" aria-label="A diagram of the P, NP, NP-complete, and NPI classes">
         <span class="orbit orbit-top">NP</span>
         <span class="orbit orbit-left">P</span>
         <span class="orbit orbit-right">NP-complete</span>
@@ -309,23 +294,23 @@
             <p class="eyebrow">01 / The setup</p>
             <h2>Three ideas to begin.</h2>
           </div>
-          <p>Think of these classes as ways to group decision problems by how efficiently they can be solved or checked.</p>
+          <p>P and NP describe how quickly problems can be solved or checked.</p>
         </div>
         <div class="concepts">
           <article class="concept">
             <span class="symbol" aria-hidden="true">P</span>
-            <h3>Efficiently solvable</h3>
-            <p>P contains decision problems that a deterministic algorithm can solve in polynomial time.</p>
+            <h3>Can be solved quickly</h3>
+            <p>A problem is in P if an algorithm can solve it in polynomial time.</p>
           </article>
           <article class="concept">
             <span class="symbol" aria-hidden="true">NP</span>
-            <h3>Efficiently checkable</h3>
-            <p>For problems in NP, a proposed yes-answer has a certificate that can be checked in polynomial time. P is contained in NP.</p>
+            <h3>Can be checked quickly</h3>
+            <p>For problems in NP, a short proof of a yes-answer can be checked in polynomial time. P is inside NP.</p>
           </article>
           <article class="concept">
             <span class="symbol" aria-hidden="true">P ≟ NP</span>
-            <h3>The open question</h3>
-            <p>We do not know whether P = NP. If they are equal, every NP problem is efficiently solvable; if not, some are not.</p>
+            <h3>Still unknown</h3>
+            <p>We do not know whether P = NP. If they differ, some NP problems cannot be solved in polynomial time.</p>
           </article>
         </div>
       </div>
@@ -338,10 +323,42 @@
           <h2>Ladner's theorem</h2>
         </div>
         <div>
-          <div class="theorem-statement">If P ≠ NP, then there exists a language in NP that is neither in P nor NP-complete (under polynomial-time many-one reductions).</div>
-          <p><strong>Why it matters:</strong> NP is not forced to split neatly into just easy problems and NP-complete problems. Under the assumption P ≠ NP, at least one problem lies in between—an <em>NP-intermediate</em> problem, or NPI.</p>
-          <p><strong>Core intuition:</strong> The proof constructs a deliberately artificial language. A controlled, gradually increasing amount of computational work keeps it outside P, while diagonalization against candidate reductions prevents it from being NP-complete. The construction depends on P ≠ NP; it does not identify a familiar, natural problem as NPI.</p>
+          <div class="theorem-statement">If P ≠ NP, there is a problem in NP that is neither in P nor NP-complete.</div>
+          <p>This means there is a middle ground: a problem that is not in P, but is also not NP-complete. Such a problem is called NP-intermediate, or NPI.</p>
+          <p>The proof builds a special problem that is hard enough to stay outside P, but is not hard enough to be NP-complete. It does not show that any familiar problem is NPI.</p>
         </div>
+      </div>
+    </section>
+
+    <section class="section" id="mahaney">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">03 / Sparse sets</p>
+            <h2>Mahaney's theorems.</h2>
+          </div>
+          <p>A sparse set has only polynomially many yes-strings of each length.</p>
+        </div>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">Mahaney's theorem</p>
+            <h2>One question</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">If a sparse set is NP-hard under polynomial-time many-one reductions, then P = NP.</div>
+            <p>If every problem in NP can be turned into one question about a sparse set, then P and NP are equal.</p>
+          </div>
+        </article>
+        <article class="theorem">
+          <div>
+            <p class="eyebrow">Stronger Mahaney's theorem</p>
+            <h2>A few questions</h2>
+          </div>
+          <div>
+            <div class="theorem-statement">If SAT can be solved in polynomial time with a fixed number of questions to a sparse set, then P = NP.</div>
+            <p>SAT asks whether a logic formula can be made true. All questions must be chosen before seeing any answers. This strengthens Mahaney's theorem: it allows more than one question, but still only a fixed number.</p>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -349,59 +366,31 @@
       <div class="wrap">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">03 / Natural candidates</p>
+            <p class="eyebrow">04 / Possible examples</p>
             <h2>Problems that might fit.</h2>
           </div>
-          <p>These are often discussed as possible NP-intermediate problems. Their exact complexity status remains unknown.</p>
+          <p>These problems might be NPI, but no one knows for sure.</p>
         </div>
         <div class="candidates">
           <article class="candidate">
             <h3>Graph isomorphism</h3>
-            <p>Given two graphs, decide whether a relabeling of one makes it identical to the other. A proposed relabeling is easy to check, so the problem is in NP. It has a quasipolynomial-time algorithm, but no polynomial-time algorithm is known.</p>
+            <p>Are two graphs the same after renaming their points? A proposed renaming is easy to check. We do not know if the problem is in P or NP-complete.</p>
             <span class="tag">NPI candidate</span>
           </article>
           <article class="candidate">
             <h3>Integer factorization</h3>
-            <p>For a decision version, ask whether an integer N has a divisor d with 1 &lt; d ≤ k. The divisor is a polynomial-size certificate, so this problem is in NP. No classical polynomial-time factoring algorithm is known, and this decision problem is not known to be NP-complete.</p>
+            <p>Given numbers N and k, is there a divisor of N between 2 and k? A proposed divisor is easy to check. It is not known to be in P or NP-complete.</p>
             <span class="tag">NPI candidate</span>
           </article>
         </div>
-        <p class="caveat"><strong>Important:</strong> Neither problem is proven to be NP-intermediate. P ≠ NP guarantees that some NPI language exists, but does not tell us whether either of these natural candidates qualifies.</p>
+        <p class="caveat"><strong>Note:</strong> We do not know if either problem is NPI. Ladner's theorem says some NPI problems exist if P ≠ NP, but these examples may or may not be among them.</p>
       </div>
     </section>
 
-    <section class="section" id="resources">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">04 / Keep exploring</p>
-            <h2>Further reading.</h2>
-          </div>
-          <p>Start with the theorem's original paper, then use a textbook for the surrounding complexity theory.</p>
-        </div>
-        <div class="resources">
-          <a class="resource" href="https://doi.org/10.1137/0204012" target="_blank" rel="noopener noreferrer">
-            <small>Original paper</small>
-            <strong>On the structure of polynomial time reducibility</strong>
-            <span>Richard E. Ladner · SIAM Journal on Computing, 1975 ↗</span>
-          </a>
-          <a class="resource" href="https://mitpress.mit.edu/9780262046305/introduction-to-the-theory-of-computation/" target="_blank" rel="noopener noreferrer">
-            <small>Textbook</small>
-            <strong>Introduction to the Theory of Computation</strong>
-            <span>Michael Sipser · MIT Press ↗</span>
-          </a>
-          <div class="resource pending">
-            <small>Course video</small>
-            <strong>CMU UCT lecture</strong>
-            <span>Video link to be added.</span>
-          </div>
-        </div>
-        <footer class="closing">
-          <p>A student-made introduction to NP-intermediate problems.</p>
-          <p><a href="#top">Back to top ↑</a></p>
-        </footer>
-      </div>
-    </section>
+    <footer class="wrap closing">
+      <p>A simple introduction to NP-intermediate problems.</p>
+      <p><a href="#top">Back to top ↑</a></p>
+    </footer>
   </main>
 </body>
 </html>
