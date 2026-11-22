@@ -1,78 +1,14 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="If P ≠ NP, NP has a nonempty middle (Ladner), and no sparse set can be NP-hard (Mahaney).">
-  <title>Is NP Split Cleanly in Two? — Complexity Notes</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-  <link rel="stylesheet" href="style.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-  <script defer src="viz.js"></script>
-  <script defer src="site.js"></script>
+  <title>Complexity Notes</title>
+  <!-- GitHub Pages serves index.html at the site root; the real home page is 1_home.html. -->
+  <meta http-equiv="refresh" content="0; url=1_home.html">
+  <link rel="canonical" href="1_home.html">
+  <script>location.replace('1_home.html' + location.search + location.hash);</script>
 </head>
 <body>
-  <header id="site-header" class="wrap topbar"></header>
-
-  <main id="top">
-    <section class="wrap hero" aria-labelledby="page-title">
-      <div>
-        <p class="eyebrow">Page 1 / Home</p>
-        <h1 id="page-title">Is NP split cleanly <em>in two?</em></h1>
-        <p class="hero-copy">If $\P \ne \NP$, then NP is not split cleanly into “easy” problems (P) and “hardest” problems (NP-complete): there is a nonempty middle ground, NPI. This site proves that fact (Ladner’s Theorem) and then proves our centerpiece, Mahaney’s Theorem: unless $\P = \NP$, no sparse set can be NP-hard. Together they show that the structure of NP is richer than a two-way split, and that density is a real barrier to hardness.</p>
-        <a class="button" href="#roadmap">What you will learn <span aria-hidden="true">↓</span></a>
-      </div>
-      <figure class="hero-figure">
-        <svg viewBox="0 0 480 285" role="img" aria-label="Two Venn diagrams. If P equals NP, the P = NP circle lies inside NP-hard except for the empty set and Sigma star, and the overlap is NP-complete. If P is not NP, NP contains P at the bottom, NP-complete where NP meets NP-hard at the top, and a nonempty NPI in between."><defs><clipPath id="h-np"><ellipse cx="365" cy="178" rx="88" ry="74"/></clipPath><clipPath id="h-p"><circle cx="115" cy="150" r="66"/></clipPath></defs><line x1="240" y1="8" x2="240" y2="282" stroke="#c6cfb7" stroke-dasharray="3 4"/><text x="115" y="16" text-anchor="middle" class="hf-h">IF P = NP</text><ellipse cx="115" cy="112" rx="108" ry="86" fill="#f3dccb" stroke="#d28c63"/><text x="115" y="48" text-anchor="middle" class="hf-b hf-o">NP-hard</text><circle cx="115" cy="150" r="66" fill="#dfe9cf" fill-opacity=".55" stroke="#245c4b" stroke-width="1.5"/><ellipse cx="115" cy="112" rx="108" ry="86" fill="#245c4b" fill-opacity=".22" clip-path="url(#h-p)"/><text x="115" y="134" text-anchor="middle" class="hf-b">P = NP</text><text x="115" y="152" text-anchor="middle" class="hf-s">overlap =</text><text x="115" y="168" text-anchor="middle" class="hf-b hf-g">NP-complete</text><circle cx="100" cy="207" r="3.2" fill="#202b30"/><circle cx="130" cy="207" r="3.2" fill="#202b30"/><text x="92" y="211" text-anchor="end" class="hf-s hf-m">∅</text><text x="138" y="211" class="hf-s hf-m">Σ*</text><text x="115" y="244" text-anchor="middle" class="hf-s">Every language in P except ∅ and Σ*</text><text x="115" y="259" text-anchor="middle" class="hf-s">is NP-complete. NPI is empty.</text><text x="365" y="16" text-anchor="middle" class="hf-h">IF P ≠ NP</text><ellipse cx="365" cy="76" rx="108" ry="54" fill="#f3dccb" stroke="#d28c63"/><text x="365" y="56" text-anchor="middle" class="hf-b hf-o">NP-hard</text><ellipse cx="365" cy="178" rx="88" ry="74" fill="#dfe9cf" fill-opacity=".55" stroke="#245c4b" stroke-width="1.5"/><ellipse cx="365" cy="76" rx="108" ry="54" fill="#245c4b" fill-opacity=".28" clip-path="url(#h-np)"/><ellipse cx="365" cy="76" rx="108" ry="54" fill="none" stroke="#d28c63" clip-path="url(#h-np)"/><text x="365" y="122" text-anchor="middle" class="hf-b hf-g">NPC</text><rect x="303" y="140" width="124" height="34" rx="3" fill="#fffefa" fill-opacity=".75"/><text x="365" y="155" text-anchor="middle" class="hf-b">NPI ≠ ∅</text><text x="365" y="169" text-anchor="middle" class="hf-s">the middle (Ladner)</text><ellipse cx="365" cy="215" rx="50" ry="28" fill="#fffefa" stroke="#245c4b" stroke-width="1.5"/><text x="365" y="220" text-anchor="middle" class="hf-b">P</text><text x="304" y="200" text-anchor="middle" class="hf-b hf-g">NP</text><text x="365" y="272" text-anchor="middle" class="hf-s">NP has three regions: P, NPI, NPC.</text></svg>
-        <figcaption>The two possible worlds. If P = NP, all of NP except ∅ and Σ* is NP-complete. If P ≠ NP, NP-complete is only the top of NP, and Ladner’s Theorem puts problems in the gap between it and P.</figcaption>
-      </figure>
-    </section>
-
-    <section class="section" id="roadmap">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">The roadmap</p>
-            <h2>What you will learn, in order</h2>
-          </div>
-          <p>Page 2 is needed for everything. Ladner (Page 3) and Mahaney (Pages 4–6) are independent, so you can read either first. Page 7 uses both.</p>
-        </div>
-        <div class="roadmap">
-          <a href="prerequisites.html"><span class="num">02</span><h3>Prerequisites and notation</h3><p>The background we assume from 455, plus two new definitions: sparse sets and tally sets.</p></a>
-          <a href="npi.html"><span class="num">03</span><h3>NPI and Ladner’s Theorem</h3><p>A full proof that $\P \ne \NP$ implies NPI is nonempty, and a look at natural problems believed to be NP-intermediate.</p></a>
-          <a href="sparse.html"><span class="num">04</span><h3>Sparse sets and the Berman–Hartmanis conjecture</h3><p>Why every known NP-complete problem is “dense,” and why that led people to ask whether a sparse set could ever be NP-complete.</p></a>
-          <a href="mahaney.html"><span class="num">05</span><h3>Mahaney’s Theorem, Part I</h3><p>The precise statement, the proof strategy, and the list of lemmas.</p></a>
-          <a href="mahaney-proof.html"><span class="num">06</span><h3>Mahaney’s Theorem, Part II</h3><p>The complete proof, using the left-set technique of Ogihara and Watanabe.</p></a>
-          <a href="consequences.html"><span class="num">07</span><h3>Consequences and extensions</h3><p>How Mahaney’s Theorem produces NPI candidates, Fortune’s theorem for co-sparse sets, and what is known for stronger kinds of reductions.</p></a>
-          <a href="glossary.html"><span class="num">08</span><h3>Glossary and key takeaways</h3><p>Every definition and theorem in one place, with links to where each is used.</p></a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="content">
-      <div class="wrap narrow">
-        <div class="article-body">
-<script type="text/markdown" data-md="home-dependencies">
-## How the pages depend on each other
-
-- [Page 2](prerequisites.html) is needed for everything.
-- [Page 3](npi.html) (Ladner) and Pages [4](sparse.html)–[6](mahaney-proof.html) (Mahaney) are independent: you can read either first.
-- [Page 7](consequences.html) uses both Ladner’s Theorem and Mahaney’s Theorem.
-
-## The one-sentence version
-
-:::box
-Ladner says the middle of NP is nonempty if $\P \ne \NP$; Mahaney says sparse sets can never be at the top of NP if $\P \ne \NP$, so sparse sets in $\NP \setminus \P$ must live in that middle.
-:::
-</script>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer id="site-footer"></footer>
+  <p><a href="1_home.html">Continue to the home page</a>.</p>
 </body>
 </html>

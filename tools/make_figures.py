@@ -62,7 +62,7 @@ def home():
                'Two Venn diagrams. If P equals NP, the P = NP circle lies inside NP-hard except for the empty set and Sigma star, and the overlap is NP-complete. If P is not NP, NP contains P at the bottom, NP-complete where NP meets NP-hard at the top, and a nonempty NPI in between.')
 
 
-# ------------------------------------------------------------------ 2. Prerequisites: a Karp reduction
+# ------------------------------------------------------------------ 2. Review: a Karp reduction
 def prereq():
     b = [arrow_defs('pr')]
     for x, name, lab in ((20, 'A', 'x'), (270, 'B', 'f(x)')):
@@ -309,9 +309,9 @@ def glossary():
                'Timeline from 1975 to 1991: Ladner, Berman–Hartmanis, Berman, Fortune, Karp–Lipton, Mahaney highlighted, Ogihara–Watanabe.')
 
 
-PAGES = {'index.html': home, 'prerequisites.html': prereq, 'npi.html': ladner, 'sparse.html': sparse,
-         'mahaney.html': mahaney1, 'mahaney-proof.html': mahaney2, 'consequences.html': consequences,
-         'glossary.html': glossary}
+PAGES = {'1_home.html': home, '2_review.html': prereq, '3_npi.html': ladner, '4_sparse.html': sparse,
+         '5_mahaney.html': mahaney1, '6_mahaney-proof.html': mahaney2, '7_consequences.html': consequences,
+         '8_glossary.html': glossary}
 pat = re.compile(r'<div class="diagram"[\s\S]*?<div class="diagram-label">[\s\S]*?</div>\s*</div>|<figure class="hero-figure">[\s\S]*?</figure>')
 for name, fn in PAGES.items():
     p = os.path.join(ROOT, name)

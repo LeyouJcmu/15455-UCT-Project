@@ -22,7 +22,7 @@
       <div>
         <p class="eyebrow">Page 5 / Mahaney’s Theorem, Part I</p>
         <h1 id="page-title">Statement and <em>strategy.</em></h1>
-        <p class="hero-copy">If some sparse set is NP-hard, then $\P = \NP$. This page states the theorem precisely, explains the plan of the proof, and lists the lemmas that <a href="mahaney-proof.html">Page 6</a> proves.</p>
+        <p class="hero-copy">If some sparse set is NP-hard, then $\P = \NP$. This page states the theorem precisely, explains the plan of the proof, and lists the lemmas that <a href="6_mahaney-proof.html">Page 6</a> proves.</p>
         <a class="button" href="#content">Read the plan <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
@@ -48,7 +48,7 @@ If $\P \ne \NP$, then no sparse set is NP-complete (or even NP-hard) under Karp 
 Two things to notice:
 
 - **$S$ need not be in NP.** The proof never uses an algorithm for $S$, so the theorem rules out sparse NP-*hard* sets, not just NP-complete ones.
-- **The reduction type matters.** The theorem is about Karp (many-one) reductions. For more powerful reductions the picture changes; see [Page 7](consequences.html#stronger-reductions).
+- **The reduction type matters.** The theorem is about Karp (many-one) reductions. For more powerful reductions the picture changes; see [Page 7](7_consequences.html#stronger-reductions).
 
 Our proof follows Ogihara and Watanabe (1991), who introduced the *left set* technique to prove a stronger theorem. Their method gives the cleanest known proof of Mahaney’s Theorem. A textbook account appears in Hemaspaandra and Ogihara, *The Complexity Theory Companion*, Chapter 1.
 </script>
@@ -56,7 +56,7 @@ Our proof follows Ogihara and Watanabe (1991), who introduced the *left set* tec
 <script type="text/markdown" data-md="mahaney1-plan">
 ## The plan in four steps
 
-1. **Search for one particular assignment.** Instead of asking “is $\varphi$ satisfiable?” we try to build the lexicographically largest satisfying assignment $z^*$ of $\varphi$, one bit at a time, by walking down the [self-reducibility tree](prerequisites.html#self-reducibility-of-sat).
+1. **Search for one particular assignment.** Instead of asking “is $\varphi$ satisfiable?” we try to build the lexicographically largest satisfying assignment $z^*$ of $\varphi$, one bit at a time, by walking down the [self-reducibility tree](4_sparse.html#self-reducibility-of-sat).
 2. **Turn that search into an NP question with a monotone answer.** Define a language $L$, the *left set*, that asks “is there a satisfying assignment at or to the right of this point?” Along any level of the tree, the points with answer “yes” form an initial segment ending exactly at the prefix of $z^*$.
 3. **Reduce $L$ to the sparse set.** Since $L \in \NP$ and $S$ is NP-hard, $L \redm S$ via some $g$. We never decide $S$, but we compare $g$-values.
 4. **Prune using collisions and the census.** At each level, keep only polynomially many candidate prefixes, using two rules that can never discard the prefix of $z^*$. At the bottom, check each surviving full assignment directly.
@@ -77,11 +77,11 @@ Fix a formula $\varphi$ with variables $x_1, \dots, x_n$. Let $z^*$ be its lexic
 
 | Lemma | Statement (informal) | Role in the proof |
 | --- | --- | --- |
-| [A](mahaney-proof.html#lemma-a) | The left set $L$ is in NP | Lets us reduce $L$ to $S$ |
-| [B](mahaney-proof.html#lemma-b) | Among prefixes of length $k$, $Q(u) \in L$ exactly when $u \le z^*[1..k]$ | The “yes” prefixes form an initial segment ending at $z^*$’s prefix |
-| [C](mahaney-proof.html#lemma-c) (collision rule) | If $u < v$ and $g(Q(u)) = g(Q(v))$, then $u$ is not $z^*$’s prefix | Safe to delete the smaller of two colliding prefixes |
-| [D](mahaney-proof.html#lemma-d) (census rule) | If all $g$-values are distinct, $z^*$’s prefix is among the first $r$ candidates | Safe to keep only $r$ candidates per level |
-| [Main](mahaney-proof.html#proof-of-mahaney) | The pruned search runs in polynomial time and decides SAT | Gives $\SAT \in \P$ |
+| [A](6_mahaney-proof.html#lemma-a) | The left set $L$ is in NP | Lets us reduce $L$ to $S$ |
+| [B](6_mahaney-proof.html#lemma-b) | Among prefixes of length $k$, $Q(u) \in L$ exactly when $u \le z^*[1..k]$ | The “yes” prefixes form an initial segment ending at $z^*$’s prefix |
+| [C](6_mahaney-proof.html#lemma-c) (collision rule) | If $u < v$ and $g(Q(u)) = g(Q(v))$, then $u$ is not $z^*$’s prefix | Safe to delete the smaller of two colliding prefixes |
+| [D](6_mahaney-proof.html#lemma-d) (census rule) | If all $g$-values are distinct, $z^*$’s prefix is among the first $r$ candidates | Safe to keep only $r$ candidates per level |
+| [Main](6_mahaney-proof.html#proof-of-mahaney) | The pruned search runs in polynomial time and decides SAT | Gives $\SAT \in \P$ |
 
 Here $r$ is a polynomial bound on the number of strings in $S$ that $g$ can possibly output for inputs of this size.
 </script>

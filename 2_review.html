@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Notation for P, NP and Karp reductions, self-reducibility of SAT, and sparse and tally sets.">
-  <title>Prerequisites and Notation — Complexity Notes</title>
+  <meta name="description" content="A review of P, NP, Karp reductions, NP-completeness and machine enumeration, with the notation used on the rest of the site.">
+  <title>Review and Notation — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -20,9 +20,9 @@
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Page 2 / Prerequisites</p>
+        <p class="eyebrow">Page 2 / Review</p>
         <h1 id="page-title">The tools we <em>assume.</em></h1>
-        <p class="hero-copy">We assume the background of a 455 student: Turing machines, P, NP, polynomial-time reductions, and the Cook–Levin Theorem. This page fixes notation for those, then introduces the two new ideas the site depends on: self-reducibility of SAT and sparse sets.</p>
+        <p class="hero-copy">We assume the background of a 455 student: Turing machines, P, NP, polynomial-time reductions, and the Cook–Levin Theorem. This page reviews those and fixes the notation the rest of the site uses. The two genuinely new ideas, sparse sets and the self-reducibility of SAT, are introduced on <a href="4_sparse.html">Page 4</a>, where they are first needed.</p>
         <a class="button" href="#content">Read the notation <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
@@ -34,7 +34,7 @@
     <section class="section" id="content">
       <div class="wrap article">
         <div class="article-body">
-<script type="text/markdown" data-md="prereq-review">
+<script type="text/markdown" data-md="review-basics">
 ## What we assume (brief review)
 
 - **Strings and lengths.** We work over the alphabet $\{0,1\}$. For a string $x$, $|x|$ is its length. $\Sigma^{\le n}$ is the set of strings of length at most $n$, and for a language $A$ we write $A^{\le n} = A \cap \Sigma^{\le n}$.
@@ -46,51 +46,16 @@
 Unless stated otherwise, “reduction” on this site means a Karp reduction.
 </script>
 
-<script type="text/markdown" data-md="prereq-enumeration">
+<script type="text/markdown" data-md="review-enumeration">
 ## Machine enumeration
 
-Fix an enumeration $M_1, M_2, M_3, \dots$ of all deterministic Turing machines, chosen so that every machine appears infinitely often in the list (for example, ignore any padding at the end of a machine’s encoding). A universal machine can simulate $M_i$ for $t$ steps in time polynomial in $i$ and $t$. [Page 3](npi.html) needs this fact.
+Fix an enumeration $M_1, M_2, M_3, \dots$ of all deterministic Turing machines, chosen so that every machine appears infinitely often in the list (for example, ignore any padding at the end of a machine’s encoding). A universal machine can simulate $M_i$ for $t$ steps in time polynomial in $i$ and $t$. [Page 3](3_npi.html) needs this fact.
 </script>
 
-<script type="text/markdown" data-md="prereq-self-reducibility">
-## Self-reducibility of SAT
-
-The key structural fact about SAT is that a satisfying assignment can be found one bit at a time. If $\varphi$ has variables $x_1, \dots, x_n$, then $\varphi$ is satisfiable if and only if $\varphi$ with $x_1 = 0$ or $\varphi$ with $x_1 = 1$ is satisfiable. Repeating this builds a binary tree of depth $n$ whose leaves are the $2^n$ full assignments.
-
-![A binary tree rooted at phi; each level fixes one more variable, and the eight leaves 000 to 111 are the full assignments](media/self-reducibility-tree.svg "The self-reducibility tree for $n = 3$. Left edges set a variable to 0, right edges to 1.")
-
-The tree has exponentially many nodes, so walking it naively is too slow. Mahaney’s proof works because a sparse set lets us prune the tree to polynomially many nodes per level.
-
-We order assignments lexicographically, treating them as $n$-bit strings: $0^n$ is smallest and $1^n$ is largest. For strings $u, v$ of the same length, $u < v$ means $u$ comes first in this order.
-</script>
-
-<script type="text/markdown" data-md="prereq-sparse">
-## Sparse and tally sets (new)
-
-:::definition (census)
-The *census function* of a language $A$ is $c_A(n) = |A^{\le n}|$, the number of strings in $A$ of length at most $n$.
-:::
-
-:::definition (sparse)
-A language $S$ is *sparse* if there is a polynomial $p$ with $c_S(n) \le p(n)$ for every $n$. Without loss of generality $p$ is nondecreasing.
-:::
-
-:::definition (tally)
-A language $T$ is a *tally set* if $T \subseteq \{1\}^*$, that is, every string in $T$ is a string of 1s. A tally set has at most $n + 1$ strings of length at most $n$, so every tally set is sparse.
-:::
-
-**Contrast with SAT.** SAT is *dense*: there are $2^{\Omega(n)}$ satisfiable formulas of length at most $n$, since any satisfiable formula can be padded with clauses like $(x \lor \lnot x)$ in exponentially many distinct ways. A sparse set has only polynomially many strings at each length bound, so it is exponentially “thinner” than SAT.
-
-:::example
-The tally set $\{1^n : n \text{ is prime}\}$ is sparse. Any language $A$ gives a tally version $\{1^{\mathrm{bin}(x)} : x \in A\}$, where $\mathrm{bin}(x)$ is the number whose binary expansion is $1x$. Encoding a string in unary like this is how tally sets show up in proofs.
-:::
-</script>
-
-<script type="text/markdown" data-md="prereq-takeaways">
+<script type="text/markdown" data-md="review-takeaways">
 :::takeaways
 - Karp reductions preserve membership in P, which is why a hard set in P would collapse NP to P.
-- SAT is self-reducible: deciding it lets us walk down a tree of partial assignments.
-- A sparse set has polynomially many strings up to each length; SAT has exponentially many.
+- Every polynomial-time machine appears (infinitely often) in one fixed enumeration $M_1, M_2, \dots$, which is what Ladner’s diagonalization walks through.
 :::
 </script>
         </div>

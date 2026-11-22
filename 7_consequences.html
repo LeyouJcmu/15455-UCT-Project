@@ -42,12 +42,12 @@ If $\P \ne \NP$, then every sparse set in $\NP \setminus \P$ is in NPI. In parti
 :::
 
 :::proof
-Let $S$ be sparse with $S \in \NP \setminus \P$. If $S$ were NP-complete, it would be a sparse NP-hard set, so $\P = \NP$ by [Mahaney’s Theorem](mahaney.html). So $S$ is in NP, not in P, and not NP-complete.
+Let $S$ be sparse with $S \in \NP \setminus \P$. If $S$ were NP-complete, it would be a sparse NP-hard set, so $\P = \NP$ by [Mahaney’s Theorem](5_mahaney.html). So $S$ is in NP, not in P, and not NP-complete.
 :::
 
-Compare this with [Ladner’s Theorem](npi.html). Ladner *constructs* an intermediate set by diagonalization. Mahaney gives a *structural* reason for intermediacy: any sparse set that is hard enough to escape P is automatically too thin to be complete.
+Compare this with [Ladner’s Theorem](3_npi.html). Ladner *constructs* an intermediate set by diagonalization. Mahaney gives a *structural* reason for intermediacy: any sparse set that is hard enough to escape P is automatically too thin to be complete.
 
-**Do such sets exist?** Not provably from $\P \ne \NP$ alone. The question is tied to exponential time. Let $\E = \mathsf{DTIME}(2^{O(n)})$ and $\NE = \mathsf{NTIME}(2^{O(n)})$. Book (1974) showed that $\NP \setminus \P$ contains a tally set if and only if $\E \ne \NE$, and Hartmanis, Immerman and Sewelson (1985) showed the same for sparse sets. The idea is the unary encoding from [Page 2](prerequisites.html#sparse-and-tally-sets-new): a problem about $n$-bit inputs at exponential time becomes a problem about inputs of length $2^n$, written in unary, at polynomial time.
+**Do such sets exist?** Not provably from $\P \ne \NP$ alone. The question is tied to exponential time. Let $\E = \mathsf{DTIME}(2^{O(n)})$ and $\NE = \mathsf{NTIME}(2^{O(n)})$. Book (1974) showed that $\NP \setminus \P$ contains a tally set if and only if $\E \ne \NE$, and Hartmanis, Immerman and Sewelson (1985) showed the same for sparse sets. The idea is the unary encoding from [Page 4](4_sparse.html#sparse-and-tally-sets): a problem about $n$-bit inputs at exponential time becomes a problem about inputs of length $2^n$, written in unary, at polynomial time.
 
 So under the assumption $\E \ne \NE$ (which implies $\P \ne \NP$), there are tally sets in NPI. They are less artificial than $\SAT_H$: for instance, the unary version of any NE-complete problem.
 </script>
@@ -59,10 +59,10 @@ So under the assumption $\E \ne \NE$ (which implies $\P \ne \NP$), there are tal
 If some sparse set $A$ is coNP-hard under Karp reductions, then $\P = \NP$.
 :::
 
-This predates Mahaney and has an easier proof. Here is a proof with the left-set tools from [Page 6](mahaney-proof.html).
+This predates Mahaney and has an easier proof. Here is a proof with the left-set tools from [Page 6](6_mahaney-proof.html).
 
 :::proof
-Since the complement of SAT reduces to $A$, SAT reduces to the complement of $A$ by the same map. Composing as in [Lemma A](mahaney-proof.html#lemma-a), there is a polynomial-time $g$ with $Q(u) \notin L$ if and only if $g(Q(u)) \in A$. Define $r$ as before, now using the census of $A$.
+Since the complement of SAT reduces to $A$, SAT reduces to the complement of $A$ by the same map. Composing as in [Lemma A](6_mahaney-proof.html#lemma-a), there is a polynomial-time $g$ with $Q(u) \notin L$ if and only if $g(Q(u)) \in A$. Define $r$ as before, now using the census of $A$.
 
 Run the algorithm from Page 6 with one change: replace the census rule by
 

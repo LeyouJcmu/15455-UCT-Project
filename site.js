@@ -15,14 +15,14 @@
 
   // ---------------------------------------------------------------- site map
   var PAGES = [
-    { href: 'index.html',         nav: 'Home',          title: 'Is NP split cleanly in two?' },
-    { href: 'prerequisites.html', nav: 'Prerequisites', title: 'Prerequisites and notation' },
-    { href: 'npi.html',           nav: 'Ladner',        title: 'NPI and Ladner\u2019s Theorem' },
-    { href: 'sparse.html',        nav: 'Sparse sets',   title: 'Sparse sets and the Berman\u2013Hartmanis conjecture' },
-    { href: 'mahaney.html',       nav: 'Mahaney I',     title: 'Mahaney\u2019s Theorem: statement and strategy' },
-    { href: 'mahaney-proof.html', nav: 'Mahaney II',    title: 'Mahaney\u2019s Theorem: the proof' },
-    { href: 'consequences.html',  nav: 'Extensions',    title: 'Consequences and extensions' },
-    { href: 'glossary.html',      nav: 'Glossary',      title: 'Glossary and key takeaways' }
+    { href: '1_home.html',         nav: 'Home',          title: 'Is NP split cleanly in two?' },
+    { href: '2_review.html',        nav: 'Review',        title: 'Review and notation' },
+    { href: '3_npi.html',           nav: 'Ladner',        title: 'NPI and Ladner\u2019s Theorem' },
+    { href: '4_sparse.html',        nav: 'Sparse sets',   title: 'Sparse sets and the Berman\u2013Hartmanis conjecture' },
+    { href: '5_mahaney.html',       nav: 'Mahaney I',     title: 'Mahaney\u2019s Theorem: statement and strategy' },
+    { href: '6_mahaney-proof.html', nav: 'Mahaney II',    title: 'Mahaney\u2019s Theorem: the proof' },
+    { href: '7_consequences.html',  nav: 'Extensions',    title: 'Consequences and extensions' },
+    { href: '8_glossary.html',      nav: 'Glossary',      title: 'Glossary and key takeaways' }
   ];
 
   // LaTeX shortcuts available in every formula. Add your own here.
@@ -54,7 +54,7 @@
     why: 'Why this step', status: 'Where we are'
   };
 
-  var here = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+  var here = decodeURIComponent(location.pathname.split('/').pop() || '1_home.html');
   var editMode = /(?:^|[?&])edit(?:=|&|$)/.test(location.search.slice(1));
   var blocks = [];
 
@@ -311,7 +311,7 @@
   function buildHeader() {
     var header = document.getElementById('site-header');
     if (!header) return;
-    header.innerHTML = '<a class="brand" href="index.html">COMPLEXITY NOTES <span>/ NPI &amp; Mahaney</span></a>' +
+    header.innerHTML = '<a class="brand" href="1_home.html">COMPLEXITY NOTES <span>/ NPI &amp; Mahaney</span></a>' +
       '<nav aria-label="Main navigation">' + PAGES.map(function (p, i) {
         return '<a href="' + p.href + '"' + (p.href === here ? ' aria-current="page"' : '') + '>' +
           '<span class="nav-num">' + (i + 1) + '</span>' + esc(p.nav) + '</a>';

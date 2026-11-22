@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Polynomial isomorphism, the Berman–Hartmanis conjecture, and why it predicts that no sparse set is NP-complete.">
+  <meta name="description" content="Sparse and tally sets, polynomial isomorphism, the Berman–Hartmanis conjecture, and the self-reducibility of SAT.">
   <title>Sparse Sets and the Berman–Hartmanis Conjecture — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
@@ -22,7 +22,7 @@
       <div>
         <p class="eyebrow">Page 4 / Sparse sets</p>
         <h1 id="page-title">Every known NP-complete set is <em>dense.</em></h1>
-        <p class="hero-copy">Every NP-complete problem anyone has found turns out to be the same problem in disguise, and all of them are dense. This page explains that observation, the conjecture it led to, and why the conjecture predicts that no sparse set is NP-complete. Mahaney’s Theorem proves that prediction from the weaker assumption $\P \ne \NP$.</p>
+        <p class="hero-copy">Every NP-complete problem anyone has found turns out to be the same problem in disguise, and all of them are dense. This page defines sparse sets, explains that observation and the conjecture it led to, and shows why the conjecture predicts that no sparse set is NP-complete. It also sets up the self-reducibility of SAT, the tree that Mahaney’s proof searches. Mahaney’s Theorem proves that prediction from the weaker assumption $\P \ne \NP$.</p>
         <a class="button" href="#content">Read on <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
@@ -34,6 +34,28 @@
     <section class="section" id="content">
       <div class="wrap article">
         <div class="article-body">
+<script type="text/markdown" data-md="sparse-definitions">
+## Sparse and tally sets {#sparse-and-tally-sets}
+
+:::definition (census)
+The *census function* of a language $A$ is $c_A(n) = |A^{\le n}|$, the number of strings in $A$ of length at most $n$.
+:::
+
+:::definition (sparse)
+A language $S$ is *sparse* if there is a polynomial $p$ with $c_S(n) \le p(n)$ for every $n$. Without loss of generality $p$ is nondecreasing.
+:::
+
+:::definition (tally)
+A language $T$ is a *tally set* if $T \subseteq \{1\}^*$, that is, every string in $T$ is a string of 1s. A tally set has at most $n + 1$ strings of length at most $n$, so every tally set is sparse.
+:::
+
+**Contrast with SAT.** SAT is *dense*: there are $2^{\Omega(n)}$ satisfiable formulas of length at most $n$, since any satisfiable formula can be padded with clauses like $(x \lor \lnot x)$ in exponentially many distinct ways. A sparse set has only polynomially many strings at each length bound, so it is exponentially “thinner” than SAT.
+
+:::example
+The tally set $\{1^n : n \text{ is prime}\}$ is sparse. Any language $A$ gives a tally version $\{1^{\mathrm{bin}(x)} : x \in A\}$, where $\mathrm{bin}(x)$ is the number whose binary expansion is $1x$. Encoding a string in unary like this is how tally sets show up in proofs.
+:::
+</script>
+
 <script type="text/markdown" data-md="sparse-isomorphism">
 ## Polynomial isomorphism
 
@@ -65,9 +87,21 @@ $$
 c_A(n) \;\le\; c_B\big(q(n)\big).
 $$
 
-Take $A = \SAT$. Since $c_{\SAT}(n) = 2^{\Omega(n)}$ ([Page 2](prerequisites.html)), any $B \iso \SAT$ has $c_B(q(n)) \ge 2^{\Omega(n)}$, so $B$ is not sparse. Therefore the conjecture implies that no sparse set is NP-complete.
+Take $A = \SAT$. Since $c_{\SAT}(n) = 2^{\Omega(n)}$ ([above](#sparse-and-tally-sets)), any $B \iso \SAT$ has $c_B(q(n)) \ge 2^{\Omega(n)}$, so $B$ is not sparse. Therefore the conjecture implies that no sparse set is NP-complete.
 
 The conjecture also implies $\P \ne \NP$. If $\P = \NP$, then any finite nonempty set $F$ that is not all of $\Sigma^*$ is NP-complete (decide the input in polynomial time and map it to a fixed string in $F$ or outside $F$). A finite set cannot be p-isomorphic to the infinite set SAT.
+</script>
+
+<script type="text/markdown" data-md="sparse-self-reducibility">
+## Self-reducibility of SAT {#self-reducibility-of-sat}
+
+The key structural fact about SAT is that a satisfying assignment can be found one bit at a time. If $\varphi$ has variables $x_1, \dots, x_n$, then $\varphi$ is satisfiable if and only if $\varphi$ with $x_1 = 0$ or $\varphi$ with $x_1 = 1$ is satisfiable. Repeating this builds a binary tree of depth $n$ whose leaves are the $2^n$ full assignments.
+
+![A binary tree rooted at phi; each level fixes one more variable, and the eight leaves 000 to 111 are the full assignments](media/self-reducibility-tree.svg "The self-reducibility tree for $n = 3$. Left edges set a variable to 0, right edges to 1.")
+
+The tree has exponentially many nodes, so walking it naively is too slow. Mahaney’s proof works because a sparse set lets us prune the tree to polynomially many nodes per level.
+
+We order assignments lexicographically, treating them as $n$-bit strings: $0^n$ is smallest and $1^n$ is largest. For strings $u, v$ of the same length, $u < v$ means $u$ comes first in this order.
 </script>
 
 <script type="text/markdown" data-md="sparse-intuition">
@@ -93,8 +127,10 @@ Mahaney’s Theorem settles the sparse case of the conjecture’s prediction, as
 
 <script type="text/markdown" data-md="sparse-takeaways">
 :::takeaways
+- A sparse set has polynomially many strings up to each length; SAT has exponentially many.
 - All known NP-complete problems are p-isomorphic to SAT, which led to the Berman–Hartmanis conjecture.
 - Isomorphisms preserve density, so the conjecture predicts that no sparse set is NP-complete.
+- SAT is self-reducible: deciding it lets us walk down a tree of partial assignments.
 - A reduction into a sparse set must collide a lot, and collisions leak information about the answer.
 :::
 </script>

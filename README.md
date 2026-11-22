@@ -6,14 +6,14 @@ A GitHub Pages teaching site on NP-intermediate problems, Ladner's Theorem and M
 
 | # | File | Topic |
 |---|------|-------|
-| 1 | `index.html` | Home: is NP split cleanly in two? |
-| 2 | `prerequisites.html` | Notation, self-reducibility of SAT, sparse and tally sets |
-| 3 | `npi.html` | NPI and Ladner's Theorem (full proof) |
-| 4 | `sparse.html` | Sparse sets and the Berman–Hartmanis conjecture |
-| 5 | `mahaney.html` | Mahaney's Theorem, Part I: statement and strategy |
-| 6 | `mahaney-proof.html` | Mahaney's Theorem, Part II: the proof |
-| 7 | `consequences.html` | Consequences and extensions |
-| 8 | `glossary.html` | Glossary, key takeaways, references |
+| 1 | `1_home.html` | Home: is NP split cleanly in two? |
+| 2 | `2_review.html` | Review: P, NP, Karp reductions, machine enumeration, notation |
+| 3 | `3_npi.html` | NPI and Ladner's Theorem (full proof) |
+| 4 | `4_sparse.html` | Sparse and tally sets, self-reducibility of SAT, the Berman–Hartmanis conjecture |
+| 5 | `5_mahaney.html` | Mahaney's Theorem, Part I: statement and strategy |
+| 6 | `6_mahaney-proof.html` | Mahaney's Theorem, Part II: the proof |
+| 7 | `7_consequences.html` | Consequences and extensions |
+| 8 | `8_glossary.html` | Glossary, key takeaways, references |
 | – | `authoring.html` | Authoring guide with live examples (not linked from the site) |
 
 Shared files: `style.css` (all styling), `site.js` (navigation, Markdown + LaTeX rendering, footnotes, edit mode), `media/` (images and videos).
@@ -54,7 +54,7 @@ LaTeX shortcuts such as `\P`, `\NP`, `\SAT`, `\redm`, `\iso`, `\enc{\varphi, y}`
 
 ### Edit mode (live preview in the browser)
 
-Add `?edit` to any page's address, for example `npi.html?edit`. Each block gets an **Edit** button with a toolbar for math, boxes, images, videos and footnotes, and the page re-renders as you type. You can drag an image or video onto the text box to insert it (then copy the file into `media/`).
+Add `?edit` to any page's address, for example `3_npi.html?edit`. Each block gets an **Edit** button with a toolbar for math, boxes, images, videos and footnotes, and the page re-renders as you type. You can drag an image or video onto the text box to insert it (then copy the file into `media/`).
 
 Edits are drafts saved in your browser only. To keep one, click **Copy Markdown**, paste it over that block in the HTML file, save, reload, then click **Revert to file** to clear the draft.
 
@@ -92,4 +92,4 @@ Open any `.html` file in a browser (internet access is needed for KaTeX and mark
 
 ## Publish
 
-In the repository's GitHub settings, enable Pages for the branch containing `index.html`. There is no build step.
+In the repository's GitHub settings, enable Pages for the branch containing these files. There is no build step. The root `index.html` only redirects to `1_home.html`, so the site's bare URL still works.
