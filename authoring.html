@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="robots" content="noindex">
+  <meta name="description" content="How to write and edit content on this site.">
+  <title>Authoring Guide — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <header id="site-header" class="wrap topbar"></header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">For the author / not linked from the site</p>
+        <h1 id="page-title">Authoring <em>guide.</em></h1>
+        <p class="hero-copy">Each section below shows a piece of syntax and what it renders to. Open this page with <code>?edit</code> to try the in-browser editor.</p>
+        <a class="button" href="?edit">Open in edit mode <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="Markdown plus LaTeX">
+        <span class="orbit orbit-top">Markdown</span>
+        <span class="orbit orbit-left">figures</span>
+        <span class="orbit orbit-right">footnotes</span>
+        <span class="orbit orbit-bottom">boxes</span>
+        <div class="diagram-label"><strong>TeX</strong><span>KaTeX</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="guide-where">
+## Where the text lives
+
+Every long section of a page is a block like this inside the HTML file:
+</script>
+<div class="prose"><pre><code>&lt;script type="text/markdown" data-md="ladner-lemmas"&gt;
+## The five lemmas
+Ordinary **Markdown**, with $\LaTeX$ math.
+&lt;/script&gt;</code></pre></div>
+<script type="text/markdown" data-md="guide-where-2">
+Edit the text between the tags and reload. The `data-md` name is just a label; it shows up in edit mode so you can find the block in the file. Indentation does not matter, but keep the text flush left to be safe. The only thing you cannot type inside a block is a closing script tag.
+</script>
+
+<script type="text/markdown" data-md="guide-math">
+## Math
+
+Inline math uses single dollars: `$c_S(n) \le p(n)$` gives $c_S(n) \le p(n)$. Display math uses double dollars:
+
+```
+$$
+|\psi'|^{2c} < |\psi'|^{H(|\psi'|)} \le |y| \le |\psi|^{c}
+$$
+```
+
+$$
+|\psi'|^{2c} < |\psi'|^{H(|\psi'|)} \le |y| \le |\psi|^{c}
+$$
+
+`\( ... \)` and `\[ ... \]` also work. Write `\$` for a literal dollar sign. Math is protected from Markdown, so `_`, `*`, `\\` and `|` inside math are safe, including inside tables.
+
+**Shortcuts** (defined in `MACROS` at the top of `site.js`): `\P` $\P$, `\NP` $\NP$, `\coNP` $\coNP$, `\NPI` $\NPI$, `\NPC` $\NPC$, `\E` $\E$, `\NE` $\NE$, `\PH` $\PH$, `\Ppoly` $\Ppoly$, `\SAT` $\SAT$, `\redm` $\redm$, `\redbtt` $\redbtt$, `\redT` $\redT$, `\iso` $\iso$, `\enc{\varphi, y}` $\enc{\varphi, y}$, `\bits` $\bits$.
+
+Math also works in the plain-HTML parts of a page (the hero text, the cards on the home page).
+</script>
+
+<script type="text/markdown" data-md="guide-boxes">
+## Theorem, lemma and proof boxes
+
+Start a box with `:::type Title` and end it with `:::`. Boxes can be nested; using more colons on the outer box (`::::`) makes nesting easier to read but is not required.
+
+```
+::::lemma 2: $\SAT_H \in \NP$
+**Claim.** Something true.
+
+:::proof
+The argument. A ∎ is added automatically.
+:::
+::::
+```
+
+::::lemma 2: $\SAT_H \in \NP$
+**Claim.** Something true.
+
+:::proof
+The argument. A ∎ is added automatically.
+:::
+::::
+
+The title is appended to the label, so `:::theorem (Ladner, 1975)` gives “Theorem (Ladner, 1975)” and `:::proof of the invariant` gives “Proof of the invariant”.
+
+Available types: `theorem`, `corollary`, `proposition`, `conjecture` (dark boxes); `lemma`, `claim`; `definition`; `proof`; `intuition`, `remark`, `note`; `example`; `warning`; `takeaways`; `box` (no label).
+
+:::definition (sparse)
+A language $S$ is sparse if $c_S(n) \le p(n)$ for a polynomial $p$.
+:::
+
+:::intuition
+An intuition box looks like this.
+:::
+
+:::warning
+A warning box looks like this.
+:::
+</script>
+
+<script type="text/markdown" data-md="guide-media">
+## Images and videos
+
+Put the file in the `media/` folder, then put the image on a line by itself. The quoted text is the caption (it can contain math); the bracketed text is the description for screen readers.
+
+```
+![A binary tree of partial assignments](media/self-reducibility-tree.svg "The tree for $n = 3$.")
+```
+
+![A binary tree of partial assignments](media/self-reducibility-tree.svg "The tree for $n = 3$.")
+
+Add `{width=60%}` (or `{width=400}` for pixels) right after the closing parenthesis to make it narrower:
+
+```
+![Left set](media/left-set.svg "Narrower."){width=60%}
+```
+
+![Left set](media/left-set.svg "Narrower."){width=60%}
+
+Videos use the same shape with `@` instead of `!`. A file in `media/` plays in a video player; a YouTube or Vimeo link is embedded:
+
+```
+@[Walkthrough of the pruning algorithm](media/pruning.mp4 "One level of the algorithm.")
+@[Lecture recording](https://www.youtube.com/watch?v=XXXXXXXXXXX "Caption")
+```
+
+An image in the middle of a sentence (not on its own line) stays inline, with no caption.
+</script>
+
+<script type="text/markdown" data-md="guide-footnotes">
+## Footnotes
+
+Put `[^name]` where the marker should go, and `[^name]: text` on its own line anywhere on the page.[^demo] Footnotes are numbered in order of appearance across the whole page, show a preview on hover, and are listed under **Notes** at the bottom.
+
+```
+...is quasipolynomial.[^babai]
+
+[^babai]: Babai announced the algorithm in 2015.
+```
+
+[^demo]: This is a footnote. It can contain *Markdown* and math like $2^{O((\log n)^c)}$, but it must fit on one line.
+</script>
+
+<script type="text/markdown" data-md="guide-more">
+## Headings, links and tables
+
+- `## Heading` starts a section; it appears in the “On this page” list. Add `{#my-id}` at the end of a heading to give it a fixed anchor, so other pages can link to `page.html#my-id`.
+- Links: `[Page 6](mahaney-proof.html#lemma-c)`.
+- Tables use the usual Markdown pipe syntax.
+- HTML comments (`<!-- note to self -->`) are allowed and stay invisible.
+
+## Edit mode
+
+Open any page with `?edit` at the end of the address (for example `npi.html?edit`). Each block gets an **Edit** button. The editor has buttons for math, boxes, images, videos and footnotes, and the page re-renders as you type. You can also drag an image or video file onto the text box to insert it.
+
+Edits are drafts kept in your browser; they do not change the file. When a block reads the way you want, click **Copy Markdown**, paste it over the contents of that block in the HTML file, save, and reload. Then **Revert to file** clears the draft.
+</script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

@@ -1,17 +1,66 @@
 # LeyouJcmu.github.io
 
-A GitHub Pages teaching site about computational complexity.
+A GitHub Pages teaching site on NP-intermediate problems, Ladner's Theorem and Mahaney's Theorem.
 
 ## Pages
 
-- `index.html` introduces P, NP, and the P vs. NP question.
-- `npi.html` covers Ladner's theorem, NP-intermediate problems, and natural candidates.
-- `mahaney.html` explains sparse sets, Mahaney's theorem, and the stronger theorem.
+| # | File | Topic |
+|---|------|-------|
+| 1 | `index.html` | Home: is NP split cleanly in two? |
+| 2 | `prerequisites.html` | Notation, self-reducibility of SAT, sparse and tally sets |
+| 3 | `npi.html` | NPI and Ladner's Theorem (full proof) |
+| 4 | `sparse.html` | Sparse sets and the Berman–Hartmanis conjecture |
+| 5 | `mahaney.html` | Mahaney's Theorem, Part I: statement and strategy |
+| 6 | `mahaney-proof.html` | Mahaney's Theorem, Part II: the proof |
+| 7 | `consequences.html` | Consequences and extensions |
+| 8 | `glossary.html` | Glossary, key takeaways, references |
+| – | `authoring.html` | Authoring guide with live examples (not linked from the site) |
+
+Shared files: `style.css` (all styling), `site.js` (navigation, Markdown + LaTeX rendering, footnotes, edit mode), `media/` (images and videos).
+
+The header navigation and the previous/next links are generated from the `PAGES` list at the top of `site.js`. To add a page, copy an existing page and add an entry there.
+
+## Editing the text
+
+Long-form text lives in Markdown blocks inside each HTML file:
+
+```html
+<script type="text/markdown" data-md="ladner-lemmas">
+## The five lemmas
+Ordinary **Markdown** with $\LaTeX$ math.
+</script>
+```
+
+Edit between the tags, save and reload. Do not type a closing `script` tag inside a block.
+
+### Syntax cheat sheet
+
+| What | Syntax |
+|------|--------|
+| Inline math | `$c_S(n) \le p(n)$` |
+| Display math | `$$ ... $$` on its own lines (also `\[ ... \]`) |
+| Literal dollar | `\$` |
+| Theorem box | `:::theorem (Ladner, 1975)` … `:::` |
+| Other boxes | `lemma`, `claim`, `corollary`, `proposition`, `conjecture`, `definition`, `proof` (adds ∎), `intuition`, `remark`, `note`, `example`, `warning`, `takeaways`, `box` |
+| Nested boxes | `::::lemma 1: Title` … `:::proof` … `:::` … `::::` |
+| Figure | `![alt text](media/file.png "Caption with $math$")` on its own line |
+| Narrower figure | add `{width=60%}` or `{width=400}` after the `)` |
+| Video | `@[alt text](media/clip.mp4 "Caption")`, or a YouTube/Vimeo URL |
+| Footnote | `text[^name]` plus a line `[^name]: Footnote text.` (one line, anywhere on the page) |
+| Fixed heading anchor | `## Lemma A {#lemma-a}` |
+
+LaTeX shortcuts such as `\P`, `\NP`, `\SAT`, `\redm`, `\iso`, `\enc{\varphi, y}` are defined in `MACROS` in `site.js`; add your own there. Math also works in the plain-HTML parts of a page (hero text, home-page cards).
+
+### Edit mode (live preview in the browser)
+
+Add `?edit` to any page's address, for example `npi.html?edit`. Each block gets an **Edit** button with a toolbar for math, boxes, images, videos and footnotes, and the page re-renders as you type. You can drag an image or video onto the text box to insert it (then copy the file into `media/`).
+
+Edits are drafts saved in your browser only. To keep one, click **Copy Markdown**, paste it over that block in the HTML file, save, reload, then click **Revert to file** to clear the draft.
 
 ## Run locally
 
-Open `index.html` in a browser, or serve this directory with any static web server. The pages share `style.css`.
+Open any `.html` file in a browser (internet access is needed for KaTeX and marked, which load from jsDelivr), or serve the folder with `python -m http.server`.
 
 ## Publish
 
-In the repository's GitHub settings, enable Pages for the branch containing `index.html`. The site is static and does not require a build step.
+In the repository's GitHub settings, enable Pages for the branch containing `index.html`. There is no build step.

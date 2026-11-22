@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 190" width="640" height="190" role="img" aria-labelledby="t d">
+  <title id="t">The left set along the leaves</title>
+  <desc id="d">Eight leaves 000 to 111. The satisfying assignments are 010 and 101; z* = 101 is the largest. Leaves 000 through 101 are yes-instances of the left set L; 110 and 111 are no-instances.</desc>
+  <rect width="640" height="190" fill="#fffefa"/>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="12" fill="#647278">
+    <circle cx="30" cy="22" r="5" fill="#e48b5c"/><text x="42" y="26">satisfying assignment</text>
+    <rect x="200" y="15" width="14" height="14" fill="#d9e7a5" stroke="#245c4b"/><text x="222" y="26">⟨φ, y⟩ ∈ L</text>
+    <rect x="320" y="15" width="14" height="14" fill="#ece9e1" stroke="#c6cfb7"/><text x="342" y="26">⟨φ, y⟩ ∉ L</text>
+  </g>
+  <g font-family="Consolas, 'Courier New', monospace" font-size="14" text-anchor="middle">
+    <g stroke="#245c4b" fill="#d9e7a5">
+      <rect x="40" y="66" width="62" height="40"/><rect x="110" y="66" width="62" height="40"/>
+      <rect x="180" y="66" width="62" height="40"/><rect x="250" y="66" width="62" height="40"/>
+      <rect x="320" y="66" width="62" height="40"/>
+    </g>
+    <rect x="390" y="66" width="62" height="40" fill="#245c4b" stroke="#245c4b"/>
+    <g stroke="#c6cfb7" fill="#ece9e1"><rect x="460" y="66" width="62" height="40"/><rect x="530" y="66" width="62" height="40"/></g>
+    <g fill="#202b30">
+      <text x="71" y="91">000</text><text x="141" y="91">001</text><text x="211" y="91">010</text><text x="281" y="91">011</text>
+      <text x="351" y="91">100</text><text x="491" y="91">110</text><text x="561" y="91">111</text>
+    </g>
+    <text x="421" y="91" fill="#ffffff">101</text>
+  </g>
+  <circle cx="211" cy="118" r="5" fill="#e48b5c"/><circle cx="421" cy="118" r="5" fill="#e48b5c"/>
+  <text x="421" y="58" font-family="Georgia, serif" font-size="15" font-style="italic" fill="#245c4b" text-anchor="middle">z*</text>
+  <g stroke="#245c4b" stroke-width="1.5" fill="none"><path d="M40 136 v8 h412 v-8"/></g>
+  <g stroke="#9aa8a0" stroke-width="1.5" fill="none"><path d="M460 136 v8 h132 v-8"/></g>
+  <g font-family="Segoe UI, Arial, sans-serif" font-size="13" text-anchor="middle">
+    <text x="246" y="166" fill="#245c4b">yes: an initial segment ending at z*</text>
+    <text x="526" y="166" fill="#647278">no</text>
+  </g>
+</svg>

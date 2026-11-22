@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Mahaney's Theorem, Part II: the complete left-set proof that a sparse NP-hard set implies P = NP.">
+  <title>Mahaney's Theorem, Part II — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <header id="site-header" class="wrap topbar"></header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Page 6 / Mahaney’s Theorem, Part II</p>
+        <h1 id="page-title">The <em>proof.</em></h1>
+        <p class="hero-copy">Given a sparse NP-hard set, we build a polynomial-time algorithm for SAT that walks down the self-reducibility tree keeping at most $r$ nodes per level. This page proves each lemma from <a href="mahaney.html">Page 5</a> and then the theorem.</p>
+        <a class="button" href="#content">Start with the setup <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="Two pruning rules, collision and census, keep at most r nodes per level">
+        <span class="orbit orbit-top">left set $L$</span>
+        <span class="orbit orbit-left">collision</span>
+        <span class="orbit orbit-right">census</span>
+        <span class="orbit orbit-bottom">$\le r$ per level</span>
+        <div class="diagram-label"><strong>p<sub>k</sub></strong><span>survives</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="mahaney2-setup">
+## Setup {#setup}
+
+Assume $S$ is sparse with census $c_S(m) \le p(m)$ for a nondecreasing polynomial $p$, and $\SAT \redm S$ via $f$. Fix an input formula $\varphi$ of length $N$ with variables $x_1, \dots, x_n$. (If $n = 0$, evaluate $\varphi$ directly.)
+
+:::definition (left set)
+$$
+L \;=\; \{\, \enc{\varphi, y} \;:\; y \in \bits^n \text{ and some } z \in \bits^n \text{ with } z \ge y \text{ satisfies } \varphi \,\}.
+$$
+:::
+
+Here $n$ is the number of variables of $\varphi$, and $\ge$ is lexicographic order. Picture the leaves of the self-reducibility tree laid out left to right from $0^n$ to $1^n$. Then $\enc{\varphi, y} \in L$ says “some satisfying leaf sits at $y$ or to its right,” so the “yes” points are exactly the points to the left of the rightmost satisfying leaf. That is where the name comes from.
+
+For a prefix $u \in \bits^k$, let $Q(u) = \enc{\varphi, u0^{n-k}}$, the query for the leftmost leaf below $u$. Let $z^*$ be the lexicographically largest satisfying assignment of $\varphi$, if one exists, and let $p_k = z^*[1..k]$ be its length-$k$ prefix.
+</script>
+
+<script type="text/markdown" data-md="mahaney2-lemma-a">
+## Lemma A: $L \in \NP$, so $L$ reduces to $S$ {#lemma-a}
+
+:::proof
+A certificate for $\enc{\varphi, y}$ is an assignment $z$. The verifier checks that $|y| = n$, that $z \ge y$, and that $\varphi(z) = 1$, all in polynomial time. So $L \in \NP$.
+
+By Cook–Levin, $L \redm \SAT$ via some $h$. Composing, $L \redm S$ via $g = f \circ h$, which is polynomial-time computable. Let $q$ be a nondecreasing polynomial with $|g(w)| \le q(|w|)$.
+:::
+
+**The bound $r$.** Every query $Q(u)$ has the same length $\ell = |\enc{\varphi, 0^n}|$, which is polynomial in $N$. So every $g$-value we compute has length at most $q(\ell)$, and at most
+
+$$
+r \;=\; p\big(q(\ell)\big)
+$$
+
+strings of that length bound lie in $S$. Note that $r$ is polynomial in $N$. The algorithm never decides $S$; $r$ is the only thing it uses about $S$.
+</script>
+
+<script type="text/markdown" data-md="mahaney2-lemma-b">
+## Lemma B: The “yes” prefixes form an initial segment {#lemma-b}
+
+**Claim.** Let $u \in \bits^k$. If $\varphi$ is unsatisfiable, then $Q(u) \notin L$. If $\varphi$ is satisfiable, then $Q(u) \in L$ if and only if $u \le p_k$.
+
+:::proof
+The unsatisfiable case is immediate. In the satisfiable case, $Q(u) \in L$ means some satisfying $z$ has $z \ge u0^{n-k}$. Since $z^*$ is the largest satisfying assignment, this holds if and only if $z^* \ge u0^{n-k}$.
+
+It remains to show $z^* \ge u0^{n-k}$ if and only if $p_k \ge u$. Compare $z^*$ with $u0^{n-k}$ by their first $k$ bits:
+
+- If $p_k > u$, they first differ within the first $k$ bits, in $z^*$’s favor, so $z^* > u0^{n-k}$.
+- If $p_k = u$, they agree on the first $k$ bits, and the rest of $u0^{n-k}$ is all 0s, the smallest possible, so $z^* \ge u0^{n-k}$.
+- If $p_k < u$, they first differ within the first $k$ bits, against $z^*$, so $z^* < u0^{n-k}$.
+:::
+</script>
+
+<script type="text/markdown" data-md="mahaney2-lemma-c">
+## Lemma C: The collision rule is safe {#lemma-c}
+
+**Claim.** Let $u < v$ be prefixes of length $k$ with $g(Q(u)) = g(Q(v))$. Then $u \ne p_k$.
+
+:::proof
+If $\varphi$ is unsatisfiable there is no $p_k$ and nothing to prove. Otherwise, suppose $u = p_k$. By Lemma B, $Q(u) \in L$, so $g(Q(u)) \in S$. The $g$-values are equal, so $g(Q(v)) \in S$, so $Q(v) \in L$. By Lemma B again, $v \le p_k = u$, contradicting $u < v$.
+:::
+
+:::intuition
+Equal $g$-values mean equal answers. The true prefix $p_k$ is the *rightmost* “yes,” so it can never share its answer with something to its right. Whenever two candidates collide, the smaller one cannot be $p_k$, and we delete it.
+:::
+</script>
+
+<script type="text/markdown" data-md="mahaney2-lemma-d">
+## Lemma D: The census rule is safe {#lemma-d}
+
+**Claim.** Suppose $\varphi$ is satisfiable, $C$ is a set of length-$k$ prefixes containing $p_k$, and the values $g(Q(u))$ for $u \in C$ are pairwise distinct. Then $p_k$ is among the $r$ smallest elements of $C$.
+
+:::proof
+By Lemma B, the elements of $C$ in $L$ are exactly those that are $\le p_k$. Since $p_k \in C$, they form an initial segment $u_1 < u_2 < \dots < u_t = p_k$ of $C$. Each $Q(u_i)$ is in $L$, so each $g(Q(u_i))$ is in $S$. These $t$ values are distinct and have length at most $q(\ell)$, so $t \le r$. Hence $p_k = u_t$ is among the first $r$ elements of $C$.
+:::
+
+:::intuition
+Everything up to $p_k$ is a “yes,” and distinct “yes” instances need distinct strings of $S$. The sparse set has room for at most $r$ of them, so $p_k$ cannot be far from the left end of the list. This is the only place the proof uses sparseness.
+:::
+</script>
+
+<script type="text/markdown" data-md="mahaney2-algorithm">
+## The algorithm {#algorithm}
+
+1. Let $C_0 = \{\varepsilon\}$, the empty prefix.
+2. For $k = 1, 2, \dots, n$:
+   1. **Expand.** Let $C' = \{u0, u1 : u \in C_{k-1}\}$.
+   2. **Compute.** For each $u \in C'$, compute $g(Q(u))$.
+   3. **Collision rule.** For each value that is shared by several $u \in C'$, keep only the largest such $u$.
+   4. **Census rule.** Keep only the $r$ smallest remaining prefixes. Call the result $C_k$.
+3. Accept if some assignment in $C_n$ satisfies $\varphi$; otherwise reject.
+</script>
+
+<script type="text/markdown" data-md="mahaney2-main-proof">
+## Proof of Mahaney’s Theorem {#proof-of-mahaney}
+
+**Invariant.** If $\varphi$ is satisfiable, then $p_k \in C_k$ for every $k$.
+
+:::proof of the invariant, by induction on $k$
+For $k = 0$, $p_0 = \varepsilon \in C_0$. Suppose $p_{k-1} \in C_{k-1}$. Then $p_k$ is $p_{k-1}$ followed by one bit, so $p_k \in C'$ after expansion. The collision rule deletes only prefixes that are smaller than another prefix with the same $g$-value; by Lemma C, $p_k$ is not one of them. After the collision rule, all $g$-values are distinct and $p_k$ is still present, so by Lemma D it is among the $r$ smallest and survives the census rule. So $p_k \in C_k$.
+:::
+
+**Correctness.** If $\varphi$ is satisfiable, then $z^* = p_n \in C_n$, so the algorithm finds it and accepts. If $\varphi$ is unsatisfiable, no assignment satisfies it, so the algorithm rejects. The algorithm only accepts after checking a satisfying assignment, so it can never wrongly accept.
+
+**Running time.** Each $C_k$ has at most $r$ elements, so each $C'$ has at most $2r$. Each level computes at most $2r$ values of $g$, each in time polynomial in $\ell$, then sorts. There are $n \le N$ levels. Since $r$ and $\ell$ are polynomial in $N$, the total time is polynomial in $N$.
+
+So $\SAT \in \P$, and therefore $\P = \NP$. $\blacksquare$
+</script>
+
+<script type="text/markdown" data-md="mahaney2-example">
+## A worked example {#example}
+
+No real example can exist unless $\P = \NP$, so this one is hypothetical: it shows what one level of the algorithm does with made-up $g$-values. Take $r = 2$ and $C_2 = \{01, 10\}$. Expansion gives four candidates at level 3.
+
+| Candidate $u$ (in order) | $g(Q(u))$ | After collision rule | After census rule ($r = 2$) |
+| --- | --- | --- | --- |
+| 010 | $a$ | deleted: collides with the larger 100 | — |
+| 011 | $b$ | kept | kept |
+| 100 | $a$ | kept | kept |
+| 101 | $c$ | kept | deleted: not among the 2 smallest |
+
+So $C_3 = \{011, 100\}$. The algorithm does not know which of $a, b, c$ lie in $S$, and it does not need to. If, say, $p_3 = 100$, then 010, 011 and 100 are the “yes” candidates; 010 and 100 share an answer, as their shared value $a$ requires, and $p_3$ survives both rules.
+</script>
+
+<script type="text/markdown" data-md="mahaney2-hypotheses">
+## Where each hypothesis is used {#hypotheses}
+
+| Hypothesis | Used in |
+| --- | --- |
+| $S$ is NP-hard | Lemma A, to get the reduction $g$ from $L$ to $S$ |
+| $S$ is sparse | Lemma D, to bound the number of “yes” candidates by $r$ |
+| SAT is self-reducible | The algorithm, to walk the tree one bit at a time |
+| Lexicographic order | Lemmas B–D, to make the “yes” region an initial segment ending at $p_k$ |
+</script>
+
+<script type="text/markdown" data-md="mahaney2-takeaways">
+:::takeaways
+- The left set makes the “yes” region at each level an initial segment that ends at the true prefix $p_k$.
+- Collisions remove anything to the left of a same-valued candidate; sparseness caps the “yes” region at $r$.
+- Together they keep the search polynomial, so a sparse NP-hard set would put SAT in P.
+:::
+</script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

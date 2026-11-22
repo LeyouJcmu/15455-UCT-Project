@@ -4,118 +4,77 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Learn the definitions of P and NP and explore the P versus NP question.">
-  <title>P, NP, and the P vs. NP Question</title>
+  <meta name="description" content="If P ≠ NP, NP has a nonempty middle (Ladner), and no sparse set can be NP-hard (Mahaney).">
+  <title>Is NP Split Cleanly in Two? — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
 </head>
 <body>
-  <header class="wrap topbar">
-    <a class="brand" href="index.html">COMPLEXITY NOTES <span>/ 01</span></a>
-    <nav aria-label="Main navigation">
-      <a href="index.html" aria-current="page">P vs. NP</a>
-      <a href="npi.html">NPI &amp; Ladner</a>
-      <a href="mahaney.html">Mahaney's theorems</a>
-    </nav>
-  </header>
+  <header id="site-header" class="wrap topbar"></header>
 
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Complexity theory, in brief</p>
-        <h1 id="page-title"><em>P</em>, NP, and the big question.</h1>
-        <p class="hero-copy">How hard is it to solve a problem? Complexity theory studies how the time needed grows as the input gets larger.</p>
-        <a class="button" href="#definitions">Explore the definitions <span aria-hidden="true">↓</span></a>
+        <p class="eyebrow">Page 1 / Home</p>
+        <h1 id="page-title">Is NP split cleanly <em>in two?</em></h1>
+        <p class="hero-copy">If $\P \ne \NP$, then NP is not split cleanly into “easy” problems (P) and “hardest” problems (NP-complete): there is a nonempty middle ground, NPI. This site proves that fact (Ladner’s Theorem) and then proves our centerpiece, Mahaney’s Theorem: unless $\P = \NP$, no sparse set can be NP-hard. Together they show that the structure of NP is richer than a two-way split, and that density is a real barrier to hardness.</p>
+        <a class="button" href="#roadmap">What you will learn <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="diagram" role="img" aria-label="P is contained in NP; whether they are equal is unknown">
+      <div class="diagram" role="img" aria-label="NP contains P, the NP-complete problems, and, if P is not NP, a middle ground NPI">
         <span class="orbit orbit-top">NP</span>
         <span class="orbit orbit-left">P</span>
-        <span class="orbit orbit-right">P = NP?</span>
-        <span class="orbit orbit-bottom">Open question</span>
-        <div class="diagram-label"><strong>P ⊆ NP</strong><span>always true</span></div>
+        <span class="orbit orbit-right">NP-complete</span>
+        <span class="orbit orbit-bottom">sparse sets live here</span>
+        <div class="diagram-label"><strong>NPI</strong><span>the middle</span></div>
       </div>
     </section>
 
-    <section class="section" id="definitions">
+    <section class="section" id="roadmap">
       <div class="wrap">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">01 / The definitions</p>
-            <h2>What are P and NP?</h2>
+            <p class="eyebrow">The roadmap</p>
+            <h2>What you will learn, in order</h2>
           </div>
-          <p>These classes describe decision problems: questions with a yes-or-no answer.</p>
+          <p>Page 2 is needed for everything. Ladner (Page 3) and Mahaney (Pages 4–6) are independent, so you can read either first. Page 7 uses both.</p>
         </div>
-        <div class="concepts">
-          <article class="concept">
-            <span class="symbol" aria-hidden="true">P</span>
-            <h3>Polynomial time</h3>
-            <p><strong>Definition:</strong> P is the class of decision problems that a deterministic algorithm can decide in polynomial time. This means its running time is at most O(n<sup>k</sup>) for some constant k, where n is the input length.</p>
-          </article>
-          <article class="concept">
-            <span class="symbol" aria-hidden="true">NP</span>
-            <h3>Polynomial-time verification</h3>
-            <p><strong>Definition:</strong> NP is the class of decision problems with a deterministic polynomial-time verifier V and polynomial q such that x is a yes-instance exactly when some certificate y, with |y| ≤ q(|x|), makes V(x, y) accept. Equivalently, a nondeterministic algorithm can decide the problem in polynomial time.</p>
-          </article>
-          <article class="concept">
-            <span class="symbol" aria-hidden="true">P ⊆ NP</span>
-            <h3>Why P is inside NP</h3>
-            <p>If we can solve a problem quickly, we can also check a proposed answer quickly. So every problem in P is also in NP.</p>
-          </article>
+        <div class="roadmap">
+          <a href="prerequisites.html"><span class="num">02</span><h3>Prerequisites and notation</h3><p>The background we assume from 455, plus two new definitions: sparse sets and tally sets.</p></a>
+          <a href="npi.html"><span class="num">03</span><h3>NPI and Ladner’s Theorem</h3><p>A full proof that $\P \ne \NP$ implies NPI is nonempty, and a look at natural problems believed to be NP-intermediate.</p></a>
+          <a href="sparse.html"><span class="num">04</span><h3>Sparse sets and the Berman–Hartmanis conjecture</h3><p>Why every known NP-complete problem is “dense,” and why that led people to ask whether a sparse set could ever be NP-complete.</p></a>
+          <a href="mahaney.html"><span class="num">05</span><h3>Mahaney’s Theorem, Part I</h3><p>The precise statement, the proof strategy, and the list of lemmas.</p></a>
+          <a href="mahaney-proof.html"><span class="num">06</span><h3>Mahaney’s Theorem, Part II</h3><p>The complete proof, using the left-set technique of Ogihara and Watanabe.</p></a>
+          <a href="consequences.html"><span class="num">07</span><h3>Consequences and extensions</h3><p>How Mahaney’s Theorem produces NPI candidates, Fortune’s theorem for co-sparse sets, and what is known for stronger kinds of reductions.</p></a>
+          <a href="glossary.html"><span class="num">08</span><h3>Glossary and key takeaways</h3><p>Every definition and theorem in one place, with links to where each is used.</p></a>
         </div>
       </div>
     </section>
 
-    <section class="section" id="question">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">02 / The open problem</p>
-            <h2>Does P equal NP?</h2>
-          </div>
-          <p>This is one of the biggest unanswered questions in computer science.</p>
-        </div>
-        <div class="theorem">
-          <div>
-            <p class="eyebrow">The question</p>
-            <h2>Can every quickly checked answer also be found quickly?</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">P = NP?</div>
-            <p><strong>What we know:</strong> P is contained in NP. We do not know whether every problem in NP is also in P.</p>
-            <p><strong>If P = NP:</strong> Every problem whose solutions can be checked quickly can also be solved quickly.</p>
-            <p><strong>If P ≠ NP:</strong> Some problems in NP have no polynomial-time solving algorithm.</p>
-          </div>
+    <section class="section" id="content">
+      <div class="wrap narrow">
+        <div class="article-body">
+<script type="text/markdown" data-md="home-dependencies">
+## How the pages depend on each other
+
+- [Page 2](prerequisites.html) is needed for everything.
+- [Page 3](npi.html) (Ladner) and Pages [4](sparse.html)–[6](mahaney-proof.html) (Mahaney) are independent: you can read either first.
+- [Page 7](consequences.html) uses both Ladner’s Theorem and Mahaney’s Theorem.
+
+## The one-sentence version
+
+:::box
+Ladner says the middle of NP is nonempty if $\P \ne \NP$; Mahaney says sparse sets can never be at the top of NP if $\P \ne \NP$, so sparse sets in $\NP \setminus \P$ must live in that middle.
+:::
+</script>
         </div>
       </div>
     </section>
-
-    <section class="section">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <div class="eyebrow">03 / Continue learning</div>
-            <h2>Explore two connected topics.</h2>
-          </div>
-          <p>Learn what happens between P and NP-complete, or explore what sparse sets tell us about NP-hardness.</p>
-        </div>
-        <div class="candidates">
-          <article class="candidate">
-            <h3>NP-intermediate problems</h3>
-            <p>If P ≠ NP, Ladner's theorem says there are problems in NP that are neither in P nor NP-complete.</p>
-            <a class="button" href="npi.html">Explore NPI <span aria-hidden="true">→</span></a>
-          </article>
-          <article class="candidate">
-            <h3>Sparse sets</h3>
-            <p>Mahaney's theorem connects sparse NP-hard sets to the question P = NP.</p>
-            <a class="button" href="mahaney.html">Explore Mahaney's theorems <span aria-hidden="true">→</span></a>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <footer class="wrap closing">
-      <p>A short introduction to complexity theory.</p>
-      <p><a href="#top">Back to top ↑</a></p>
-    </footer>
   </main>
+
+  <footer id="site-footer"></footer>
 </body>
 </html>

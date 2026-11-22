@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Every definition and theorem on the site, key takeaways, and references.">
+  <title>Glossary and Key Takeaways — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <header id="site-header" class="wrap topbar"></header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Page 8 / Glossary</p>
+        <h1 id="page-title">Everything <em>in one place.</em></h1>
+        <p class="hero-copy">Every definition and theorem on the site, with the page where it is introduced and used.</p>
+        <a class="button" href="#content">Browse the glossary <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="Definitions, theorems, takeaways and references">
+        <span class="orbit orbit-top">definitions</span>
+        <span class="orbit orbit-left">theorems</span>
+        <span class="orbit orbit-right">takeaways</span>
+        <span class="orbit orbit-bottom">references</span>
+        <div class="diagram-label"><strong>A–Z</strong><span>glossary</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="glossary-definitions">
+## Definitions
+
+| Term | Definition | Introduced | Used on |
+| --- | --- | --- | --- |
+| $A^{\le n}$ | Strings in $A$ of length at most $n$ | [Page 2](prerequisites.html) | 4, 6 |
+| Census $c_A(n)$ | $|A^{\le n}|$, the number of strings in $A$ of length at most $n$ | [Page 2](prerequisites.html#sparse-and-tally-sets-new) | 4, 6 |
+| Karp reduction ($\redm$) | Polynomial-time $f$ with $x \in A$ iff $f(x) \in B$ | [Page 2](prerequisites.html) | All |
+| NP-hard / NP-complete | Every NP language reduces to it / and it is in NP | [Page 2](prerequisites.html) | All |
+| Sparse set | $c_S(n) \le p(n)$ for some polynomial $p$ | [Page 2](prerequisites.html#sparse-and-tally-sets-new) | 4–7 |
+| Tally set | A subset of $\{1\}^*$ | [Page 2](prerequisites.html#sparse-and-tally-sets-new) | 4, 7 |
+| Self-reducibility of SAT | $\varphi$ is satisfiable iff $\varphi[x_1{=}0]$ or $\varphi[x_1{=}1]$ is | [Page 2](prerequisites.html#self-reducibility-of-sat) | 6 |
+| NPI | $\NP \setminus (\P \cup \NPC)$ | [Page 3](npi.html#theorem) | 3, 7 |
+| $\SAT_H$ | Strings $\psi\,0\,1^{|\psi|^{H(|\psi|)}}$ with $\psi \in \SAT$ | [Page 3](npi.html#construction) | 3 |
+| p-isomorphic ($\iso$) | Related by a polynomial-time bijection with polynomial-time inverse | [Page 4](sparse.html) | 4 |
+| Paddable | Has an invertible polynomial-time padding function | [Page 4](sparse.html#all-known-np-complete-sets-are-p-isomorphic) | 4 |
+| Left set $L$ | Pairs $\enc{\varphi, y}$ with a satisfying assignment $z \ge y$ | [Page 6](mahaney-proof.html#setup) | 6, 7 |
+| $Q(u)$ | The query $\enc{\varphi, u0^{n-k}}$ for prefix $u$ of length $k$ | [Page 6](mahaney-proof.html#setup) | 6, 7 |
+| $p_k$ | The length-$k$ prefix of the largest satisfying assignment $z^*$ | [Page 6](mahaney-proof.html#setup) | 6, 7 |
+| $r$ | $p(q(\ell))$, the most $g$-values that can lie in $S$ | [Page 6](mahaney-proof.html#lemma-a) | 6, 7 |
+</script>
+
+<script type="text/markdown" data-md="glossary-theorems">
+## Theorems
+
+| Theorem | Statement | Page |
+| --- | --- | --- |
+| Ladner (1975) | If $\P \ne \NP$, then $\NPI \ne \varnothing$ | [3](npi.html) |
+| Berman–Hartmanis (1977) | Paddable sets that reduce to each other are p-isomorphic | [4](sparse.html) |
+| Mahaney (1982) | If a sparse set is NP-hard, then $\P = \NP$ | [5](mahaney.html), [6](mahaney-proof.html) |
+| Corollary | If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is in NPI | [7](consequences.html#sparse-npi) |
+| Fortune (1979) | If a sparse set is coNP-hard, then $\P = \NP$ | [7](consequences.html#fortune) |
+| Ogihara–Watanabe (1991) | If a sparse set is NP-hard under $\redbtt$, then $\P = \NP$ | [7](consequences.html#stronger-reductions) |
+| Karp–Lipton (1980) | If $\NP \subseteq \Ppoly$, then $\PH = \Sigma_2^p$ | [7](consequences.html#stronger-reductions) |
+</script>
+
+<script type="text/markdown" data-md="glossary-takeaways">
+## Key takeaways
+
+1. **NP is not a two-way split.** If $\P \ne \NP$, then problems strictly between P and NP-complete exist (Ladner).
+2. **Density is a barrier to hardness.** A Karp reduction from SAT into a sparse set must collide heavily, and collisions reveal answers. So a sparse NP-hard set would make $\P = \NP$ (Mahaney).
+3. **The left set is the key tool.** Searching for the rightmost satisfying assignment turns the “yes” region into an initial segment, which collisions and the census can prune safely.
+4. **The two theorems meet.** Under $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is NP-intermediate.
+</script>
+
+<!-- The references were written from memory, without web access: check titles, venues and years before publishing. -->
+<script type="text/markdown" data-md="glossary-references">
+## References
+
+- S. Arora and B. Barak, *Computational Complexity: A Modern Approach*, Cambridge University Press, 2009, Chapter 3 (Ladner’s Theorem).
+- L. Hemaspaandra and M. Ogihara, *The Complexity Theory Companion*, Springer, 2002, Chapter 1 (Mahaney’s Theorem via left sets).
+- R. Ladner, “On the structure of polynomial time reducibility,” *Journal of the ACM*, 1975.
+- S. Mahaney, “Sparse complete sets for NP: Solution of a conjecture of Berman and Hartmanis,” *Journal of Computer and System Sciences*, 1982.
+- M. Ogihara and O. Watanabe, “On polynomial-time bounded truth-table reducibility of NP sets to sparse sets,” *SIAM Journal on Computing*, 1991.
+- L. Berman and J. Hartmanis, “On isomorphisms and density of NP and other complete sets,” *SIAM Journal on Computing*, 1977.
+- S. Fortune, “A note on sparse complete sets,” *SIAM Journal on Computing*, 1979.
+- J. Hartmanis, N. Immerman and V. Sewelson, “Sparse sets in NP−P: EXPTIME versus NEXPTIME,” *Information and Control*, 1985.
+</script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

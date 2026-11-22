@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="Sparse sets in NP \ P are NP-intermediate, Fortune's theorem via left sets, and results for stronger reductions.">
+  <title>Consequences and Extensions — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <header id="site-header" class="wrap topbar"></header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Page 7 / Consequences and extensions</p>
+        <h1 id="page-title">Where the two theorems <em>meet.</em></h1>
+        <p class="hero-copy">Mahaney’s Theorem gives a second, more natural route into NPI: every sparse set in $\NP \setminus \P$ is NP-intermediate, if $\P \ne \NP$. This page proves that, proves Fortune’s theorem with the same left-set machinery, and surveys what happens for more powerful reductions.</p>
+        <a class="button" href="#content">Read the consequences <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="diagram" role="img" aria-label="Sparse sets in NP minus P are NP-intermediate">
+        <span class="orbit orbit-top">Ladner</span>
+        <span class="orbit orbit-left">Fortune</span>
+        <span class="orbit orbit-right">Karp–Lipton</span>
+        <span class="orbit orbit-bottom">Mahaney</span>
+        <div class="diagram-label"><strong>NPI</strong><span>sparse sets</span></div>
+      </div>
+    </section>
+
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="cons-sparse-npi">
+## Sparse sets in NP \ P are NP-intermediate {#sparse-npi}
+
+:::corollary
+If $\P \ne \NP$, then every sparse set in $\NP \setminus \P$ is in NPI. In particular, every tally set in $\NP \setminus \P$ is in NPI.
+:::
+
+:::proof
+Let $S$ be sparse with $S \in \NP \setminus \P$. If $S$ were NP-complete, it would be a sparse NP-hard set, so $\P = \NP$ by [Mahaney’s Theorem](mahaney.html). So $S$ is in NP, not in P, and not NP-complete.
+:::
+
+Compare this with [Ladner’s Theorem](npi.html). Ladner *constructs* an intermediate set by diagonalization. Mahaney gives a *structural* reason for intermediacy: any sparse set that is hard enough to escape P is automatically too thin to be complete.
+
+**Do such sets exist?** Not provably from $\P \ne \NP$ alone. The question is tied to exponential time. Let $\E = \mathsf{DTIME}(2^{O(n)})$ and $\NE = \mathsf{NTIME}(2^{O(n)})$. Book (1974) showed that $\NP \setminus \P$ contains a tally set if and only if $\E \ne \NE$, and Hartmanis, Immerman and Sewelson (1985) showed the same for sparse sets. The idea is the unary encoding from [Page 2](prerequisites.html#sparse-and-tally-sets-new): a problem about $n$-bit inputs at exponential time becomes a problem about inputs of length $2^n$, written in unary, at polynomial time.
+
+So under the assumption $\E \ne \NE$ (which implies $\P \ne \NP$), there are tally sets in NPI. They are less artificial than $\SAT_H$: for instance, the unary version of any NE-complete problem.
+</script>
+
+<script type="text/markdown" data-md="cons-fortune">
+## Fortune’s theorem: sparse coNP-hard sets {#fortune}
+
+:::theorem (Fortune, 1979)
+If some sparse set $A$ is coNP-hard under Karp reductions, then $\P = \NP$.
+:::
+
+This predates Mahaney and has an easier proof. Here is a proof with the left-set tools from [Page 6](mahaney-proof.html).
+
+:::proof
+Since the complement of SAT reduces to $A$, SAT reduces to the complement of $A$ by the same map. Composing as in [Lemma A](mahaney-proof.html#lemma-a), there is a polynomial-time $g$ with $Q(u) \notin L$ if and only if $g(Q(u)) \in A$. Define $r$ as before, now using the census of $A$.
+
+Run the algorithm from Page 6 with one change: replace the census rule by
+
+> **Early accept.** If, after the collision rule, more than $r$ candidates remain, accept.
+
+The collision rule is still safe, because Lemma C only used “equal $g$-values mean equal answers.” Early accept is correct: if $\varphi$ were unsatisfiable, every candidate would be outside $L$, so its distinct $g$-values would all lie in $A$, and there would be at most $r$ of them. If the algorithm never accepts early, each level has at most $r$ candidates, $p_k$ is never removed, and the final check is correct as before.
+:::
+
+:::intuition
+For coNP-hardness the sparse set holds the “no” answers instead of the “yes” answers. Too many distinct “no”-looking candidates is impossible, so a crowded level is itself proof of satisfiability.
+:::
+</script>
+
+<script type="text/markdown" data-md="cons-stronger">
+## Stronger reductions {#stronger-reductions}
+
+Mahaney’s Theorem is about Karp reductions, where each instance maps to one query. More powerful reductions are allowed to ask several questions of $S$.
+
+| Reduction from SAT to a sparse set | Known consequence | Source |
+| --- | --- | --- |
+| Karp ($\redm$): one query, answer copied | $\P = \NP$ | Mahaney 1982 |
+| Bounded truth-table ($\redbtt$): a constant number of non-adaptive queries | $\P = \NP$ | Ogihara and Watanabe 1991 |
+| Turing ($\redT$): polynomially many adaptive queries | $\NP \subseteq \Ppoly$, so the polynomial hierarchy collapses to $\Sigma_2^p$ | Karp and Lipton 1980 |
+
+**Why Turing reductions are different.** A language is Turing-reducible to a sparse set exactly when it has polynomial-size circuits: the strings of $S$ up to the relevant length can be written down as advice. So a sparse Turing-hard set for NP is equivalent to $\NP \subseteq \Ppoly$. That is believed false, but its only known consequence is a collapse of the polynomial hierarchy, not $\P = \NP$. The collision trick breaks down because an instance’s answer is no longer determined by a single string’s membership in $S$.
+
+The Karp–Lipton collapse has since been strengthened to lower levels (for example, to $\mathsf{ZPP}^{\NP}$ by Köbler and Watanabe). For reductions between bounded truth-table and Turing, results are more partial; Hemaspaandra and Ogihara, Chapter 1, surveys them.
+</script>
+
+<script type="text/markdown" data-md="cons-takeaways">
+:::takeaways
+- If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is NP-intermediate.
+- Sparse sets in $\NP \setminus \P$ exist exactly when $\E \ne \NE$.
+- The left-set method also proves Fortune’s theorem and extends to bounded truth-table reductions; for Turing reductions we only get a hierarchy collapse.
+:::
+</script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>

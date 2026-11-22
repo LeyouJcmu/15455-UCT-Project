@@ -4,97 +4,102 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Mahaney's theorem and the stronger sparse-set theorem.">
-  <title>Mahaney's Theorems — Complexity Notes</title>
+  <meta name="description" content="Mahaney's Theorem, Part I: the statement, the left-set proof strategy, and the list of lemmas.">
+  <title>Mahaney's Theorem, Part I — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="site.js"></script>
 </head>
 <body>
-  <header class="wrap topbar">
-    <a class="brand" href="index.html">COMPLEXITY NOTES <span>/ 01</span></a>
-    <nav aria-label="Main navigation">
-      <a href="index.html">P vs. NP</a>
-      <a href="npi.html">NPI &amp; Ladner</a>
-      <a href="mahaney.html" aria-current="page">Mahaney's theorems</a>
-    </nav>
-  </header>
+  <header id="site-header" class="wrap topbar"></header>
 
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">02 / Sparse sets</p>
-        <h1 id="page-title">Few yes-instances. Big consequences.</h1>
-        <p class="hero-copy">Mahaney's theorem shows that a sparse set cannot be NP-hard unless P = NP. A stronger result allows a fixed number of nonadaptive questions.</p>
-        <a class="button" href="#mahaney">Explore the theorems <span aria-hidden="true">↓</span></a>
+        <p class="eyebrow">Page 5 / Mahaney’s Theorem, Part I</p>
+        <h1 id="page-title">Statement and <em>strategy.</em></h1>
+        <p class="hero-copy">If some sparse set is NP-hard, then $\P = \NP$. This page states the theorem precisely, explains the plan of the proof, and lists the lemmas that <a href="mahaney-proof.html">Page 6</a> proves.</p>
+        <a class="button" href="#content">Read the plan <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="diagram" role="img" aria-label="A sparse set contains only polynomially many yes-instances at each input length">
-        <span class="orbit orbit-top">length n</span>
-        <span class="orbit orbit-left">few</span>
-        <span class="orbit orbit-right">yes-instances</span>
-        <span class="orbit orbit-bottom">polynomial</span>
-        <div class="diagram-label"><strong>S</strong><span>sparse set</span></div>
+      <div class="diagram" role="img" aria-label="A sparse NP-hard set would put SAT in P">
+        <span class="orbit orbit-top">SAT</span>
+        <span class="orbit orbit-left">$\le_m^p$</span>
+        <span class="orbit orbit-right">sparse $S$</span>
+        <span class="orbit orbit-bottom">$\Rightarrow$ P = NP</span>
+        <div class="diagram-label"><strong>1982</strong><span>Mahaney</span></div>
       </div>
     </section>
 
-    <section class="section" id="mahaney">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">01 / One question</p>
-            <h2>Mahaney's theorem.</h2>
-          </div>
-          <p>First, what does sparse mean?</p>
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="mahaney1-statement">
+## The statement
+
+:::theorem (Mahaney, 1982)
+If there is a sparse set $S$ such that $\SAT \redm S$, then $\P = \NP$.
+:::
+
+:::corollary
+If $\P \ne \NP$, then no sparse set is NP-complete (or even NP-hard) under Karp reductions.
+:::
+
+Two things to notice:
+
+- **$S$ need not be in NP.** The proof never uses an algorithm for $S$, so the theorem rules out sparse NP-*hard* sets, not just NP-complete ones.
+- **The reduction type matters.** The theorem is about Karp (many-one) reductions. For more powerful reductions the picture changes; see [Page 7](consequences.html#stronger-reductions).
+
+Our proof follows Ogihara and Watanabe (1991), who introduced the *left set* technique to prove a stronger theorem. Their method gives the cleanest known proof of Mahaney’s Theorem. A textbook account appears in Hemaspaandra and Ogihara, *The Complexity Theory Companion*, Chapter 1.
+</script>
+
+<script type="text/markdown" data-md="mahaney1-plan">
+## The plan in four steps
+
+1. **Search for one particular assignment.** Instead of asking “is $\varphi$ satisfiable?” we try to build the lexicographically largest satisfying assignment $z^*$ of $\varphi$, one bit at a time, by walking down the [self-reducibility tree](prerequisites.html#self-reducibility-of-sat).
+2. **Turn that search into an NP question with a monotone answer.** Define a language $L$, the *left set*, that asks “is there a satisfying assignment at or to the right of this point?” Along any level of the tree, the points with answer “yes” form an initial segment ending exactly at the prefix of $z^*$.
+3. **Reduce $L$ to the sparse set.** Since $L \in \NP$ and $S$ is NP-hard, $L \redm S$ via some $g$. We never decide $S$, but we compare $g$-values.
+4. **Prune using collisions and the census.** At each level, keep only polynomially many candidate prefixes, using two rules that can never discard the prefix of $z^*$. At the bottom, check each surviving full assignment directly.
+</script>
+
+<script type="text/markdown" data-md="mahaney1-why-largest">
+## Why the largest satisfying assignment?
+
+A level of the tree has exponentially many nodes, and we can afford only polynomially many. We need a rule for which nodes are safe to throw away. Fixing a target ($z^*$, the rightmost satisfying leaf) and an order (left to right) gives us one: everything to the left of $z^*$’s path is a “yes” for $L$, everything to its right is a “no,” and $z^*$’s prefix is the *rightmost* “yes.” Both pruning rules exploit this picture.
+
+![Eight leaves 000 to 111; the satisfying assignments are 010 and 101; leaves 000 through 101 are shaded as yes-instances of L and 110, 111 as no-instances](media/left-set.svg "The left set on the leaves of a 3-variable formula whose satisfying assignments are $010$ and $101$. The “yes” region runs from $0^n$ up to $z^* = 101$.")
+</script>
+
+<script type="text/markdown" data-md="mahaney1-lemmas">
+## The lemmas
+
+Fix a formula $\varphi$ with variables $x_1, \dots, x_n$. Let $z^*$ be its lexicographically largest satisfying assignment if $\varphi$ is satisfiable. For a prefix $u$ of length $k$, let $Q(u) = \enc{\varphi, u0^{n-k}}$.
+
+| Lemma | Statement (informal) | Role in the proof |
+| --- | --- | --- |
+| [A](mahaney-proof.html#lemma-a) | The left set $L$ is in NP | Lets us reduce $L$ to $S$ |
+| [B](mahaney-proof.html#lemma-b) | Among prefixes of length $k$, $Q(u) \in L$ exactly when $u \le z^*[1..k]$ | The “yes” prefixes form an initial segment ending at $z^*$’s prefix |
+| [C](mahaney-proof.html#lemma-c) (collision rule) | If $u < v$ and $g(Q(u)) = g(Q(v))$, then $u$ is not $z^*$’s prefix | Safe to delete the smaller of two colliding prefixes |
+| [D](mahaney-proof.html#lemma-d) (census rule) | If all $g$-values are distinct, $z^*$’s prefix is among the first $r$ candidates | Safe to keep only $r$ candidates per level |
+| [Main](mahaney-proof.html#proof-of-mahaney) | The pruned search runs in polynomial time and decides SAT | Gives $\SAT \in \P$ |
+
+Here $r$ is a polynomial bound on the number of strings in $S$ that $g$ can possibly output for inputs of this size.
+</script>
+
+<script type="text/markdown" data-md="mahaney1-takeaways">
+:::takeaways
+- Mahaney’s Theorem: a sparse NP-hard set would put SAT in P.
+- The proof searches for the rightmost satisfying assignment and never needs to decide $S$.
+- Collisions and the census bound let us keep only polynomially many nodes per level.
+:::
+</script>
         </div>
-        <article class="theorem">
-          <div>
-            <p class="eyebrow">Definition</p>
-            <h2>A sparse set</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">A set S is sparse if, for every input length n, at most polynomially many strings of length n are in S.</div>
-            <p>There may be up to 2<sup>n</sup> strings of length n in total. A sparse set contains only a polynomial number of them.</p>
-          </div>
-        </article>
-        <article class="theorem">
-          <div>
-            <p class="eyebrow">Mahaney's theorem</p>
-            <h2>One question</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">If a sparse set is NP-hard under polynomial-time many-one reductions, then P = NP.</div>
-            <p>A many-one reduction turns an instance of one problem into a single instance of another. So if one sparse set can represent every problem in NP this way, then P and NP must be equal.</p>
-          </div>
-        </article>
       </div>
     </section>
-
-    <section class="section" id="stronger">
-      <div class="wrap">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">02 / A fixed number of questions</p>
-            <h2>The stronger theorem.</h2>
-          </div>
-          <p>The stronger result allows several questions about the sparse set, but the number must be fixed.</p>
-        </div>
-        <article class="theorem">
-          <div>
-            <p class="eyebrow">Stronger Mahaney's theorem</p>
-            <h2>Nonadaptive questions</h2>
-          </div>
-          <div>
-            <div class="theorem-statement">If SAT can be decided in polynomial time using a fixed constant number of nonadaptive queries to a sparse set, then P = NP.</div>
-            <p>SAT asks whether a Boolean formula can be made true. “Nonadaptive” means all questions to the sparse set are prepared before any answers are received.</p>
-            <p>This strengthens Mahaney's theorem: it permits more than one question, while keeping their number constant.</p>
-            <p>The stronger result is due to Ogiwara and Watanabe.</p>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <footer class="wrap closing">
-      <p>Sparse sets · <a href="index.html">Back to P vs. NP</a></p>
-      <p><a href="#top">Back to top ↑</a></p>
-    </footer>
   </main>
+
+  <footer id="site-footer"></footer>
 </body>
 </html>
