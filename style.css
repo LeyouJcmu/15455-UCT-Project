@@ -605,3 +605,62 @@ sup.fnref:hover .fn-pop, sup.fnref:focus-within .fn-pop { display: block; }
   background: #e9ebdd;
 }
 .env-status .env-head::before { content: "\2713\00a0"; color: var(--green); }
+
+/* ------------------------------------------------------------------
+   Interactive figures (viz.js)
+   ------------------------------------------------------------------ */
+.viz-figure { margin: 32px 0; }
+.viz {
+  padding: 16px 18px 14px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--green);
+  background: var(--white);
+}
+.viz-loading { margin: 0; color: var(--muted); font-size: 14px; }
+.viz-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin-bottom: 10px; }
+.viz-kicker { color: #b25d32; font-size: 11px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; }
+.viz-head strong { font: 400 21px/1.2 var(--serif); }
+.viz-svg { display: block; width: 100%; height: auto; }
+.viz-svg text { fill: var(--ink); font: 12px var(--sans); }
+.viz-svg .viz-s { fill: var(--muted); font-size: 11px; }
+.viz-svg .viz-b { font-weight: 700; }
+.viz-svg .viz-g { fill: var(--green); }
+.viz-svg .viz-o { fill: #b25d32; }
+.viz-svg .viz-m { font-family: var(--serif); font-style: italic; font-size: 14px; }
+.viz-svg .viz-mono { font-family: Consolas, "Courier New", monospace; font-size: 12px; }
+.viz-svg .viz-h { fill: var(--green-dark); font-size: 11px; font-weight: 800; letter-spacing: .12em; }
+.viz-svg .viz-hit { cursor: pointer; }
+.viz-svg g[tabindex]:focus { outline: none; }
+.viz-svg g[tabindex]:focus-visible rect { stroke: var(--orange); stroke-width: 3; }
+.viz-caption {
+  min-height: 5.2em;
+  margin: 12px 0;
+  padding: 11px 14px;
+  border-left: 3px solid var(--lime);
+  background: #eef0e6;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.viz-caption code { padding: 0 4px; background: var(--white); }
+.viz-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.viz-sep { flex: 1 1 auto; }
+.viz-btn {
+  padding: 7px 12px;
+  border: 1px solid #c6cfb7;
+  border-radius: 3px;
+  background: var(--white);
+  color: var(--ink);
+  font: 600 13px var(--sans);
+  cursor: pointer;
+}
+.viz-btn:hover { border-color: var(--green); color: var(--green); }
+.viz-btn:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.viz-btn[aria-pressed="true"] { border-color: var(--green-dark); background: var(--green-dark); color: #fff; }
+.viz-primary { border-color: var(--green); background: var(--green); color: #fff; }
+.viz-primary:hover { background: var(--green-dark); color: #fff; }
+.viz-group { display: inline-flex; flex-wrap: wrap; }
+.viz-group .viz-btn { border-radius: 0; }
+.viz-group .viz-btn + .viz-btn { margin-left: -1px; }
+.viz-group .viz-btn:first-child { border-radius: 3px 0 0 3px; }
+.viz-group .viz-btn:last-child { border-radius: 0 3px 3px 0; }
+.viz-check { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 13px; cursor: pointer; }

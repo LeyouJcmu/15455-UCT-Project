@@ -48,6 +48,7 @@ Edit between the tags, save and reload. Do not type a closing `script` tag insid
 | Video | `@[alt text](media/clip.mp4 "Caption")`, or a YouTube/Vimeo URL |
 | Footnote | `text[^name]` plus a line `[^name]: Footnote text.` (one line, anywhere on the page) |
 | Fixed heading anchor | `## Lemma A {#lemma-a}` |
+| Interactive figure | `@[viz](mahaney-search "Caption")` on its own line (see below) |
 
 LaTeX shortcuts such as `\P`, `\NP`, `\SAT`, `\redm`, `\iso`, `\enc{\varphi, y}` are defined in `MACROS` in `site.js`; add your own there. Math also works in the plain-HTML parts of a page (hero text, home-page cards).
 
@@ -56,6 +57,24 @@ LaTeX shortcuts such as `\P`, `\NP`, `\SAT`, `\redm`, `\iso`, `\enc{\varphi, y}`
 Add `?edit` to any page's address, for example `npi.html?edit`. Each block gets an **Edit** button with a toolbar for math, boxes, images, videos and footnotes, and the page re-renders as you type. You can drag an image or video onto the text box to insert it (then copy the file into `media/`).
 
 Edits are drafts saved in your browser only. To keep one, click **Copy Markdown**, paste it over that block in the HTML file, save, reload, then click **Revert to file** to clear the draft.
+
+## Interactive figures
+
+`viz.js` defines step-through animations. Embed one in any Markdown block with a line of its own:
+
+```
+@[viz](NAME "Caption")
+@[viz](NAME?option=value "Caption")
+```
+
+| NAME | What it shows | Used on |
+|------|---------------|---------|
+| `ladner-h` | H(n) catching machines one by one; toggle the impossible "M₃ is fast" world | Ladner, "The idea" |
+| `ladner-shrink` | The square-rooting recursion of Lemma 5 | Ladner, Goal (iii) |
+| `left-set` | Click leaves to set the satisfying assignments; the left set on every level (Lemma B) | Mahaney I |
+| `mahaney-search` | The pruned search on made-up instances; options `r=1`, `r=2`, `r=3`, `mode=fortune` | Mahaney II, Extensions |
+
+To try a widget on its own, open `tools/viz-test.html?w=NAME&s=5` (it clicks Step five times).
 
 ## Hero graphics
 

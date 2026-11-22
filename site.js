@@ -142,6 +142,13 @@
       var w = attrs && attrs.match(/width\s*=\s*([\d.]+(?:px|%|em|rem)?)/);
       if (w) style = ' style="width:' + (/^[\d.]+$/.test(w[1]) ? w[1] + 'px' : w[1]) + '"';
       var body;
+      if (kind === 'video' && alt.trim().toLowerCase() === 'viz') {
+        var q = url.indexOf('?');
+        var name = q < 0 ? url : url.slice(0, q), vopts = q < 0 ? '' : url.slice(q + 1);
+        return '\n\n<figure class="md-figure viz-figure"><div class="viz" data-viz="' + esc(name) + '" data-viz-opts="' + esc(vopts) +
+          '"><p class="viz-loading">Loading interactive figure…</p></div>' +
+          (title ? '<figcaption>' + inline(title) + '</figcaption>' : '') + '</figure>\n\n';
+      }
       if (kind === 'img') {
         body = '<img src="' + esc(url) + '" alt="' + esc(alt) + '" loading="lazy">';
       } else {
@@ -212,6 +219,7 @@
       t.parentNode.insertBefore(wrap, t);
       wrap.appendChild(t);
     });
+    if (window.Viz) window.Viz.mount(block.out);
   }
 
   function renderAllBlocks() {
@@ -413,7 +421,8 @@
     { label: 'Proof', title: ':::proof ... ::: (adds \u220E)', run: function (ta) { wrap(ta, ':::proof\n', '\n:::', 'Argument.', true); } },
     { label: 'Image', title: 'Figure with caption; put the file in media/', run: function (ta) { wrap(ta, '![Describe the image for screen readers](media/', ' "Caption, may use $math$")', 'your-image.png', true); } },
     { label: 'Video', title: 'Video file in media/, or a YouTube/Vimeo URL', run: function (ta) { wrap(ta, '@[Describe the video](', ' "Caption")', 'media/your-video.mp4', true); } },
-    { label: 'Footnote', title: 'Adds [^n] here and its text at the end of the block', run: addFootnote }
+    { label: 'Footnote', title: 'Adds [^n] here and its text at the end of the block', run: addFootnote },
+    { label: 'Animation', title: 'Interactive figure: ladner-h, ladner-shrink, left-set, mahaney-search (?r=2, ?mode=fortune)', run: function (ta) { wrap(ta, '@[viz](', ' "Caption")', 'mahaney-search', true); } }
   ];
 
   function rerender(block, text) {

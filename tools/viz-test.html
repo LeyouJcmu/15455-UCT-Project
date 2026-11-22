@@ -1,0 +1,21 @@
+<!doctype html>
+<!-- Dev harness: open tools/viz-test.html?w=mahaney-search&s=5 (w = widget, s = steps to click, o = options, pre = button labels to click first). -->
+<html lang="en"><head><meta charset="utf-8"><title>viz test</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../style.css">
+<script src="../viz.js"></script></head>
+<body style="padding:20px;max-width:760px">
+<div class="viz" id="v"></div>
+<script>
+var q = new URLSearchParams(location.search);
+var el = document.getElementById('v');
+el.setAttribute('data-viz', q.get('w'));
+el.setAttribute('data-viz-opts', q.get('o') || '');
+Viz.mount(document);
+(q.get('pre') || '').split(',').filter(Boolean).forEach(function (label) {
+  Array.prototype.forEach.call(el.querySelectorAll('button'), function (b) { if (b.textContent.indexOf(label) >= 0) b.click(); });
+});
+var steps = +(q.get('s') || 0);
+var stepBtn = Array.prototype.filter.call(el.querySelectorAll('button'), function (b) { return b.textContent.indexOf('Step') >= 0; })[0];
+for (var i = 0; i < steps; i++) stepBtn && stepBtn.click();
+</script></body></html>
