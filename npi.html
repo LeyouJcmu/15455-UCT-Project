@@ -24,13 +24,10 @@
         <p class="hero-copy">If $\P \ne \NP$, then some problem in NP is neither in P nor NP-complete. We prove this in full by building such a problem: SAT padded by an amount that grows just slowly enough to defeat every polynomial-time algorithm, and just quickly enough to destroy NP-completeness.</p>
         <a class="button" href="#content">Read the proof <span aria-hidden="true">↓</span></a>
       </div>
-      <div class="diagram" role="img" aria-label="NP contains P, NP-complete problems, and possible NP-intermediate problems">
-        <span class="orbit orbit-top">NP</span>
-        <span class="orbit orbit-left">P</span>
-        <span class="orbit orbit-right">NP-complete</span>
-        <span class="orbit orbit-bottom">$\mathrm{SAT}_H$</span>
-        <div class="diagram-label"><strong>NPI</strong><span>the middle</span></div>
-      </div>
+      <figure class="hero-figure">
+        <svg viewBox="0 0 460 290" role="img" aria-label="Top: a string psi, then 0, then a long run of ones. Bottom: a plot of H(n). A flat line is labelled NP-complete, a steep curve is labelled in P, and a slowly rising staircase between them is labelled NPI."><defs><marker id="la-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#202b30"/></marker></defs><text x="20" y="16" class="hf-h">A STRING OF SAT<tspan dy="3" font-size="9">H</tspan></text><rect x="20" y="26" width="58" height="26" fill="#245c4b"/><text x="49" y="44" text-anchor="middle" class="hf-b hf-m hf-w">ψ</text><rect x="78" y="26" width="20" height="26" fill="#fffefa" stroke="#c6cfb7"/><text x="88" y="44" text-anchor="middle" class="hf-mono">0</text><rect x="98" y="26" width="342" height="26" fill="#d9e7a5" stroke="#b6c4a8"/><text x="269" y="44" text-anchor="middle" class="hf-mono">1111111111111111111111111111111111111111111…</text><path d="M98 58 v5 h342 v-5" fill="none" stroke="#647278"/><text x="269" y="77" text-anchor="middle" class="hf-s">padding of length |ψ|<tspan dy="-5" font-size="8">H(|ψ|)</tspan></text><path d="M50 268 H440" stroke="#202b30" marker-end="url(#la-arr)"/><path d="M50 268 V96" stroke="#202b30" marker-end="url(#la-arr)"/><text x="440" y="284" text-anchor="end" class="hf-s hf-m">n</text><text x="42" y="108" text-anchor="end" class="hf-s hf-m">H(n)</text><path d="M50 264 C 90 250, 115 180, 140 104" fill="none" stroke="#647278" stroke-width="2"/><text x="148" y="112" class="hf-s">grows fast: brute force is</text><text x="148" y="125" class="hf-s">polynomial, so it is in P</text><path d="M50 246 H430" fill="none" stroke="#e48b5c" stroke-width="2"/><text x="430" y="261" text-anchor="end" class="hf-s hf-o">constant: polynomial padding, still NP-complete</text><path d="M50 236 L100 236 L100 218 L175 218 L175 198 L280 198 L280 176 L430 176" fill="none" stroke="#245c4b" stroke-width="3" stroke-linejoin="round"/><text x="430" y="150" text-anchor="end" class="hf-b hf-g">Ladner’s H: grows, but slowly</text><text x="430" y="166" text-anchor="end" class="hf-s">neither in P nor NP-complete, so NPI</text></svg>
+        <figcaption>SAT<sub>H</sub> pads each formula with $|\psi|^{H(|\psi|)}$ ones. Too little padding keeps it NP-complete, too much puts it in P. Ladner’s $H$ climbs one step each time the next machine fails, which lands in between.</figcaption>
+      </figure>
     </section>
 
     <section class="section" id="content">

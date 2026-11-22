@@ -55,10 +55,10 @@
     nav a:hover, nav a[aria-current="page"] { color: var(--green); }
     .hero {
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
       align-items: center;
-      gap: 60px;
-      padding-block: 88px 82px;
+      gap: 48px;
+      padding-block: 72px 72px;
     }
     .eyebrow {
       margin: 0 0 15px;
@@ -229,7 +229,7 @@
       .topbar { min-height: 66px; flex-wrap: wrap; padding-block: 12px; }
       nav { gap: 13px; }
       nav a { font-size: 11px; }
-      .hero { grid-template-columns: 1fr; gap: 36px; padding-block: 62px 54px; }
+      .hero { grid-template-columns: minmax(0, 1fr); gap: 36px; padding-block: 62px 54px; }
       .diagram { min-height: 270px; }
       .section { padding-block: 55px; }
       .section-heading { grid-template-columns: 1fr; gap: 14px; }
@@ -562,3 +562,23 @@ sup.fnref:hover .fn-pop, sup.fnref:focus-within .fn-pop { display: block; }
 }
 .toc .eyebrow { text-align: left; }
 .diagram-label sub, .diagram-label sup { font-size: .55em; }
+
+/* Hero figures (replace the old orbit diagram) */
+.hero-figure {
+  margin: 0;
+  padding: 18px 18px 14px;
+  border: 1px solid #d5d9c9;
+  border-radius: 4px;
+  background: #eef0e6;
+}
+.hero-figure svg { display: block; width: 100%; height: auto; }
+.hero-figure figcaption { margin-top: 10px; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.hero-figure text { font-family: var(--sans); fill: var(--ink); }
+.hero-figure .hf-h { font-size: 11px; font-weight: 800; letter-spacing: .12em; fill: var(--green-dark); }
+.hero-figure .hf-b { font-size: 13px; font-weight: 700; }
+.hero-figure .hf-s { font-size: 11px; fill: var(--muted); }
+.hero-figure .hf-m { font-family: var(--serif); font-style: italic; }
+.hero-figure .hf-g { fill: var(--green); }
+.hero-figure .hf-w { fill: #fff; }
+.hero-figure .hf-o { fill: #b25d32; }
+.hero-figure .hf-mono { font-family: Consolas, "Courier New", monospace; font-size: 10px; }
