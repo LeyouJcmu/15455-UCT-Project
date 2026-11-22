@@ -50,7 +50,8 @@
     theorem: 'Theorem', lemma: 'Lemma', corollary: 'Corollary', proposition: 'Proposition',
     claim: 'Claim', definition: 'Definition', conjecture: 'Conjecture', proof: 'Proof',
     remark: 'Remark', example: 'Example', intuition: 'Intuition', note: 'Note',
-    warning: 'Caution', takeaways: 'Key takeaways', box: ''
+    warning: 'Caution', takeaways: 'Key takeaways', box: '',
+    why: 'Why this step', status: 'Where we are'
   };
 
   var here = decodeURIComponent(location.pathname.split('/').pop() || 'index.html');

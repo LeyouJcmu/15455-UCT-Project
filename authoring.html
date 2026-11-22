@@ -97,7 +97,15 @@ The argument. A ∎ is added automatically.
 
 The title is appended to the label, so `:::theorem (Ladner, 1975)` gives “Theorem (Ladner, 1975)” and `:::proof of the invariant` gives “Proof of the invariant”.
 
-Available types: `theorem`, `corollary`, `proposition`, `conjecture` (dark boxes); `lemma`, `claim`; `definition`; `proof`; `intuition`, `remark`, `note`; `example`; `warning`; `takeaways`; `box` (no label).
+Available types: `theorem`, `corollary`, `proposition`, `conjecture` (dark boxes); `lemma`, `claim`; `definition`; `proof`; `intuition`, `remark`, `note`; `example`; `warning`; `takeaways`; `box` (no label); `why` (“Why this step”, motivation before a lemma); `status` (“Where we are”, progress after a step).
+
+:::why
+A why box explains what problem the next lemma solves.
+:::
+
+:::status
+A status box says what has been established so far.
+:::
 
 :::definition (sparse)
 A language $S$ is sparse if $c_S(n) \le p(n)$ for a polynomial $p$.

@@ -582,3 +582,26 @@ sup.fnref:hover .fn-pop, sup.fnref:focus-within .fn-pop { display: block; }
 .hero-figure .hf-w { fill: #fff; }
 .hero-figure .hf-o { fill: #b25d32; }
 .hero-figure .hf-mono { font-family: Consolas, "Courier New", monospace; font-size: 10px; }
+
+/* Bridges between lemmas (:::why) and progress notes (:::status) */
+.env-why {
+  padding: 14px 20px;
+  border: 1px dashed #b6c4a8;
+  background: transparent;
+}
+.env-why .env-head,
+.env-status .env-head {
+  color: var(--green-dark);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.env-why .env-head::before { content: "\2192\00a0"; color: var(--orange); }
+.env-status {
+  padding: 12px 20px;
+  border: 0;
+  border-left: 3px solid var(--green);
+  background: #e9ebdd;
+}
+.env-status .env-head::before { content: "\2713\00a0"; color: var(--green); }

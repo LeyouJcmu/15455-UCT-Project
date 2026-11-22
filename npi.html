@@ -80,8 +80,26 @@ and if no such $i$ exists, let $H(n) = \ell(n)$.
 **Why this is well defined.** Deciding whether $x \in \SAT_H$ only requires $H(|\psi|)$ for the prefix $\psi$ of $x$, and $|\psi| < |x| \le \log n < n$. So $H(n)$ depends only on values $H(m)$ with $m < n$, and the definition is a valid recursion.
 </script>
 
-<script type="text/markdown" data-md="ladner-lemmas">
-## The five lemmas {#lemmas}
+<script type="text/markdown" data-md="ladner-plan">
+## The plan {#lemmas}
+
+To show $\SAT_H \in \NPI$, we need three facts, each assuming only $\P \ne \NP$:
+
+| Goal | Why we need it | Proved by |
+| --- | --- | --- |
+| **(i)** $\SAT_H \in \NP$ | NPI is part of NP, so this gets $\SAT_H$ in the door | [Lemmas 1–2](#goal-np) |
+| **(ii)** $\SAT_H \notin \P$ | rules out the “easy” side | [Lemma 3](#goal-not-p) |
+| **(iii)** $\SAT_H$ is not NP-complete | rules out the “hardest” side | [Lemmas 4–5](#goal-not-npc) |
+
+Goals (ii) and (iii) pull in opposite directions. Goal (ii) wants $\SAT_H$ to stay close to SAT (little padding); goal (iii) wants it far from SAT (lots of padding). The self-referential $H$ settles the tension: if a fast algorithm for $\SAT_H$ existed, $H$ would stop growing and $\SAT_H$ would collapse back to SAT; if none exists, $H$ grows forever and $\SAT_H$ thins out. Either failure would put SAT in P.
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-np">
+## Goal (i): $\SAT_H$ is in NP {#goal-np}
+
+:::why
+To check whether $x = \psi\,0\,1^k$ is in $\SAT_H$, a verifier must confirm that the padding has exactly the right length, $k = |\psi|^{H(|\psi|)}$, and that requires computing $H$. But $H$ is defined by simulating machines, which sounds expensive. If computing $H$ were slow, $\SAT_H$ could fall out of NP for a bookkeeping reason that has nothing to do with SAT. So first we show $H$ is cheap. This is exactly why $H(n)$ only tests machines on inputs of length at most $\log n$.
+:::
 
 ::::lemma 1: $H$ is computable in polynomial time
 **Claim.** $H(n)$ can be computed in time $O(n^3)$.
@@ -96,11 +114,27 @@ There are $\ell(n) \cdot 2n$ pairs $(i, x)$, each costing $n^{1 + o(1)}$, for a 
 :::
 ::::
 
+:::why
+With $H$ cheap, deciding membership in $\SAT_H$ is “check the padding, then check $\psi \in \SAT$.” The first part is polynomial-time bookkeeping and the second is an NP question, so the whole thing is in NP.
+:::
+
 ::::lemma 2: $\SAT_H \in \NP$
 :::proof
 On input $x$: parse $x$ as $\psi\,0\,1^k$ (reject if impossible); compute $H(|\psi|)$ using Lemma 1; check that $k = |\psi|^{H(|\psi|)}$ (computing the power with an early stop once it exceeds $|x|$); then guess an assignment to $\psi$ and verify it. Every step is polynomial in $|x|$.
 :::
 ::::
+
+:::status
+Goal (i) is done: $\SAT_H \in \NP$. Lemma 1 comes back twice more, because Lemmas 3 and 5 both need to add or check padding in polynomial time.
+:::
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-not-p">
+## Goal (ii): $\SAT_H$ is not in P {#goal-not-p}
+
+:::why
+We prove the contrapositive: a fast algorithm for $\SAT_H$ would give a fast algorithm for SAT. This is where the self-reference in $H$ pays off. $H(n)$ is the first machine that looks like a fast, correct algorithm for $\SAT_H$ on small inputs. If some machine really is one, $H$ finds it and gets stuck at its index, so the padding $|\psi|^{H(|\psi|)}$ is only polynomial. Polynomial padding can be added in polynomial time, which turns every SAT instance into an $\SAT_H$ instance.
+:::
 
 ::::lemma 3: If $\SAT_H \in \P$, then $\SAT \in \P$
 :::proof
@@ -112,6 +146,18 @@ Now the map $\psi \mapsto \psi\,0\,1^{|\psi|^{H(|\psi|)}}$ is computable in poly
 :::
 ::::
 
+:::status
+Goal (ii) is done: since $\P \ne \NP$, SAT is not in P, so by Lemma 3 neither is $\SAT_H$. We also learned something we will need next: no machine decides $\SAT_H$ quickly, so $H$ never gets stuck.
+:::
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-not-npc">
+## Goal (iii): $\SAT_H$ is not NP-complete {#goal-not-npc}
+
+:::why
+Goal (iii) needs the opposite of goal (ii): now we want the padding to be *huge*, so that $\SAT_H$ is too thin to be NP-hard. Goal (ii) gave us “$\SAT_H \notin \P$.” The next lemma turns that into the statement we actually need: $H$ grows without bound, so the padding is eventually larger than any fixed polynomial.
+:::
+
 ::::lemma 4: If $\SAT_H \notin \P$, then $H(n) \to \infty$
 :::proof
 We show that each value $i$ is taken by $H$ only finitely often. Suppose instead $H(n) = i$ for infinitely many $n$. For each such $n$, $M_i$ correctly decides $\SAT_H$, within time $i \cdot |x|^i + i$, on every $x$ with $|x| \le \log n$. These $n$ are unbounded, so $\log n$ is unbounded, so $M_i$ is correct on every input. Then $\SAT_H \in \P$, a contradiction.
@@ -119,6 +165,10 @@ We show that each value $i$ is taken by $H$ only finitely often. Suppose instead
 So for each $i$, only finitely many $n$ have $H(n) = i$. Given any bound $B$, take $n$ past the last occurrence of each of the values $1, \dots, B$; then $H(n) > B$.
 :::
 ::::
+
+:::why
+Why does huge padding rule out NP-hardness? A reduction $f$ from SAT to $\SAT_H$ runs in polynomial time, so on input $\psi$ its output has length at most $|\psi|^c$. If that output is a well-formed string $\psi'\,0\,1^{|\psi'|^{H(|\psi'|)}}$, the length budget $|\psi|^c$ has to pay for all of the padding. Once $H$ exceeds $2c$, the padding costs more than $|\psi'|^{2c}$, which forces $\psi'$ to be much shorter than $\psi$. A reduction that always shrinks its input can be applied again and again until the formula is small enough to look up in a table, and that is a polynomial-time algorithm for SAT.
+:::
 
 ::::lemma 5: If $H(n) \to \infty$ and $\SAT_H$ is NP-complete, then $\SAT \in \P$
 :::proof
@@ -139,10 +189,16 @@ $$
 which gives $|\psi'| < |\psi|^{1/2}$. Each call at least square-roots the length, so there are $O(\log \log |\psi|)$ calls, each polynomial in $|\psi|$. So $A$ decides SAT in polynomial time.
 :::
 ::::
+
+:::status
+Goal (iii) is done: Lemma 4 says $H \to \infty$, so if $\SAT_H$ were NP-complete, Lemma 5 would put SAT in P.
+:::
 </script>
 
 <script type="text/markdown" data-md="ladner-together">
 ## Putting it together {#together}
+
+Each goal was reached by showing that its failure would put SAT in P. Collected in one place:
 
 :::proof of Ladner’s Theorem
 Assume $\P \ne \NP$. By Lemma 2, $\SAT_H \in \NP$. If $\SAT_H$ were in P, Lemma 3 would give $\SAT \in \P$, contradicting $\P \ne \NP$; so $\SAT_H \notin \P$. By Lemma 4, $H(n) \to \infty$. If $\SAT_H$ were NP-complete, Lemma 5 would give $\SAT \in \P$, again a contradiction. So $\SAT_H \in \NPI$.

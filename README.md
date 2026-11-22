@@ -41,7 +41,7 @@ Edit between the tags, save and reload. Do not type a closing `script` tag insid
 | Display math | `$$ ... $$` on its own lines (also `\[ ... \]`) |
 | Literal dollar | `\$` |
 | Theorem box | `:::theorem (Ladner, 1975)` … `:::` |
-| Other boxes | `lemma`, `claim`, `corollary`, `proposition`, `conjecture`, `definition`, `proof` (adds ∎), `intuition`, `remark`, `note`, `example`, `warning`, `takeaways`, `box` |
+| Other boxes | `lemma`, `claim`, `corollary`, `proposition`, `conjecture`, `definition`, `proof` (adds ∎), `intuition`, `remark`, `note`, `example`, `warning`, `takeaways`, `box`, `why` (motivation before a lemma), `status` (progress after a step) |
 | Nested boxes | `::::lemma 1: Title` … `:::proof` … `:::` … `::::` |
 | Figure | `![alt text](media/file.png "Caption with $math$")` on its own line |
 | Narrower figure | add `{width=60%}` or `{width=400}` after the `)` |

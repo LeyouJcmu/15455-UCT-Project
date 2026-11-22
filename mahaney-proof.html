@@ -49,8 +49,27 @@ Here $n$ is the number of variables of $\varphi$, and $\ge$ is lexicographic ord
 For a prefix $u \in \bits^k$, let $Q(u) = \enc{\varphi, u0^{n-k}}$, the query for the leftmost leaf below $u$. Let $z^*$ be the lexicographically largest satisfying assignment of $\varphi$, if one exists, and let $p_k = z^*[1..k]$ be its length-$k$ prefix.
 </script>
 
+<script type="text/markdown" data-md="mahaney2-plan">
+## The plan {#plan}
+
+The algorithm walks down the tree of prefixes one level at a time and throws away almost every prefix, keeping at most $r$ per level. Throwing a prefix away is safe only if it cannot be $p_k$, the prefix of our target $z^*$. Each lemma supplies one piece of that safety argument:
+
+| Lemma | The question it answers |
+| --- | --- |
+| [A](#lemma-a) | How can the sparse set say anything about prefixes at all, and how much room does $S$ have? |
+| [B](#lemma-b) | Which prefixes are “yes” for $L$, and where does $p_k$ sit among them? |
+| [C](#lemma-c) | When is it safe to delete a prefix because of a collision? |
+| [D](#lemma-d) | Once collisions are gone, why may we keep only $r$ prefixes? |
+
+Then [the algorithm](#algorithm) puts the two pruning rules together, and [the proof](#proof-of-mahaney) checks that $p_k$ survives every level.
+</script>
+
 <script type="text/markdown" data-md="mahaney2-lemma-a">
 ## Lemma A: $L \in \NP$, so $L$ reduces to $S$ {#lemma-a}
+
+:::why
+The algorithm never decides $S$; it only computes reductions into $S$ and compares the results. For that we need a reduction from the question we care about (“is there a satisfying assignment at or to the right of this point?”) into $S$. Since $S$ is NP-hard, it is enough to show that this question is in NP. Along the way we get the number $r$, the most “yes” answers $S$ has room for, which is the only fact about $S$ the algorithm ever uses.
+:::
 
 :::proof
 A certificate for $\enc{\varphi, y}$ is an assignment $z$. The verifier checks that $|y| = n$, that $z \ge y$, and that $\varphi(z) = 1$, all in polynomial time. So $L \in \NP$.
@@ -70,6 +89,10 @@ strings of that length bound lie in $S$. Note that $r$ is polynomial in $N$. The
 <script type="text/markdown" data-md="mahaney2-lemma-b">
 ## Lemma B: The “yes” prefixes form an initial segment {#lemma-b}
 
+:::why
+To throw prefixes away safely, we need to know what the “yes” region of $L$ looks like on each level. Lemma B says it is as simple as possible: one contiguous block that starts at the far left and ends exactly at $p_k$. The key consequence is that $p_k$ is always the *rightmost* “yes,” and both pruning rules rely on that.
+:::
+
 **Claim.** Let $u \in \bits^k$. If $\varphi$ is unsatisfiable, then $Q(u) \notin L$. If $\varphi$ is satisfiable, then $Q(u) \in L$ if and only if $u \le p_k$.
 
 :::proof
@@ -86,6 +109,10 @@ It remains to show $z^* \ge u0^{n-k}$ if and only if $p_k \ge u$. Compare $z^*$ 
 <script type="text/markdown" data-md="mahaney2-lemma-c">
 ## Lemma C: The collision rule is safe {#lemma-c}
 
+:::why
+Now the first pruning rule. We cannot tell whether a query $Q(u)$ is in $L$, because that would mean deciding $S$. What we *can* see is when two queries land on the same $g$-value, which means they have the same answer. Combined with Lemma B (“$p_k$ is the rightmost yes”), a collision tells us the smaller of the two prefixes cannot be $p_k$.
+:::
+
 **Claim.** Let $u < v$ be prefixes of length $k$ with $g(Q(u)) = g(Q(v))$. Then $u \ne p_k$.
 
 :::proof
@@ -100,6 +127,10 @@ Equal $g$-values mean equal answers. The true prefix $p_k$ is the *rightmost* �
 <script type="text/markdown" data-md="mahaney2-lemma-d">
 ## Lemma D: The census rule is safe {#lemma-d}
 
+:::why
+The collision rule alone does not bound the number of candidates: if the $g$-values happen to be all different, it deletes nothing, and the list could double at every level. This is where sparseness finally enters. Every candidate up to $p_k$ is a “yes,” so its $g$-value is a string of $S$; distinct values need distinct strings, and Lemma A says $S$ has only $r$ of them to offer.
+:::
+
 **Claim.** Suppose $\varphi$ is satisfiable, $C$ is a set of length-$k$ prefixes containing $p_k$, and the values $g(Q(u))$ for $u \in C$ are pairwise distinct. Then $p_k$ is among the $r$ smallest elements of $C$.
 
 :::proof
@@ -108,6 +139,10 @@ By Lemma B, the elements of $C$ in $L$ are exactly those that are $\le p_k$. Sin
 
 :::intuition
 Everything up to $p_k$ is a “yes,” and distinct “yes” instances need distinct strings of $S$. The sparse set has room for at most $r$ of them, so $p_k$ cannot be far from the left end of the list. This is the only place the proof uses sparseness.
+:::
+
+:::status
+We now have everything the algorithm needs: two pruning rules that never delete $p_k$ (Lemmas C and D), a cap of $r$ prefixes per level after both rules (Lemma D), and the fact that $r$ is polynomial in $N$ (Lemma A).
 :::
 </script>
 
@@ -118,8 +153,8 @@ Everything up to $p_k$ is a “yes,” and distinct “yes” instances need dis
 2. For $k = 1, 2, \dots, n$:
    1. **Expand.** Let $C' = \{u0, u1 : u \in C_{k-1}\}$.
    2. **Compute.** For each $u \in C'$, compute $g(Q(u))$.
-   3. **Collision rule.** For each value that is shared by several $u \in C'$, keep only the largest such $u$.
-   4. **Census rule.** Keep only the $r$ smallest remaining prefixes. Call the result $C_k$.
+   3. **Collision rule.** For each value that is shared by several $u \in C'$, keep only the largest such $u$. *(Safe by [Lemma C](#lemma-c).)*
+   4. **Census rule.** Keep only the $r$ smallest remaining prefixes. Call the result $C_k$. *(Safe by [Lemma D](#lemma-d).)*
 3. Accept if some assignment in $C_n$ satisfies $\varphi$; otherwise reject.
 </script>
 
