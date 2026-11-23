@@ -20,7 +20,7 @@
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Page 4 / Sparse sets</p>
+        <p class="eyebrow">Page 3 / Sparse sets</p>
         <h1 id="page-title">Every known NP-complete set is <em>dense.</em></h1>
         <p class="hero-copy">Every NP-complete problem anyone has found turns out to be the same problem in disguise, and all of them are dense. This page defines sparse sets, explains that observation and the conjecture it led to, and shows why the conjecture predicts that no sparse set is NP-complete. It also sets up the self-reducibility of SAT, the tree that Mahaney’s proof searches. Mahaney’s Theorem proves that prediction from the weaker assumption $\P \ne \NP$.</p>
         <a class="button" href="#content">Read on <span aria-hidden="true">↓</span></a>
@@ -36,6 +36,8 @@
         <div class="article-body">
 <script type="text/markdown" data-md="sparse-definitions">
 ## Sparse and tally sets {#sparse-and-tally-sets}
+
+**Notation.** We work over the alphabet $\Sigma = \{0,1\}$. $\Sigma^{\le n}$ is the set of strings of length at most $n$, and for a language $A$ we write $A^{\le n} = A \cap \Sigma^{\le n}$.
 
 :::definition (census)
 The *census function* of a language $A$ is $c_A(n) = |A^{\le n}|$, the number of strings in $A$ of length at most $n$.

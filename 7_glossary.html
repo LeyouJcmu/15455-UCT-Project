@@ -20,7 +20,7 @@
   <main id="top">
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
-        <p class="eyebrow">Page 8 / Glossary</p>
+        <p class="eyebrow">Page 7 / Glossary</p>
         <h1 id="page-title">Everything <em>in one place.</em></h1>
         <p class="hero-copy">Every definition and theorem on the site, with the page where it is introduced and used.</p>
         <a class="button" href="#content">Browse the glossary <span aria-hidden="true">↓</span></a>
@@ -35,25 +35,36 @@
       <div class="wrap article">
         <div class="article-body">
 <script type="text/markdown" data-md="glossary-definitions">
+## Assumed background {#assumed-background}
+
+Standard 15-455 material, collected here for reference. The site uses these without re-proving them.
+
+| Term | Definition | Used on |
+| --- | --- | --- |
+| $\P$ | Languages decided by a deterministic machine in polynomial time | All |
+| $\NP$ | Languages $A$ with a polynomial-time verifier $V$ and polynomial $q$: $x \in A$ iff some certificate $w$ with $|w| \le q(|x|)$ makes $V(x, w)$ accept | All |
+| Karp reduction ($\redm$) | Polynomial-time $f$ with $x \in A \iff f(x) \in B$. Reductions compose, and if $A \redm B$ and $B \in \P$ then $A \in \P$ | All |
+| NP-hard / NP-complete | Every NP language reduces to it / and it is in NP | All |
+| $\SAT$ | Satisfiable Boolean formulas; NP-complete by Cook–Levin | All |
+
 ## Definitions
 
 | Term | Definition | Introduced | Used on |
 | --- | --- | --- | --- |
-| $A^{\le n}$ | Strings in $A$ of length at most $n$ | [Page 2](2_review.html) | 4, 6 |
-| Census $c_A(n)$ | $|A^{\le n}|$, the number of strings in $A$ of length at most $n$ | [Page 4](4_sparse.html#sparse-and-tally-sets) | 4, 6 |
-| Karp reduction ($\redm$) | Polynomial-time $f$ with $x \in A$ iff $f(x) \in B$ | [Page 2](2_review.html) | All |
-| NP-hard / NP-complete | Every NP language reduces to it / and it is in NP | [Page 2](2_review.html) | All |
-| Sparse set | $c_S(n) \le p(n)$ for some polynomial $p$ | [Page 4](4_sparse.html#sparse-and-tally-sets) | 4–7 |
-| Tally set | A subset of $\{1\}^*$ | [Page 4](4_sparse.html#sparse-and-tally-sets) | 4, 7 |
-| Self-reducibility of SAT | $\varphi$ is satisfiable iff $\varphi[x_1{=}0]$ or $\varphi[x_1{=}1]$ is | [Page 4](4_sparse.html#self-reducibility-of-sat) | 6 |
-| NPI | $\NP \setminus (\P \cup \NPC)$ | [Page 3](3_npi.html#theorem) | 3, 7 |
-| $\SAT_H$ | Strings $\psi\,0\,1^{|\psi|^{H(|\psi|)}}$ with $\psi \in \SAT$ | [Page 3](3_npi.html#construction) | 3 |
-| p-isomorphic ($\iso$) | Related by a polynomial-time bijection with polynomial-time inverse | [Page 4](4_sparse.html) | 4 |
-| Paddable | Has an invertible polynomial-time padding function | [Page 4](4_sparse.html#all-known-np-complete-sets-are-p-isomorphic) | 4 |
-| Left set $L$ | Pairs $\enc{\varphi, y}$ with a satisfying assignment $z \ge y$ | [Page 6](6_mahaney-proof.html#setup) | 6, 7 |
-| $Q(u)$ | The query $\enc{\varphi, u0^{n-k}}$ for prefix $u$ of length $k$ | [Page 6](6_mahaney-proof.html#setup) | 6, 7 |
-| $p_k$ | The length-$k$ prefix of the largest satisfying assignment $z^*$ | [Page 6](6_mahaney-proof.html#setup) | 6, 7 |
-| $r$ | $p(q(\ell))$, the most $g$-values that can lie in $S$ | [Page 6](6_mahaney-proof.html#lemma-a) | 6, 7 |
+| $\Sigma^{\le n}$, $A^{\le n}$ | Strings of length at most $n$; those in $A$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
+| Census $c_A(n)$ | $|A^{\le n}|$, the number of strings in $A$ of length at most $n$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
+| Machine enumeration $M_1, M_2, \dots$ | A fixed list of all Turing machines, each appearing infinitely often, with efficient universal simulation | [Page 2](2_npi.html#construction) | 2 |
+| Sparse set | $c_S(n) \le p(n)$ for some polynomial $p$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3–6 |
+| Tally set | A subset of $\{1\}^*$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 6 |
+| Self-reducibility of SAT | $\varphi$ is satisfiable iff $\varphi[x_1{=}0]$ or $\varphi[x_1{=}1]$ is | [Page 3](3_sparse.html#self-reducibility-of-sat) | 5 |
+| NPI | $\NP \setminus (\P \cup \NPC)$ | [Page 2](2_npi.html#theorem) | 2, 6 |
+| $\SAT_H$ | Strings $\psi\,0\,1^{|\psi|^{H(|\psi|)}}$ with $\psi \in \SAT$ | [Page 2](2_npi.html#construction) | 2 |
+| p-isomorphic ($\iso$) | Related by a polynomial-time bijection with polynomial-time inverse | [Page 3](3_sparse.html) | 3 |
+| Paddable | Has an invertible polynomial-time padding function | [Page 3](3_sparse.html#all-known-np-complete-sets-are-p-isomorphic) | 3 |
+| Left set $L$ | Pairs $\enc{\varphi, y}$ with a satisfying assignment $z \ge y$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
+| $Q(u)$ | The query $\enc{\varphi, u0^{n-k}}$ for prefix $u$ of length $k$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
+| $p_k$ | The length-$k$ prefix of the largest satisfying assignment $z^*$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
+| $r$ | $p(q(\ell))$, the most $g$-values that can lie in $S$ | [Page 5](5_mahaney-proof.html#lemma-a) | 5, 6 |
 </script>
 
 <script type="text/markdown" data-md="glossary-theorems">
@@ -61,13 +72,13 @@
 
 | Theorem | Statement | Page |
 | --- | --- | --- |
-| Ladner (1975) | If $\P \ne \NP$, then $\NPI \ne \varnothing$ | [3](3_npi.html) |
-| Berman–Hartmanis (1977) | Paddable sets that reduce to each other are p-isomorphic | [4](4_sparse.html) |
-| Mahaney (1982) | If a sparse set is NP-hard, then $\P = \NP$ | [5](5_mahaney.html), [6](6_mahaney-proof.html) |
-| Corollary | If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is in NPI | [7](7_consequences.html#sparse-npi) |
-| Fortune (1979) | If a sparse set is coNP-hard, then $\P = \NP$ | [7](7_consequences.html#fortune) |
-| Ogihara–Watanabe (1991) | If a sparse set is NP-hard under $\redbtt$, then $\P = \NP$ | [7](7_consequences.html#stronger-reductions) |
-| Karp–Lipton (1980) | If $\NP \subseteq \Ppoly$, then $\PH = \Sigma_2^p$ | [7](7_consequences.html#stronger-reductions) |
+| Ladner (1975) | If $\P \ne \NP$, then $\NPI \ne \varnothing$ | [2](2_npi.html) |
+| Berman–Hartmanis (1977) | Paddable sets that reduce to each other are p-isomorphic | [3](3_sparse.html) |
+| Mahaney (1982) | If a sparse set is NP-hard, then $\P = \NP$ | [4](4_mahaney.html), [5](5_mahaney-proof.html) |
+| Corollary | If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is in NPI | [6](6_consequences.html#sparse-npi) |
+| Fortune (1979) | If a sparse set is coNP-hard, then $\P = \NP$ | [6](6_consequences.html#fortune) |
+| Ogihara–Watanabe (1991) | If a sparse set is NP-hard under $\redbtt$, then $\P = \NP$ | [6](6_consequences.html#stronger-reductions) |
+| Karp–Lipton (1980) | If $\NP \subseteq \Ppoly$, then $\PH = \Sigma_2^p$ | [6](6_consequences.html#stronger-reductions) |
 </script>
 
 <script type="text/markdown" data-md="glossary-takeaways">

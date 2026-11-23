@@ -49,10 +49,9 @@ def home():
     b.append(f'<ellipse cx="365" cy="76" rx="108" ry="54" fill="{GREEN}" fill-opacity=".28" clip-path="url(#h-np)"/>')
     b.append(f'<ellipse cx="365" cy="76" rx="108" ry="54" fill="none" stroke="{HARD_STROKE}" clip-path="url(#h-np)"/>')
     b.append('<text x="365" y="122" text-anchor="middle" class="hf-b hf-g">NPC</text>')
-    b.append(f'<rect x="303" y="140" width="124" height="34" rx="3" fill="#fffefa" fill-opacity=".75"/>')
-    b.append('<text x="365" y="155" text-anchor="middle" class="hf-b">NPI ≠ ∅</text>')
-    b.append('<text x="365" y="169" text-anchor="middle" class="hf-s">the middle (Ladner)</text>')
-    b.append(f'<ellipse cx="365" cy="215" rx="50" ry="28" fill="#fffefa" stroke="{GREEN}" stroke-width="1.5"/>')
+    b.append('<text x="365" y="157" text-anchor="middle" class="hf-b hf-g">NPI ≠ ∅</text>')
+    b.append('<text x="365" y="172" text-anchor="middle" class="hf-s">the middle (Ladner)</text>')
+    b.append(f'<ellipse cx="365" cy="215" rx="50" ry="28" fill="{GREEN}" fill-opacity=".22" stroke="{GREEN}" stroke-width="1.5"/>')
     b.append('<text x="365" y="220" text-anchor="middle" class="hf-b">P</text>')
     b.append('<text x="304" y="200" text-anchor="middle" class="hf-b hf-g">NP</text>')
     b.append('<text x="365" y="272" text-anchor="middle" class="hf-s">NP has three regions: P, NPI, NPC.</text>')
@@ -309,9 +308,9 @@ def glossary():
                'Timeline from 1975 to 1991: Ladner, Berman–Hartmanis, Berman, Fortune, Karp–Lipton, Mahaney highlighted, Ogihara–Watanabe.')
 
 
-PAGES = {'1_home.html': home, '2_review.html': prereq, '3_npi.html': ladner, '4_sparse.html': sparse,
-         '5_mahaney.html': mahaney1, '6_mahaney-proof.html': mahaney2, '7_consequences.html': consequences,
-         '8_glossary.html': glossary}
+PAGES = {'1_home.html': home, '2_npi.html': ladner, '3_sparse.html': sparse,
+         '4_mahaney.html': mahaney1, '5_mahaney-proof.html': mahaney2, '6_consequences.html': consequences,
+         '7_glossary.html': glossary}
 pat = re.compile(r'<div class="diagram"[\s\S]*?<div class="diagram-label">[\s\S]*?</div>\s*</div>|<figure class="hero-figure">[\s\S]*?</figure>')
 for name, fn in PAGES.items():
     p = os.path.join(ROOT, name)

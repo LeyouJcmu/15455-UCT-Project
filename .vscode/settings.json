@@ -1,0 +1,7 @@
+{
+  // Soft-wrap long lines in the editor only; files are not changed.
+  "editor.wordWrap": "on",
+  "editor.wrappingIndent": "same",
+  "[html]": { "editor.wordWrap": "on" },
+  "[markdown]": { "editor.wordWrap": "on" }
+}

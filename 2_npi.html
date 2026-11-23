@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f2eb">
+  <meta name="description" content="A full proof of Ladner's Theorem: if P ≠ NP then NP-intermediate problems exist, plus natural NPI candidates.">
+  <title>NPI and Ladner's Theorem — Complexity Notes</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+  <script defer src="viz.js"></script>
+  <script defer src="site.js"></script>
+</head>
+<body>
+  <header id="site-header" class="wrap topbar"></header>
+
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Page 2 / NPI and Ladner’s Theorem</p>
+        <h1 id="page-title">In between $\P$ and $\NP$-complete</h1>
+        <p class="hero-copy">If $\P \ne \NP$, then some language in NP is neither in P nor NP-complete. We prove this artificially constructing such a language: SAT padded by an amount that grows just slowly enough to defeat every polynomial-time algorithm, and just quickly enough to destroy NP-completeness.</p>
+        <a class="button" href="#content">Read the proof <span aria-hidden="true">↓</span></a>
+      </div>
+      <figure class="hero-figure">
+        <svg viewBox="0 0 460 290" role="img" aria-label="Top: a string psi, then 0, then a long run of ones. Bottom: a plot of H(n). A flat line is labelled NP-complete, a steep curve is labelled in P, and a slowly rising staircase between them is labelled NPI."><defs><marker id="la-arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#202b30"/></marker></defs><text x="20" y="16" class="hf-h">A STRING OF SAT<tspan dy="3" font-size="9">H</tspan></text><rect x="20" y="26" width="58" height="26" fill="#245c4b"/><text x="49" y="44" text-anchor="middle" class="hf-b hf-m hf-w">ψ</text><rect x="78" y="26" width="20" height="26" fill="#fffefa" stroke="#c6cfb7"/><text x="88" y="44" text-anchor="middle" class="hf-mono">0</text><rect x="98" y="26" width="342" height="26" fill="#d9e7a5" stroke="#b6c4a8"/><text x="269" y="44" text-anchor="middle" class="hf-mono">1111111111111111111111111111111111111111111…</text><path d="M98 58 v5 h342 v-5" fill="none" stroke="#647278"/><text x="269" y="77" text-anchor="middle" class="hf-s">padding of length |ψ|<tspan dy="-5" font-size="8">H(|ψ|)</tspan></text><path d="M50 268 H440" stroke="#202b30" marker-end="url(#la-arr)"/><path d="M50 268 V96" stroke="#202b30" marker-end="url(#la-arr)"/><text x="440" y="284" text-anchor="end" class="hf-s hf-m">n</text><text x="42" y="108" text-anchor="end" class="hf-s hf-m">H(n)</text><path d="M50 264 C 90 250, 115 180, 140 104" fill="none" stroke="#647278" stroke-width="2"/><text x="148" y="112" class="hf-s">grows fast: brute force is</text><text x="148" y="125" class="hf-s">polynomial, so it is in P</text><path d="M50 246 H430" fill="none" stroke="#e48b5c" stroke-width="2"/><text x="430" y="261" text-anchor="end" class="hf-s hf-o">constant: polynomial padding, still NP-complete</text><path d="M50 236 L100 236 L100 218 L175 218 L175 198 L280 198 L280 176 L430 176" fill="none" stroke="#245c4b" stroke-width="3" stroke-linejoin="round"/><text x="430" y="150" text-anchor="end" class="hf-b hf-g">Ladner’s H: grows, but slowly</text><text x="430" y="166" text-anchor="end" class="hf-s">neither in P nor NP-complete, so NPI</text></svg>
+        <figcaption>SAT<sub>H</sub> pads each formula with $|\psi|^{H(|\psi|)}$ ones. Too little padding keeps it NP-complete, too much puts it in P. Ladner’s $H$ climbs one step each time the next machine fails, which lands in between.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section" id="content">
+      <div class="wrap article">
+        <div class="article-body">
+<script type="text/markdown" data-md="ladner-statement">
+## The theorem {#theorem}
+
+:::definition (NPI)
+$\NPI = \NP \setminus (\P \cup \NPC)$, where $\NPC$ is the class of NP-complete languages under Karp reductions. Problems in NPI are called *NP-intermediate*.
+:::
+
+If $\P = \NP$, then NPI is empty: every language in P other than $\varnothing$ and $\Sigma^*$ is NP-complete. So the question is only interesting under $\P \ne \NP$.
+
+:::theorem (Ladner, 1975)
+If $\P \ne \NP$, then $\NPI \ne \varnothing$.
+:::
+
+The proof below is due to Impagliazzo and appears in Arora and Barak, *Computational Complexity: A Modern Approach*, Chapter 3. Ladner’s original proof uses a “blowing holes in SAT” construction; we mention it [at the end](#remarks).
+</script>
+
+<script type="text/markdown" data-md="ladner-idea">
+## Proof strategy {#idea}
+
+We take SAT, and apply just the right amount of padding.
+
+Pad each 3-CNF formula $\psi$ with $1$s of length $|\psi|^{H(|\psi|)}$, for some $H$. We want $H$ to be fast, too slow and the padding is not enough to rid of $\NP$-completeness. However, we also want $H$ to be slow, too fast and the padding reduces to $P$. 
+
+The trick to get $H$ to reach this goldilocks state is to have $H$ rely on an enumeration of machines $M_1, M_2, \dots$ and stay at some $c$ so long as the $M_i$ is fast enough. This allows $H$ to always be fast enough, but not too fast as to place the language in $P$.
+
+@[viz](ladner-h "Toggle between the two worlds. In the real one every machine is eventually caught and H climbs forever; if some machine were genuinely fast, H would freeze at its index and SAT<sub>H</sub> would collapse back to SAT.")
+</script>
+
+<script type="text/markdown" data-md="ladner-construction">
+## The construction {#construction}
+
+We first arbitrarily enumerate all deterministic Turing machines: $M_1, M_2, M_3, \dots$. We then have a universal machine simulating $M_i$ for $t$ steps in time polynomial in $i$ and $t$. 
+
+Let $\ell(n) = \lfloor \log \log n \rfloor$ for $n \ge 4$. Note that we have this for $n \ge 4$ as to have $\ell(n)$ start at $1$. For a function $H : \mathbb{N} \to \mathbb{N}$ define
+
+$$
+\SAT_H \;=\; \{\, \psi\,0\,1^{\,m^{H(m)}} \;:\; \psi \in \SAT,\ m = |\psi| \,\}.
+$$
+
+We use a separator $0$ here to mark the end of the formula $\psi$, and the start of the padding.
+
+Now we define our function $H$:
+$$
+H = \begin{cases} 1, &n < 4 \\ \text{smallest } i \in \{1, ..., \ell(n)\} \text{ fulfilling the following condition}, &n \ge 4
+\end{cases}
+$$
+**Condition**:
+If for every $x$ with $|x| \leq \log n$, the machine $M_i$ on input $x$ halts within $i \cdot |x|^i$ steps and outputs the correct value. If no such $i$ exists, we have $H(n) = \ell(n)$.
+
+$H$ is in fact well-defined as $H(n)$ only decides membership of $\SAT_H$ of strings $|x| \ge n$ and $H$ is defined by strings $|x| \leq \log n$. Additionally, $H$ can be computed in polynomial time, which we will prove in lemma 1.
+
+</script>
+
+<script type="text/markdown" data-md="ladner-plan">
+## The plan {#lemmas}
+
+To show $\SAT_H \in \NPI$, we need three facts, each assuming only $\P \ne \NP$:
+
+| Goal | Why we need it | Proved by |
+| --- | --- | --- |
+| **(i)** $\SAT_H \in \NP$ | NPI is part of NP | [Lemmas 1–2](#goal-np) |
+| **(ii)** $\SAT_H \notin \P$ | rules out $\P$ | [Lemma 3](#goal-not-p) |
+| **(iii)** $\SAT_H$ is not NP-complete | rules out $\NPC$ | [Lemmas 4–5](#goal-not-npc) |
+
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-np">
+## Goal (i): $\SAT_H$ is in NP {#goal-np}
+
+::::lemma 1: $H$ is computable in polynomial time
+**Claim.** $H(n)$ can be computed in polynomial time.
+
+Since $H$ depends only on $|x| \leq \log n$, we can brute force check every string $x \leq \log n$. We then can check each $M_i$ with each $x$, within $i \cdot |x|^i$ steps. 
+
+**First step: Precompute table of values for all $|x| \leq \log n$ if $x \in \SAT_H$.**
+- To verify this, we check how many strings $x$ we need to check.
+$$
+\sum_{i=0}^{\lfloor \log n \rfloor} 2^i = 2^{\lfloor n \rfloor} - 1 \leq 2n 
+$$
+- Then for each string $x$, we do the following to check for membership:
+   - Split $x$ into $\psi01^p$, by parsing right until left until first $0$ is reached.
+   - Then we recursively compute $H(|\psi|)$, which calls on an exponentially smaller number, due to $k < \log n$.
+   - We then verify that the padding equals $k^{H(k)}$, which takes polynomial time w.r.t. $n$.
+   - Lastly, we can verify $\psi$ by brute force, checking all truth assignments. Since $|\psi| < \log n$, we know that $\psi$ can have at most $\log n$ boolean variables. Testing all $2^{|\psi|} \leq 2^{\log n} = n$ truth assignments takes polynomial time w.r.t. $n$.
+   - Note that if any of the above steps fail the verification, we know that $x \notin \SAT_H$.
+
+**Second step: Compute smallest $i$ fulfilling the above condition.**
+- We now test $M_i$ for $i = 1,2,..., \lfloor \log \log n \rfloor - 1$.
+- Since $i < \log \log n$ and $|x| \leq \log n$, we only simulate for
+$$
+i \cdot |x|^i \leq (\log \log n)(\log n)^{\log \log n} = o(n)
+$$
+steps.
+- Then simulating a universal Turing machine for this many steps is still polynomial $p(n)$ time w.r.t. $n$.
+- With $\leq 2n$ strings and $\leq \log \log n$ machines, where each string takes polynomial steps to simulate, the total simulation time is bounded by:
+$$(\log \log n) \cdot 2n \cdot p(n) \leq \text{poly}(n)$$
+- Then we simply output the first $i$ such that the machine $M_i$ perfectly matches the precomputed table of values for all $|x| \leq \log n$. Of course if none of the $M_i$ match, we simply return $\log \log n$, following our rule.
+
+::::
+
+::::lemma 2: $\SAT_H \in \NP$
+:::proof
+We construct a verifier to verify $\SAT_H$ in the following steps:
+We have our verifier take in input $x$, and a boolean assignment certificate string $c$.
+We then parse $x$ into $\psi01^p$, rejecting if not in valid form. Then compute $H(|\psi|)$ using Lemma 1, and check that $p = |\psi|^{H(|\psi|)}$, rejecting if or when $|\psi|^{H(|\psi|)}$ exceeds $|x|$. This step is very important as a malicious string $\psi01$ could produce a number too large to compute, which makes our verifier not polynomial-time. We then check $c$ if it is in correct form: a boolean assignment, if $c$ contains valid assignments to the exact boolean variables in $\psi$, then if the boolean assignment is correct.
+
+**Correctness**
+
+($\Rightarrow$) If $x \in \SAT_H$, then $x = \psi01^p$, where $p = |\psi|^{H(|\psi|)}$. Additionally, there exists a boolean assignment that satisfies $x$. Thus, there exists a $c$ assignment satisfying $\psi$. 
+
+($\Leftarrow$) If the verifier accepts, it must be that $x = \psi01^p$, such that $p = |\psi|^{H(|\psi|)}$. Additionally, $\psi$ must have a valid assignment. Thus, $x \in \SAT_H$.
+
+**Time Bounds**
+
+First, parsing $x$ takes polynomial time, and from Lemma 1, computing $H(|\psi|)$ takes polynomial time. Checking if $p$ is correct takes polynomial time since we early stop if computing $|\psi|^{H(|\psi|)}$ exceeds $|x|$. Then checking the certificate $c$, and then the boolean assignment are both polynomial time. Thus, our verifier solves $\SAT_H$ in polynomial-amount of steps w.r.t. $|x|$.
+:::
+::::
+
+:::status
+Goal (i) is done: $\SAT_H \in \NP$. Lemma 1 comes back twice more, because Lemmas 3 and 5 both need to add or check padding in polynomial time.
+:::
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-not-p">
+## Goal (ii): $\SAT_H$ is not in P {#goal-not-p}
+
+::::lemma 3: If $\SAT_H \in \P$, then $\SAT \in \P$
+:::proof
+AFSOC that a machine $M$ decides $\SAT_H$ in time at most $c \cdot |x|^c$. Then we use a similar strategy as the Lower Time Bound Theorem from our second lecture: $M$ actually appears indirectly infinitely many times as we can add dummy states and transitions. From this, we know there is an index $i \ge c$ with $M_i$ having the same behavior as $M$, or $M_i = M$. Then we know that $M_i$ decides $\SAT_H$ within $i \cdot |x|^i$ step on every input by our definition of $\SAT_H$. 
+
+For every $n$ with $\ell(n) \ge i$, $i$ satisfies the condition for $H(n)$, so $H(n) \leq i$. Then for $\ell(n) < i$, we have $H(n) \leq \ell(n) < i$, so $H(n) \leq i$. Thus, $H(n) \leq i$ for any $n$.
+
+Now we create a mapping function: $f(\psi) = \psi01^{|\psi|^{H(|\psi|)}}$. First, $H(|\psi|)$ is computable in polynomial time by Lemma 1. Then since $H(\psi) \leq i$, the output of the function has length at most $|\psi| + 1 + |\psi|^i$, which is bounded polynomially w.r.t. $|\psi|$. 
+
+We know that $\psi \in \SAT$ iff $f(\psi) \in \SAT_H$ by our definition of $\SAT_H$. Then since we can compute $f(\psi)$ in polynomial time, we can reduce from $\SAT$ to $\SAT_H$. Since we assumed that $\SAT_H \in \P$, it must be that $\SAT \in P$. However, this is a contradiction since we assumed $\P \neq \NP$. 
+:::
+::::
+
+</script>
+
+<script type="text/markdown" data-md="ladner-goal-not-npc">
+## Goal (iii): $\SAT_H$ is not NP-complete {#goal-not-npc}
+
+::::lemma 4: If $\SAT_H \notin \P$, then $H(n) \to \infty$
+:::proof
+We want to show that if $\SAT_H \notin \P$, then $H(n) \to \infty$, as $n \to \infty$. We show this by proving all $i$ are taken by $H$ only finitely often, or in other words, $H(n) = i$ for finite number of $n$. 
+
+AFSOC that $H(n) = i$ for infinitely many $n$. Then for such $n$, $M_i$ decides $\SAT_H$ within time $i \cdot |x|^i + i$ on every $x$ with $|x| \leq \log n$. Then since these $n$ are unbounded since there are infinitely such $n$, $\log n$ is also unbounded. Then $M_i$ is correct on all inputs since it is correct on every $x$ with $|x| \leq \log n$, where $\log n$ is unbounded. This would mean $\SAT_H \in \P$, since this $M_i$ runs in polynomial-time w.r.t. $|x|$. However, this contradicts Lemma 3, where we showed that $\SAT_H \notin \P$. Then since all $i$ are taken finitely often, $H(n) \to \infty$, as $n \to \infty$.
+:::
+::::
+
+::::lemma 5: If $H(n) \to \infty$ and $\SAT_H$ is NP-complete, then $\SAT \in \P$
+:::proof
+We want to show that if $H(n) \to \infty$ and assuming $\SAT_H$ is NP-complete, we get that $\SAT \in \P$ which is a contradiction.
+
+From Lemma 4, we know that $H(n) \to \infty$. We now AFSOC that $\SAT_H$ is NP-complete. We will prove that $\SAT \in \P$ with this assumption.
+
+Since $\SAT_H$ is NP-hard (definition of NP-complete), $\SAT \redm \SAT_H$ with some mapping function $f$ such that $|f(\psi)| \leq |\psi|^c$, for all $|\psi| \ge 2$. Our strategy now is to repeated apply this mapping function $f$ to reduce the size of the input fast enough to yield us a polynomial-time TM solving $\SAT$.
+
+Since $H(n) \to \infty$, we fix a threshold $N_0$ such that $H(m) > 2c$ for all $m > N_0$. This will be important for guaranteeing polynomial bounds.
+
+We define a TM to solve $\SAT$ in polynomial time:
+1. For all strings of length $\max(N_0, 2)$, brute force compute whether the string $x$ is in $\SAT$. Since $N_0$ is a fixed constant, this is $O(1)$ time.
+2. If $|\psi| \leq \max(N_0, 2)$, we can simply return the brute force computed result. If not, we run the following steps with a helper TM.
+3. We now compute $y = f(\psi)$, which takes polynomial-time w.r.t. $|\psi|$, since we $f$ is a polynomial-time mapping function. We then check if $y$ is of the form $\psi'01^{|\psi'|^{H(|\psi'|)}}$, which takes polynomial time by Lemma 1, rejecting if it is not in proper form.
+4. If $y$ is correct, then we know that $\psi \in \SAT$ iff $y \in \SAT_H$. Then by definition of $\SAT_H$, $y \in \SAT_H$ iff $\psi' \in \SAT$. Then rerun the helper TM on $\psi'$. Note that simulating this helper TM still runs in polynomial time due to Universal TM time bounds.
+
+The crux of this argument lies in the fact that $\psi'$ shrinks fast enough such that the number of calls is very small, yielding a polynomial-time TM solving $\SAT$. 
+
+If $|\psi'| \leq N_0$, we simply return the precomputed table result. Otherwise, we know that $H(|\psi'|) > 2c$, since $H(m) > 2c$ for all $m > N_0$. Thus: 
+$$
+|\psi'|^{2c} < |\psi'|^{H(|\psi'|)} \leq |y| \leq |\psi|^c
+$$
+giving us $|\psi'| < |\psi|^{\frac{1}{2}}$.
+
+Then since each call of the helper TM cuts the input $\psi$ to a $\psi'$ such that $|psi'| < \sqrt{|\psi|}$, the helper TM will only be ran at most $O(\log \log |\psi|)$ times, where each call is polynomial w.r.t. $|\psi|$ (since each $\psi$ only gets smaller). Subsequently, this TM solves $\SAT$ in polynomial time which places $\SAT \in \P$. However, we assumed $\P \neq \NP$, meaning $\SAT \notin \P$, meaning we've reached a contradiction. Thus, $SAT_H$ is not NP-complete.
+:::
+::::
+</script>
+
+<script type="text/markdown" data-md="ladner-together">
+## The Bigger Picture {#together}
+
+:::proof of Ladner’s Theorem
+First assume $\P \neq \NP$. By Lemma 2, $\SAT_H \in \NP$. By Lemma 3, $\SAT_H \in \P \Rightarrow \SAT \in \P$ which is a contradiction, meaning $\SAT_H \notin \P$. By Lemma 5, $\SAT_H \in \NPC \Rightarrow \SAT \in P$ which is also a contradiction, meaning $\SAT_H \notin \P$. Since $\SAT_H \in \NP$, but not in $\P$ nor $\NPC$, $\SAT_H \in \NPI$. Thus, there exists a language in $\NPI$.
+:::
+</script>
+
+<script type="text/markdown" data-md="ladner-remarks">
+## Remarks {#remarks}
+
+- **Why $\log n$?** $H(n)$ only tests $M_i$ on inputs of length at most $\log n$. That keeps $H$ cheap to compute: brute-forcing SAT and enumerating inputs on that range costs about $n$, not $2^n$.
+- **The original proof.** Ladner’s 1975 proof instead builds a language that agrees with SAT on some long intervals of lengths and is empty on others, switching whenever the current interval has defeated the next machine or reduction. Both proofs are diagonalizations that interleave two goals.
+- **More than one intermediate degree.** Iterating the argument shows that if $\P \ne \NP$, then NPI contains infinitely many problems, no two of which reduce to each other in both directions. NP has an infinite, dense hierarchy of degrees between P and NPC.
+</script>
+
+<script type="text/markdown" data-md="ladner-candidates">
+## Natural candidates for NPI {#candidates}
+
+The language $\SAT_H$ is artificial. No natural problem is known to be in NPI (that would prove $\P \ne \NP$), but some are strongly believed to be:
+
+| Problem | Evidence it is not in P | Evidence it is not NP-complete |
+| --- | --- | --- |
+| Graph Isomorphism | No polynomial-time algorithm known; Babai’s 2015 algorithm is quasipolynomial[^babai] | $\mathrm{GI} \in \mathsf{coAM}$, so if GI were NP-complete, the polynomial hierarchy would collapse to its second level (Boppana, Håstad, Zachos 1987) |
+| Factoring (decision version: does $N$ have a factor $\le k$?) | Best known algorithms are subexponential; much of cryptography relies on hardness | It lies in $\NP \cap \coNP$, so if it were NP-complete, then $\NP = \coNP$ |
+| Discrete logarithm (decision version) | Same situation as factoring | Also in $\NP \cap \coNP$ |
+
+[^babai]: Babai announced the algorithm in 2015. In January 2017 Helfgott found an error in the running-time analysis; Babai repaired it within days, restoring the quasipolynomial bound $2^{O((\log n)^c)}$.
+
+[Page 6](6_consequences.html) adds a different source of candidates: sparse sets in $\NP \setminus \P$.
+</script>
+
+<script type="text/markdown" data-md="ladner-takeaways">
+:::takeaways
+- If $\P \ne \NP$, then NP has a nonempty middle, NPI.
+- The witness $\SAT_H$ is SAT padded by $|\psi|^{H(|\psi|)}$, where $H$ grows only when every small machine fails.
+- Bounded $H$ makes $\SAT_H$ equivalent to SAT; unbounded $H$ makes $\SAT_H$ too padded to be NP-hard.
+:::
+</script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="site-footer"></footer>
+</body>
+</html>
