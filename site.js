@@ -17,11 +17,11 @@
   var PAGES = [
     { href: '1_home.html',         nav: 'Home',          title: 'Is NP split cleanly in two?' },
     { href: '2_npi.html',           nav: 'Ladner',        title: 'NPI and Ladner\u2019s Theorem' },
-    { href: '3_sparse.html',        nav: 'Sparse sets',   title: 'Sparse sets and the Berman\u2013Hartmanis conjecture' },
+    { href: '3_sparse.html',        nav: 'Sparse languages',   title: 'Sparse languages and the Berman\u2013Hartmanis conjecture' },
     { href: '4_mahaney.html',       nav: 'Mahaney I',     title: 'Mahaney\u2019s Theorem: statement and strategy' },
     { href: '5_mahaney-proof.html', nav: 'Mahaney II',    title: 'Mahaney\u2019s Theorem: the proof' },
     { href: '6_consequences.html',  nav: 'Extensions',    title: 'Consequences and extensions' },
-    { href: '7_glossary.html',      nav: 'Glossary',      title: 'Glossary and key takeaways' }
+    { href: '7_glossary.html',      nav: 'Glossary',      title: 'Glossary and references' }
   ];
 
   // LaTeX shortcuts available in every formula. Add your own here.

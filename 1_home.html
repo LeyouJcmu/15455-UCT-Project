@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="If P ≠ NP, NP has a nonempty middle (Ladner), and no sparse set can be NP-hard (Mahaney).">
+  <meta name="description" content="If P ≠ NP, NP has a nonempty middle (Ladner), and no sparse language can be NP-hard (Mahaney).">
   <title>Exploring the classes within NP — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
@@ -22,7 +22,7 @@
       <div>
         <p class="eyebrow">Page 1 / Home</p>
         <h1 id="page-title">Exploring the classes within NP </h1>
-        <p class="hero-copy">If $\P \ne \NP$, then NP is not split cleanly into “easy” problems (P) and “harder” problems (NP-complete): there is a nonempty middle ground, NPI. The following virtual lectures prove that fact (Ladner’s Theorem) and then proves another result, Mahaney’s Theorem: if $\P \neq \NP$, then no sparse set can be NP-hard. Together they show that the structure of NP is even richer than we have previously learned, of course, assuming $\P \neq \NP$.</p>
+        <p class="hero-copy">If $\P \ne \NP$, then there is a nonempty middle ground, $\NPI$, between $\P$ and $\NP$-complete. The following virtual lectures prove that fact (Ladner’s Theorem) and then proves another result, Mahaney’s Theorem: if $\P \neq \NP$, then no sparse language can be NP-hard. Together they show that the structure of NP is even richer than we have previously learned, of course, assuming $\P \neq \NP$.</p>
         <a class="button" href="#roadmap">What you will learn <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
@@ -41,11 +41,11 @@
         </div>
         <div class="roadmap">
           <a href="2_npi.html"><span class="num">02</span><h3>NPI and Ladner’s Theorem</h3><p>A full proof that $\P \ne \NP$ implies NPI is nonempty, and a look at natural problems believed to be NP-intermediate.</p></a>
-          <a href="3_sparse.html"><span class="num">03</span><h3>Sparse sets and the Berman–Hartmanis conjecture</h3><p>Sparse and tally sets, the self-reducibility of SAT, why every known NP-complete problem is “dense,” and why that led people to ask whether a sparse set could ever be NP-complete.</p></a>
+          <a href="3_sparse.html"><span class="num">03</span><h3>Sparse languages and the Berman–Hartmanis conjecture</h3><p>Sparse and tally languages, the self-reducibility of SAT, why every known NP-complete problem is “dense,” and why that led people to ask whether a sparse language could ever be NP-complete.</p></a>
           <a href="4_mahaney.html"><span class="num">04</span><h3>Mahaney’s Theorem, Part I</h3><p>The precise statement, the proof strategy, and the list of lemmas.</p></a>
           <a href="5_mahaney-proof.html"><span class="num">05</span><h3>Mahaney’s Theorem, Part II</h3><p>The complete proof, using the left-set technique of Ogihara and Watanabe.</p></a>
-          <a href="6_consequences.html"><span class="num">06</span><h3>Consequences and extensions</h3><p>How Mahaney’s Theorem produces NPI candidates, Fortune’s theorem for co-sparse sets, and what is known for stronger kinds of reductions.</p></a>
-          <a href="7_glossary.html"><span class="num">07</span><h3>Glossary and key takeaways</h3><p>Every definition and theorem in one place, with links to where each is used.</p></a>
+          <a href="6_consequences.html"><span class="num">06</span><h3>Consequences and extensions</h3><p>How Mahaney’s Theorem produces NPI candidates, when such candidates exist, and what is known for stronger kinds of reductions.</p></a>
+          <a href="7_glossary.html"><span class="num">07</span><h3>Glossary and references</h3><p>Every definition and theorem in one place, with links to where each is used.</p></a>
         </div>
       </div>
     </section>
@@ -54,9 +54,13 @@
       <div class="wrap narrow">
         <div class="article-body">
 <script type="text/markdown" data-md="home-dependencies">
+## Why this matters {#context}
+
+In class, we learned that there are many consequences if $\P = \NP$, but touched very lightly on the consequences if $\P \neq \NP$. I wanted to bring to light many more theorems and topics that we were not able to cover in class. In terms of why these results are important, they build theory on (what I like to believe) a likely result that $\P \neq \NP$. The centerpiece theorem I have chosen is Mahaney's Theorem, simply that if there is a sparse $NP$-hard language, then $\P = \NP$. This was a landmark result that provided support towards the Berman-Hartmanis observation that every known $NP$-complete language is dense. However, I prove another big result: Ladner's Theorem which very much complements Mahaney's Theorem. These topics were covered in a much older iteration of 15-455, and I believe that they are still very much interesting to learn about! Though, I did use slightly different techniques than the older videos I found of 15-455 lectures.
+
 ## Review {#prerequisites}
 
-Throughout the virtual lecture, I assume students have knowledge of Turing machines, the classes P and NP (via polynomial-time verifiers), Karp reductions $A \redm B$, NP-hardness and NP-completeness, and the Cook–Levin Theorem ($\SAT$ is NP-complete). Unless stated otherwise, “reduction” means a Karp reduction. Short definitions of all of these are in the [glossary](7_glossary.html#assumed-background).
+Throughout the virtual lecture, I assume you all understand basic 455 concepts and expand upon them. This includes knowledge of Turing machines, the classes P and NP (via polynomial-time verifiers), Karp reductions $A \redm B$, NP-hardness and NP-completeness, and the Cook–Levin Theorem ($\SAT$ is NP-complete). Unless stated otherwise, “reduction” means a Karp reduction. Lastly, Short definitions of all of these are in the [glossary](7_glossary.html#assumed-background) in the event you need a refresher.
 </script>
         </div>
       </div>

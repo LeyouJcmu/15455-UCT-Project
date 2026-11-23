@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Sparse sets in NP \ P are NP-intermediate, Fortune's theorem via left sets, and results for stronger reductions.">
+  <meta name="description" content="sparse languages in NP \ P are NP-intermediate, when such languages exist, and results for stronger reductions.">
   <title>Consequences and Extensions — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
@@ -22,12 +22,12 @@
       <div>
         <p class="eyebrow">Page 6 / Consequences and extensions</p>
         <h1 id="page-title">Where the two theorems <em>meet.</em></h1>
-        <p class="hero-copy">Mahaney’s Theorem gives a second, more natural route into NPI: every sparse set in $\NP \setminus \P$ is NP-intermediate, if $\P \ne \NP$. This page proves that, proves Fortune’s theorem with the same left-set machinery, and surveys what happens for more powerful reductions.</p>
+        <p class="hero-copy">Mahaney’s Theorem gives a second, more natural route into NPI: every sparse language in $\NP \setminus \P$ is NP-intermediate, if $\P \ne \NP$. In this page, we prove the previous statement, discuss when such languages exist, and survey what happens for more powerful reductions.</p>
         <a class="button" href="#content">Read the consequences <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
-        <svg viewBox="0 0 460 298" role="img" aria-label="The P not equal NP picture. Orange dots for sparse sets fill the NPI band between P and NP-complete. A dashed line at the NP-complete boundary is labelled: no sparse set crosses this line."><defs><clipPath id="co-np"><ellipse cx="215" cy="182" rx="135" ry="104"/></clipPath></defs><g transform="translate(-16 0)"><ellipse cx="215" cy="66" rx="150" ry="56" fill="#f3dccb" stroke="#d28c63"/><text x="215" y="38" text-anchor="middle" class="hf-b hf-o">NP-hard</text><ellipse cx="215" cy="182" rx="135" ry="104" fill="#dfe9cf" fill-opacity=".55" stroke="#245c4b" stroke-width="1.5"/><ellipse cx="215" cy="66" rx="150" ry="56" fill="#245c4b" fill-opacity=".28" clip-path="url(#co-np)"/><ellipse cx="215" cy="66" rx="150" ry="56" fill="none" stroke="#e48b5c" stroke-width="3" stroke-dasharray="7 5" clip-path="url(#co-np)"/><text x="215" y="104" text-anchor="middle" class="hf-b hf-g">NP-complete</text><ellipse cx="215" cy="250" rx="72" ry="28" fill="#fffefa" stroke="#245c4b" stroke-width="1.5"/><text x="215" y="255" text-anchor="middle" class="hf-b">P</text><text x="100" y="178" class="hf-b hf-g">NPI</text><text x="104" y="240" class="hf-b hf-g">NP</text><circle cx="150" cy="150" r="3.4" fill="#e48b5c"/><circle cx="176" cy="172" r="3.4" fill="#e48b5c"/><circle cx="198" cy="143" r="3.4" fill="#e48b5c"/><circle cx="226" cy="162" r="3.4" fill="#e48b5c"/><circle cx="252" cy="146" r="3.4" fill="#e48b5c"/><circle cx="278" cy="170" r="3.4" fill="#e48b5c"/><circle cx="304" cy="154" r="3.4" fill="#e48b5c"/><circle cx="168" cy="196" r="3.4" fill="#e48b5c"/><circle cx="318" cy="186" r="3.4" fill="#e48b5c"/><circle cx="238" cy="188" r="3.4" fill="#e48b5c"/><circle cx="205" cy="176" r="3.4" fill="#e48b5c"/><circle cx="286" cy="196" r="3.4" fill="#e48b5c"/><circle cx="138" cy="180" r="3.4" fill="#e48b5c"/><circle cx="262" cy="128" r="3.4" fill="#e48b5c"/><circle cx="184" cy="132" r="3.4" fill="#e48b5c"/><text x="230" y="214" text-anchor="middle" class="hf-s">sparse sets in NP ∖ P</text><text x="368" y="122" class="hf-b">Mahaney:</text><text x="368" y="137" class="hf-s">no sparse set</text><text x="368" y="150" class="hf-s">crosses this line</text><path d="M364 132 Q348 124 340 116" fill="none" stroke="#202b30" stroke-width="1"/><text x="368" y="236" class="hf-b">They exist</text><text x="368" y="251" class="hf-s">iff E ≠ NE</text><text x="368" y="264" class="hf-s">(Hartmanis,</text><text x="368" y="277" class="hf-s">Immerman,</text><text x="368" y="290" class="hf-s">Sewelson 1985)</text></g></svg>
-        <figcaption>If $\P \ne \NP$, a sparse set in NP that escapes P cannot reach NP-complete, so it must sit in NPI. This gives intermediate problems for a structural reason rather than by diagonalization.</figcaption>
+        <svg viewBox="0 0 460 298" role="img" aria-label="The P not equal NP picture. Orange dots for sparse languages fill the NPI band between P and NP-complete. A dashed line at the NP-complete boundary is labelled: no sparse language crosses this line."><defs><clipPath id="co-np"><ellipse cx="215" cy="182" rx="135" ry="104"/></clipPath></defs><g transform="translate(-16 0)"><ellipse cx="215" cy="66" rx="150" ry="56" fill="#f3dccb" stroke="#d28c63"/><text x="215" y="38" text-anchor="middle" class="hf-b hf-o">NP-hard</text><ellipse cx="215" cy="182" rx="135" ry="104" fill="#dfe9cf" fill-opacity=".55" stroke="#245c4b" stroke-width="1.5"/><ellipse cx="215" cy="66" rx="150" ry="56" fill="#245c4b" fill-opacity=".28" clip-path="url(#co-np)"/><ellipse cx="215" cy="66" rx="150" ry="56" fill="none" stroke="#e48b5c" stroke-width="3" stroke-dasharray="7 5" clip-path="url(#co-np)"/><text x="215" y="104" text-anchor="middle" class="hf-b hf-g">NP-complete</text><ellipse cx="215" cy="250" rx="72" ry="28" fill="#fffefa" stroke="#245c4b" stroke-width="1.5"/><text x="215" y="255" text-anchor="middle" class="hf-b">P</text><text x="100" y="178" class="hf-b hf-g">NPI</text><text x="104" y="240" class="hf-b hf-g">NP</text><circle cx="150" cy="150" r="3.4" fill="#e48b5c"/><circle cx="176" cy="172" r="3.4" fill="#e48b5c"/><circle cx="198" cy="143" r="3.4" fill="#e48b5c"/><circle cx="226" cy="162" r="3.4" fill="#e48b5c"/><circle cx="252" cy="146" r="3.4" fill="#e48b5c"/><circle cx="278" cy="170" r="3.4" fill="#e48b5c"/><circle cx="304" cy="154" r="3.4" fill="#e48b5c"/><circle cx="168" cy="196" r="3.4" fill="#e48b5c"/><circle cx="318" cy="186" r="3.4" fill="#e48b5c"/><circle cx="238" cy="188" r="3.4" fill="#e48b5c"/><circle cx="205" cy="176" r="3.4" fill="#e48b5c"/><circle cx="286" cy="196" r="3.4" fill="#e48b5c"/><circle cx="138" cy="180" r="3.4" fill="#e48b5c"/><circle cx="262" cy="128" r="3.4" fill="#e48b5c"/><circle cx="184" cy="132" r="3.4" fill="#e48b5c"/><text x="230" y="214" text-anchor="middle" class="hf-s">sparse languages in NP ∖ P</text><text x="368" y="122" class="hf-b">Mahaney:</text><text x="368" y="137" class="hf-s">no sparse language</text><text x="368" y="150" class="hf-s">crosses this line</text><path d="M364 132 Q348 124 340 116" fill="none" stroke="#202b30" stroke-width="1"/><text x="368" y="236" class="hf-b">They exist</text><text x="368" y="251" class="hf-s">iff E ≠ NE</text><text x="368" y="264" class="hf-s">(Hartmanis,</text><text x="368" y="277" class="hf-s">Immerman,</text><text x="368" y="290" class="hf-s">Sewelson 1985)</text></g></svg>
+        <figcaption>If $\P \ne \NP$, a sparse language in NP that escapes P cannot reach NP-complete, so it must sit in NPI. This gives intermediate problems for a structural reason rather than by diagonalization.</figcaption>
       </figure>
     </section>
 
@@ -35,72 +35,45 @@
       <div class="wrap article">
         <div class="article-body">
 <script type="text/markdown" data-md="cons-sparse-npi">
-## Sparse sets in NP \ P are NP-intermediate {#sparse-npi}
+## Sparse languages in NP \ P are NP-intermediate {#sparse-npi}
 
 :::corollary
-If $\P \ne \NP$, then every sparse set in $\NP \setminus \P$ is in NPI. In particular, every tally set in $\NP \setminus \P$ is in NPI.
+If $\P \ne \NP$, then every sparse language in $\NP \setminus \P$ is in NPI. In particular, every tally language in $\NP \setminus \P$ is in NPI.
 :::
 
 :::proof
-Let $S$ be sparse with $S \in \NP \setminus \P$. If $S$ were NP-complete, it would be a sparse NP-hard set, so $\P = \NP$ by [Mahaney’s Theorem](4_mahaney.html). So $S$ is in NP, not in P, and not NP-complete.
+Let $S$ be a sparse language such that $S \in \NP \setminus \P$. This means $S \notin \P$. Additionally, if $S$ were $\NP$-complete, it would be a sparse $\NP$-hard language, so $\P = \NP$ by [Mahaney’s Theorem](4_mahaney.html). However, we assumed $\P \neq \NP$, meaning $S$ cannot be $\NP$-complete. Thus, $S \in \NPI$.
 :::
 
-Compare this with [Ladner’s Theorem](2_npi.html). Ladner *constructs* an intermediate set by diagonalization. Mahaney gives a *structural* reason for intermediacy: any sparse set that is hard enough to escape P is automatically too thin to be complete.
+Compare this with [Ladner’s Theorem](2_npi.html). Ladner utilizes diagonalization to construct an intermediate language, which often doesn't tackle the true underlying structure of the complexity class and TM. However, Mahaney gives a structural reason for an intermediate language, sparse languages that escape $\P$, cannot enter $\NPC$. 
 
-**Do such sets exist?** Not provably from $\P \ne \NP$ alone. The question is tied to exponential time. Let $\E = \mathsf{DTIME}(2^{O(n)})$ and $\NE = \mathsf{NTIME}(2^{O(n)})$. Book (1974) showed that $\NP \setminus \P$ contains a tally set if and only if $\E \ne \NE$, and Hartmanis, Immerman and Sewelson (1985) showed the same for sparse sets. The idea is the unary encoding from [Page 3](3_sparse.html#sparse-and-tally-sets): a problem about $n$-bit inputs at exponential time becomes a problem about inputs of length $2^n$, written in unary, at polynomial time.
+**Do such languages exist?** Not provably from $\P \ne \NP$ alone. The question is tied to exponential time. Book (1974) showed that $\NP \setminus \P$ contains a tally language if and only if $\text{E} \ne \text{NE}$, and Hartmanis, Immerman and Sewelson (1985) showed the same for sparse languages. The underlying idea for these proofs is unary encoding, which turns any language into a [tally language](3_sparse.html#sparse-and-tally-sets): a problem about $n$-bit inputs at exponential time becomes a problem about inputs of length $2^n$, written in unary, at polynomial time.
 
-So under the assumption $\E \ne \NE$ (which implies $\P \ne \NP$), there are tally sets in NPI. They are less artificial than $\SAT_H$: for instance, the unary version of any NE-complete problem.
-</script>
-
-<script type="text/markdown" data-md="cons-fortune">
-## Fortune’s theorem: sparse coNP-hard sets {#fortune}
-
-:::theorem (Fortune, 1979)
-If some sparse set $A$ is coNP-hard under Karp reductions, then $\P = \NP$.
-:::
-
-This predates Mahaney and has an easier proof. Here is a proof with the left-set tools from [Page 5](5_mahaney-proof.html).
-
-:::proof
-Since the complement of SAT reduces to $A$, SAT reduces to the complement of $A$ by the same map. Composing as in [Lemma A](5_mahaney-proof.html#lemma-a), there is a polynomial-time $g$ with $Q(u) \notin L$ if and only if $g(Q(u)) \in A$. Define $r$ as before, now using the census of $A$.
-
-Run the algorithm from Page 5 with one change: replace the census rule by
-
-> **Early accept.** If, after the collision rule, more than $r$ candidates remain, accept.
-
-The collision rule is still safe, because Lemma C only used “equal $g$-values mean equal answers.” Early accept is correct: if $\varphi$ were unsatisfiable, every candidate would be outside $L$, so its distinct $g$-values would all lie in $A$, and there would be at most $r$ of them. If the algorithm never accepts early, each level has at most $r$ candidates, $p_k$ is never removed, and the final check is correct as before.
-:::
-
-:::intuition
-For coNP-hardness the sparse set holds the “no” answers instead of the “yes” answers. Too many distinct “no”-looking candidates is impossible, so a crowded level is itself proof of satisfiability.
-:::
-
-@[viz](mahaney-search?mode=fortune "The same search with Fortune’s early-accept rule. Now the sparse set holds the no-answers, so a level crowded with distinct values proves that $\varphi$ is satisfiable.")
+So under the assumption $\text{E} \ne \text{NE}$ (which implies $\P \ne \NP$), there are tally languages in NPI. They are less artificial than $\SAT_H$: for instance, the unary version of any NE-complete problem.
 </script>
 
 <script type="text/markdown" data-md="cons-stronger">
 ## Stronger reductions {#stronger-reductions}
 
-Mahaney’s Theorem is about Karp reductions, where each instance maps to one query. More powerful reductions are allowed to ask several questions of $S$.
+Mahaney’s Theorem is about Karp reductions, where each instance maps to one query. With more powerful reductions, we are allowed to ask several questions of $S$.
 
-| Reduction from SAT to a sparse set | Known consequence | Source |
+| Reduction from SAT to a sparse language | Known consequence | Source |
 | --- | --- | --- |
 | Karp ($\redm$): one query, answer copied | $\P = \NP$ | Mahaney 1982 |
 | Bounded truth-table ($\redbtt$): a constant number of non-adaptive queries | $\P = \NP$ | Ogihara and Watanabe 1991 |
 | Turing ($\redT$): polynomially many adaptive queries | $\NP \subseteq \Ppoly$, so the polynomial hierarchy collapses to $\Sigma_2^p$ | Karp and Lipton 1980 |
 
-**Why Turing reductions are different.** A language is Turing-reducible to a sparse set exactly when it has polynomial-size circuits: the strings of $S$ up to the relevant length can be written down as advice. So a sparse Turing-hard set for NP is equivalent to $\NP \subseteq \Ppoly$. That is believed false, but its only known consequence is a collapse of the polynomial hierarchy, not $\P = \NP$. The collision trick breaks down because an instance’s answer is no longer determined by a single string’s membership in $S$.
-
-The Karp–Lipton collapse has since been strengthened to lower levels (for example, to $\mathsf{ZPP}^{\NP}$ by Köbler and Watanabe). For reductions between bounded truth-table and Turing, results are more partial; Hemaspaandra and Ogihara, Chapter 1, surveys them.
+**Why Turing reductions are different.** A language is Turing-reducible to a sparse language exactly when it has polynomial-size circuits: the strings of $S$ up to the relevant length can be written down as advice. So a sparse Turing-hard language for NP is equivalent to $\NP \subseteq \Ppoly$. That is believed false, but its only known consequence is a collapse of the polynomial hierarchy, not $\P = \NP$.
 </script>
 
 <script type="text/markdown" data-md="cons-takeaways">
-:::takeaways
-- If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is NP-intermediate.
-- Sparse sets in $\NP \setminus \P$ exist exactly when $\E \ne \NE$.
-- The left-set method also proves Fortune’s theorem and extends to bounded truth-table reductions; for Turing reductions we only get a hierarchy collapse.
+:::Takeaways
+- $\NP$ is even more richer than we have previously learned in class. If $\P \neq \NP$, then there exists a whole infinite hierarchy of intermediate degrees between $\P$ and $\NP$-complete classes.
+- Density is a barrier to hardness: sparse languages cannot cross the $\NP$-hard boundary unless $\P = \NP$.
+- These two theorems both show evidence that there could exist $\NP$-intermediate languages, however, they do so in very different ways.
 :::
 </script>
+
         </div>
       </div>
     </section>

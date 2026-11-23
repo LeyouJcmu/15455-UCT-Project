@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Every definition and theorem on the site, key takeaways, and references.">
-  <title>Glossary and Key Takeaways — Complexity Notes</title>
+  <meta name="description" content="Every definition and theorem on the site, with where each is introduced and used, and references.">
+  <title>Glossary — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
@@ -21,12 +21,12 @@
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Page 7 / Glossary</p>
-        <h1 id="page-title">Everything <em>in one place.</em></h1>
-        <p class="hero-copy">Every definition and theorem on the site, with the page where it is introduced and used.</p>
+        <h1 id="page-title"> Every definition and theorem mentioned in the virtual lectures </h1>
+        <p class="hero-copy">Every definition and theorem mentioned in the virtual lectures, with the page where it is introduced and used.</p>
         <a class="button" href="#content">Browse the glossary <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
-        <svg viewBox="0 0 460 290" role="img" aria-label="Timeline from 1975 to 1991: Ladner, Berman–Hartmanis, Berman, Fortune, Karp–Lipton, Mahaney highlighted, Ogihara–Watanabe."><line x1="66" y1="16" x2="66" y2="276" stroke="#b6c4a8" stroke-width="2"/><text x="50" y="31" text-anchor="end" class="hf-m hf-g" font-size="15">1975</text><circle cx="66" cy="26" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="27" class="hf-b">Ladner</text><text x="84" y="41" class="hf-s">P ≠ NP&#160;⇒&#160;NPI ≠ ∅</text><text x="50" y="71" text-anchor="end" class="hf-m hf-g" font-size="15">1977</text><circle cx="66" cy="66" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="67" class="hf-b">Berman–Hartmanis</text><text x="84" y="81" class="hf-s">conjecture: all NP-complete sets are p-isomorphic</text><text x="50" y="111" text-anchor="end" class="hf-m hf-g" font-size="15">1978</text><circle cx="66" cy="106" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="107" class="hf-b">Berman</text><text x="84" y="121" class="hf-s">tally NP-hard set&#160;⇒&#160;P = NP</text><text x="50" y="151" text-anchor="end" class="hf-m hf-g" font-size="15">1979</text><circle cx="66" cy="146" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="147" class="hf-b">Fortune</text><text x="84" y="161" class="hf-s">sparse coNP-hard set&#160;⇒&#160;P = NP</text><text x="50" y="191" text-anchor="end" class="hf-m hf-g" font-size="15">1980</text><circle cx="66" cy="186" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="187" class="hf-b">Karp–Lipton</text><text x="84" y="201" class="hf-s">NP ⊆ P/poly&#160;⇒&#160;PH = Σ₂ᵖ</text><rect x="54" y="210" width="398" height="38" rx="3" fill="#d9e7a5"/><text x="50" y="231" text-anchor="end" class="hf-m hf-g" font-size="15">1982</text><circle cx="66" cy="226" r="6" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="227" class="hf-b">Mahaney</text><text x="84" y="241" class="hf-s">sparse NP-hard set&#160;⇒&#160;P = NP</text><text x="50" y="271" text-anchor="end" class="hf-m hf-g" font-size="15">1991</text><circle cx="66" cy="266" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="267" class="hf-b">Ogihara–Watanabe</text><text x="84" y="281" class="hf-s">same for ≤btt reductions, via left sets</text></svg>
+        <svg viewBox="0 0 460 290" role="img" aria-label="Timeline from 1974 to 1991: Book, Ladner, Berman–Hartmanis, Karp–Lipton, Mahaney highlighted, Hartmanis–Immerman–Sewelson, Ogihara–Watanabe."><line x1="66" y1="16" x2="66" y2="276" stroke="#b6c4a8" stroke-width="2"/><text x="50" y="31" text-anchor="end" class="hf-m hf-g" font-size="15">1974</text><circle cx="66" cy="26" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="27" class="hf-b">Book</text><text x="84" y="41" class="hf-s">tally languages in NP − P&#160;⇔&#160;E ≠ NE</text><text x="50" y="71" text-anchor="end" class="hf-m hf-g" font-size="15">1975</text><circle cx="66" cy="66" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="67" class="hf-b">Ladner</text><text x="84" y="81" class="hf-s">P ≠ NP&#160;⇒&#160;NPI ≠ ∅</text><text x="50" y="111" text-anchor="end" class="hf-m hf-g" font-size="15">1977</text><circle cx="66" cy="106" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="107" class="hf-b">Berman–Hartmanis</text><text x="84" y="121" class="hf-s">conjecture: all NP-complete languages are p-isomorphic</text><text x="50" y="151" text-anchor="end" class="hf-m hf-g" font-size="15">1980</text><circle cx="66" cy="146" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="147" class="hf-b">Karp–Lipton</text><text x="84" y="161" class="hf-s">NP ⊆ P/poly&#160;⇒&#160;PH = Σ₂ᵖ</text><rect x="54" y="170" width="398" height="38" rx="3" fill="#d9e7a5"/><text x="50" y="191" text-anchor="end" class="hf-m hf-g" font-size="15">1982</text><circle cx="66" cy="186" r="6" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="187" class="hf-b">Mahaney</text><text x="84" y="201" class="hf-s">sparse NP-hard language&#160;⇒&#160;P = NP</text><text x="50" y="231" text-anchor="end" class="hf-m hf-g" font-size="15">1985</text><circle cx="66" cy="226" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="227" class="hf-b">Hartmanis–Immerman–Sewelson</text><text x="84" y="241" class="hf-s">same as Book, for sparse languages</text><text x="50" y="271" text-anchor="end" class="hf-m hf-g" font-size="15">1991</text><circle cx="66" cy="266" r="4.5" fill="#245c4b" stroke="#eef0e6" stroke-width="2"/><text x="84" y="267" class="hf-b">Ogihara–Watanabe</text><text x="84" y="281" class="hf-s">same for ≤btt reductions, via left sets</text></svg>
         <figcaption>The results on this site in the order they were proved. Mahaney’s Theorem, the centerpiece, settled the sparse case of the Berman–Hartmanis prediction.</figcaption>
       </figure>
     </section>
@@ -37,7 +37,7 @@
 <script type="text/markdown" data-md="glossary-definitions">
 ## Assumed background {#assumed-background}
 
-Standard 15-455 material, collected here for reference. The site uses these without re-proving them.
+Here are the background terms/definitions that I expect viewers of this lecture to know:
 
 | Term | Definition | Used on |
 | --- | --- | --- |
@@ -49,45 +49,73 @@ Standard 15-455 material, collected here for reference. The site uses these with
 
 ## Definitions
 
+Listed in the order they appear on the site.
+
+### Ladner’s Theorem (Page 2)
+
 | Term | Definition | Introduced | Used on |
 | --- | --- | --- | --- |
-| $\Sigma^{\le n}$, $A^{\le n}$ | Strings of length at most $n$; those in $A$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
-| Census $c_A(n)$ | $|A^{\le n}|$, the number of strings in $A$ of length at most $n$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
-| Machine enumeration $M_1, M_2, \dots$ | A fixed list of all Turing machines, each appearing infinitely often, with efficient universal simulation | [Page 2](2_npi.html#construction) | 2 |
-| Sparse set | $c_S(n) \le p(n)$ for some polynomial $p$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3–6 |
-| Tally set | A subset of $\{1\}^*$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 6 |
-| Self-reducibility of SAT | $\varphi$ is satisfiable iff $\varphi[x_1{=}0]$ or $\varphi[x_1{=}1]$ is | [Page 3](3_sparse.html#self-reducibility-of-sat) | 5 |
-| NPI | $\NP \setminus (\P \cup \NPC)$ | [Page 2](2_npi.html#theorem) | 2, 6 |
-| $\SAT_H$ | Strings $\psi\,0\,1^{|\psi|^{H(|\psi|)}}$ with $\psi \in \SAT$ | [Page 2](2_npi.html#construction) | 2 |
-| p-isomorphic ($\iso$) | Related by a polynomial-time bijection with polynomial-time inverse | [Page 3](3_sparse.html) | 3 |
-| Paddable | Has an invertible polynomial-time padding function | [Page 3](3_sparse.html#all-known-np-complete-sets-are-p-isomorphic) | 3 |
-| Left set $L$ | Pairs $\enc{\varphi, y}$ with a satisfying assignment $z \ge y$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
-| $Q(u)$ | The query $\enc{\varphi, u0^{n-k}}$ for prefix $u$ of length $k$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
-| $p_k$ | The length-$k$ prefix of the largest satisfying assignment $z^*$ | [Page 5](5_mahaney-proof.html#setup) | 5, 6 |
-| $r$ | $p(q(\ell))$, the most $g$-values that can lie in $S$ | [Page 5](5_mahaney-proof.html#lemma-a) | 5, 6 |
+| NPI | $\NP \setminus (\P \cup \NPC)$: languages in NP that are neither in P nor NP-complete (*NP-intermediate*) | [Page 2](2_npi.html#theorem) | 1, 2, 6 |
+| Machine enumeration $M_1, M_2, \dots$ | A fixed list of all deterministic Turing machines, each appearing infinitely often; a universal machine simulates $M_i$ for $t$ steps in time polynomial in $i$ and $t$ | [Page 2](2_npi.html#construction) | 2 |
+| $\ell(n)$ | $\lfloor \log \log n \rfloor$, the largest value $H(n)$ may take | [Page 2](2_npi.html#construction) | 2 |
+| $H(n)$ | The smallest $i \le \ell(n)$ such that $M_i$ correctly decides $\SAT_H$ within $i \cdot \lvert x \rvert^i + i$ steps on every $x$ with $\lvert x \rvert \le \log n$; $\ell(n)$ if no such $i$ exists | [Page 2](2_npi.html#construction) | 2 |
+| $\SAT_H$ | $\{\psi\,0\,1^{m^{H(m)}} : \psi \in \SAT,\ m = \lvert\psi\rvert\}$, SAT padded by an amount controlled by $H$ | [Page 2](2_npi.html#construction) | 2 |
+
+### Sparse languages (Page 3)
+
+| Term | Definition | Introduced | Used on |
+| --- | --- | --- | --- |
+| $\Sigma^{\le n}$, $A^{\le n}$ | Strings of length at most $n$; those that are in $A$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
+| Census $c_A(n)$ | $\lvert A^{\le n}\rvert$, the number of strings in $A$ of length at most $n$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 5 |
+| Sparse language | $c_S(n) \le p(n)$ for some polynomial $p$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3–6 |
+| Tally language | A subset of $\{1\}^*$; every tally language is sparse | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3, 6 |
+| Dense | Not sparse; e.g. $c_{\SAT}(n) = 2^{\Omega(n)}$ | [Page 3](3_sparse.html#sparse-and-tally-sets) | 3 |
+| p-isomorphic ($\iso$) | $A \iso B$ if a bijection $f$ with $f$, $f^{-1}$ polynomial-time computable satisfies $x \in A \iff f(x) \in B$ | [Page 3](3_sparse.html#polynomial-isomorphism) | 3 |
+| Paddable | $A$ has a polynomial-time, polynomial-time-invertible $\mathrm{pad}(x, y)$ with $\mathrm{pad}(x, y) \in A \iff x \in A$ | [Page 3](3_sparse.html#all-known-np-complete-languages-are-p-isomorphic) | 3 |
+| Self-reducibility tree | Binary tree of partial assignments to $x_1, \dots, x_n$; $\varphi$ is satisfiable iff $\varphi[x_1{=}0]$ or $\varphi[x_1{=}1]$ is | [Page 3](3_sparse.html#self-reducibility-of-sat) | 3–5 |
+
+### Mahaney’s Theorem (Pages 4–5)
+
+| Term | Definition | Introduced | Used on |
+| --- | --- | --- | --- |
+| $f$ | The assumed Karp reduction from $\SAT$ to the sparse language $S$ | [Page 5](5_mahaney-proof.html#setup) | 5 |
+| Left set $L$ | $\{\enc{\varphi, y} : \text{some satisfying } z \text{ has } z \ge y\}$, with $\ge$ lexicographic | [Page 5](5_mahaney-proof.html#setup) | 4, 5 |
+| $z^*$ | The lexicographically largest satisfying assignment of $\varphi$ | [Page 4](4_mahaney.html#the-lemmas) | 4, 5 |
+| $p_k$ | $z^*$’s length-$k$ prefix, the one candidate the algorithm must never delete | [Page 5](5_mahaney-proof.html#setup) | 5 |
+| $Q(u)$ | $\enc{\varphi, u0^{n-k}}$, the query for the smallest assignment below prefix $u$ of length $k$ | [Page 5](5_mahaney-proof.html#setup) | 4, 5 |
+| $g$ | The Karp reduction from $L$ to $S$, obtained from $L \redm \SAT$ (Cook–Levin) followed by $f$ | [Page 5](5_mahaney-proof.html#lemma-a) | 4, 5 |
+| $q$ | A polynomial with $\lvert g(w)\rvert \le q(\lvert w\rvert)$ | [Page 5](5_mahaney-proof.html#lemma-a) | 5 |
+| $\ell$ | $\lvert\enc{\varphi, 0^n}\rvert$, the common length of every query $Q(u)$ | [Page 5](5_mahaney-proof.html#lemma-a) | 5 |
+| $r$ | $p(q(\ell))$: the most strings of $S$ any $g(Q(u))$ can equal, and so the cap on candidates per level | [Page 5](5_mahaney-proof.html#lemma-a) | 4, 5 |
+| $C_k$ | The candidate prefixes of length $k$ kept by the algorithm | [Page 5](5_mahaney-proof.html#algorithm) | 5 |
+| Collision rule | If two candidates have the same $g$-value, delete the smaller (safe by Lemma C) | [Page 5](5_mahaney-proof.html#lemma-c) | 5 |
+| Census rule | After the collision rule, keep only the $r$ smallest candidates (safe by Lemma D) | [Page 5](5_mahaney-proof.html#lemma-d) | 5 |
+
+### Extensions (Page 6)
+
+| Term | Definition | Introduced | Used on |
+| --- | --- | --- | --- |
+| $\E$ | $\mathsf{DTIME}(2^{O(n)})$: languages decided deterministically in time $2^{cn}$ for some constant $c$ | [Page 6](6_consequences.html#sparse-npi) | 6 |
+| $\NE$ | $\mathsf{NTIME}(2^{O(n)})$: the nondeterministic version of $\E$ | [Page 6](6_consequences.html#sparse-npi) | 6 |
+| Bounded truth-table reduction ($\redbtt$) | A reduction that asks a constant number of non-adaptive questions to the target language | [Page 6](6_consequences.html#stronger-reductions) | 6 |
+| Turing reduction ($\redT$) | A polynomial-time algorithm that may ask polynomially many adaptive questions to the target language | [Page 6](6_consequences.html#stronger-reductions) | 6 |
+| $\Ppoly$ | Languages decided by polynomial-size circuit families | [Page 6](6_consequences.html#stronger-reductions) | 6 |
 </script>
 
 <script type="text/markdown" data-md="glossary-theorems">
 ## Theorems
 
-| Theorem | Statement | Page |
+| Result | Statement | Page |
 | --- | --- | --- |
-| Ladner (1975) | If $\P \ne \NP$, then $\NPI \ne \varnothing$ | [2](2_npi.html) |
-| Berman–Hartmanis (1977) | Paddable sets that reduce to each other are p-isomorphic | [3](3_sparse.html) |
-| Mahaney (1982) | If a sparse set is NP-hard, then $\P = \NP$ | [4](4_mahaney.html), [5](5_mahaney-proof.html) |
-| Corollary | If $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is in NPI | [6](6_consequences.html#sparse-npi) |
-| Fortune (1979) | If a sparse set is coNP-hard, then $\P = \NP$ | [6](6_consequences.html#fortune) |
-| Ogihara–Watanabe (1991) | If a sparse set is NP-hard under $\redbtt$, then $\P = \NP$ | [6](6_consequences.html#stronger-reductions) |
+| Ladner (1975) | If $\P \ne \NP$, then $\NPI \ne \varnothing$ | [2](2_npi.html#theorem) |
+| Berman–Hartmanis (1977) | Paddable languages that reduce to each other are p-isomorphic | [3](3_sparse.html#all-known-np-complete-languages-are-p-isomorphic) |
+| Berman–Hartmanis Conjecture (1977, open) | All NP-complete languages are p-isomorphic; it would imply no sparse language is NP-complete | [3](3_sparse.html#all-known-np-complete-languages-are-p-isomorphic) |
+| Mahaney (1982) | If $\SAT \redm S$ for a sparse language $S$, then $\P = \NP$ | [4](4_mahaney.html), [5](5_mahaney-proof.html#proof-of-mahaney) |
+| Corollary of Mahaney | If $\P \ne \NP$, no sparse language is NP-hard under Karp reductions | [4](4_mahaney.html) |
+| Corollary: sparse NPI | If $\P \ne \NP$, every sparse language in $\NP \setminus \P$ is in NPI | [6](6_consequences.html#sparse-npi) |
+| Book (1974); Hartmanis–Immerman–Sewelson (1985) | $\NP \setminus \P$ contains a tally (resp. sparse) language iff $\E \ne \NE$, where $\E = \mathsf{DTIME}(2^{O(n)})$ | [6](6_consequences.html#sparse-npi) |
+| Ogihara–Watanabe (1991) | If $\SAT \redbtt S$ for a sparse language $S$, then $\P = \NP$ | [6](6_consequences.html#stronger-reductions) |
 | Karp–Lipton (1980) | If $\NP \subseteq \Ppoly$, then $\PH = \Sigma_2^p$ | [6](6_consequences.html#stronger-reductions) |
-</script>
-
-<script type="text/markdown" data-md="glossary-takeaways">
-## Key takeaways
-
-1. **NP is not a two-way split.** If $\P \ne \NP$, then problems strictly between P and NP-complete exist (Ladner).
-2. **Density is a barrier to hardness.** A Karp reduction from SAT into a sparse set must collide heavily, and collisions reveal answers. So a sparse NP-hard set would make $\P = \NP$ (Mahaney).
-3. **The left set is the key tool.** Searching for the rightmost satisfying assignment turns the “yes” region into an initial segment, which collisions and the census can prune safely.
-4. **The two theorems meet.** Under $\P \ne \NP$, every sparse set in $\NP \setminus \P$ is NP-intermediate.
 </script>
 
 <!-- References checked against publisher / DBLP / Crossref records, November 2026. -->
@@ -104,15 +132,11 @@ Standard 15-455 material, collected here for reference. The site uses these with
 - R. E. Ladner, “On the structure of polynomial time reducibility,” *Journal of the ACM* 22(1):155–171, 1975.
 - R. V. Book, “Tally languages and complexity classes,” *Information and Control* 26:186–193, 1974.
 - L. Berman and J. Hartmanis, “On isomorphisms and density of NP and other complete sets,” *SIAM Journal on Computing* 6(2):305–322, 1977.
-- P. Berman, “Relationship between density and deterministic complexity of NP-complete languages,” *ICALP 1978*, LNCS 62, pp. 63–71, 1978.
-- S. Fortune, “A note on sparse complete sets,” *SIAM Journal on Computing* 8(3):431–433, 1979.
 - R. M. Karp and R. J. Lipton, “Some connections between nonuniform and uniform complexity classes,” *STOC 1980*, pp. 302–309, 1980.
 - S. R. Mahaney, “Sparse complete sets for NP: Solution of a conjecture of Berman and Hartmanis,” *Journal of Computer and System Sciences* 25(2):130–143, 1982.
 - J. Hartmanis, N. Immerman and V. Sewelson, “Sparse sets in NP−P: EXPTIME versus NEXPTIME,” *Information and Control* 65(2/3):158–181, 1985.
-- D. Joseph and P. Young, “Some remarks on witness functions for nonpolynomial and noncomplete sets in NP,” *Theoretical Computer Science* 39:225–237, 1985.
 - R. B. Boppana, J. Håstad and S. Zachos, “Does co-NP have short interactive proofs?” *Information Processing Letters* 25(2):127–132, 1987.
 - M. Ogiwara (now Ogihara) and O. Watanabe, “On polynomial-time bounded truth-table reducibility of NP sets to sparse sets,” *SIAM Journal on Computing* 20(3):471–483, 1991.
-- J. Köbler and O. Watanabe, “New collapse consequences of NP having small circuits,” *SIAM Journal on Computing* 28(1):311–324, 1998.
 - L. Babai, “Graph isomorphism in quasipolynomial time,” *STOC 2016*, pp. 684–697, 2016.
 </script>
         </div>

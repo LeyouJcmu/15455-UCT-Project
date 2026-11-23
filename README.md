@@ -8,11 +8,11 @@ A GitHub Pages teaching site on NP-intermediate problems, Ladner's Theorem and M
 |---|------|-------|
 | 1 | `1_home.html` | Home: is NP split cleanly in two? |
 | 2 | `2_npi.html` | NPI and Ladner's Theorem (full proof) |
-| 3 | `3_sparse.html` | Sparse and tally sets, self-reducibility of SAT, the Berman–Hartmanis conjecture |
+| 3 | `3_sparse.html` | Sparse and tally languages, self-reducibility of SAT, the Berman–Hartmanis conjecture |
 | 4 | `4_mahaney.html` | Mahaney's Theorem, Part I: statement and strategy |
 | 5 | `5_mahaney-proof.html` | Mahaney's Theorem, Part II: the proof |
 | 6 | `6_consequences.html` | Consequences and extensions |
-| 7 | `7_glossary.html` | Glossary, key takeaways, references |
+| 7 | `7_glossary.html` | Glossary and references |
 | – | `authoring.html` | Authoring guide with live examples (not linked from the site) |
 
 Shared files: `style.css` (all styling), `site.js` (navigation, Markdown + LaTeX rendering, footnotes, edit mode), `media/` (images and videos).

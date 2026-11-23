@@ -151,9 +151,9 @@ def sparse():
     b.append('<text x="374" y="186" class="hf-s">exponential</text>')
     b.append('<text x="374" y="199" class="hf-s">gap</text>')
     return fig(('viewBox="0 0 460 285"', ''.join(b)),
-               'Census functions. A p-isomorphism keeps the census within a polynomial, so no sparse set can be p-isomorphic to SAT. '
-               'If the Berman–Hartmanis conjecture holds, no sparse set is NP-complete.',
-               'Plot of census against length. SAT rises exponentially; a sparse set stays below a polynomial; a tally set stays below n plus 1. A gap between SAT and sparse is labelled no p-isomorphism.')
+               'Census functions. A p-isomorphism keeps the census within a polynomial, so no sparse language can be p-isomorphic to SAT. '
+               'If the Berman–Hartmanis conjecture holds, no sparse language is NP-complete.',
+               'Plot of census against length. SAT rises exponentially; a sparse language stays below a polynomial; a tally language stays below n plus 1. A gap between SAT and sparse is labelled no p-isomorphism.')
 
 
 # ------------------------------------------------------------------ 5. Mahaney I: forced collisions
@@ -162,7 +162,7 @@ def mahaney1():
     b = []
     b.append('<text x="74" y="16" text-anchor="middle" class="hf-h">FORMULAS</text>')
     b.append('<text x="74" y="31" text-anchor="middle" class="hf-s">2<tspan dy="-5" font-size="8">Ω(n)</tspan><tspan dy="5"> satisfiable ones</tspan></text>')
-    b.append('<text x="392" y="16" text-anchor="middle" class="hf-h">SPARSE SET S</text>')
+    b.append('<text x="454" y="16" text-anchor="end" class="hf-h">SPARSE LANGUAGE S</text>')
     b.append('<text x="392" y="31" text-anchor="middle" class="hf-s">only polynomially many</text>')
     s_pts = [(392, 82 + 40 * i) for i in range(5)]
     b.append(f'<ellipse cx="392" cy="162" rx="34" ry="112" fill="#fffefa" stroke="{GREEN}" stroke-width="1.5"/>')
@@ -194,9 +194,9 @@ def mahaney1():
     b.append(f'<circle cx="26" cy="305" r="4" fill="{GREEN}"/><text x="35" y="309" class="hf-s">satisfiable</text>')
     b.append(f'<circle cx="112" cy="305" r="4" fill="#c3c9c3"/><text x="121" y="309" class="hf-s">unsatisfiable (sent outside S)</text>')
     return fig(('viewBox="0 0 460 315"', ''.join(b)),
-               'A reduction from SAT to a sparse set has to squeeze exponentially many yes-instances into polynomially many strings, '
+               'A reduction from SAT to a sparse language has to squeeze exponentially many yes-instances into polynomially many strings, '
                'so many formulas share an image. Each collision says two formulas have the same answer, and the proof gets that without ever deciding $S$.',
-               'Many green dots for satisfiable formulas on the left, with lines funnelling into five points of a sparse set S on the right. Two highlighted formulas map to the same point.')
+               'Many green dots for satisfiable formulas on the left, with lines funnelling into five points of a sparse language S on the right. Two highlighted formulas map to the same point.')
 
 
 # ------------------------------------------------------------------ 6. Mahaney II: the pruned search
@@ -247,11 +247,11 @@ def mahaney2():
     b.append(f'<line x1="386" y1="{y}" x2="406" y2="{y}" stroke="{GREEN}" stroke-width="3.5"/><text x="412" y="{y+4}" class="hf-s">p<tspan dy="3" font-size="8">k</tspan></text>')
     return fig(('viewBox="0 0 460 312"', ''.join(b)),
                'The pruned search with $r = 2$. At each level, collisions remove the smaller of two prefixes with the same $g$-value, and the census rule keeps the $r$ smallest. '
-               'The true prefix $p_k$ (thick path) is never removed. Level 3 matches the worked example below.',
+               'The true prefix $p_k$ (thick path) is never removed.',
                'A binary tree four levels deep. At each level two nodes are kept and the rest are crossed out by the collision rule or dropped by the census rule. A thick path from the root to 1000 marks the prefixes of z star.')
 
 
-# ------------------------------------------------------------------ 7. Consequences: sparse sets live in NPI
+# ------------------------------------------------------------------ 7. Consequences: sparse languages live in NPI
 def consequences():
     b = ['<defs><clipPath id="co-np"><ellipse cx="215" cy="182" rx="135" ry="104"/></clipPath></defs><g transform="translate(-16 0)">']
     b.append(f'<ellipse cx="215" cy="66" rx="150" ry="56" fill="{HARD_FILL}" stroke="{HARD_STROKE}"/>')
@@ -267,9 +267,9 @@ def consequences():
     for x, y in [(150, 150), (176, 172), (198, 143), (226, 162), (252, 146), (278, 170), (304, 154), (168, 196),
                  (318, 186), (238, 188), (205, 176), (286, 196), (138, 180), (262, 128), (184, 132)]:
         b.append(f'<circle cx="{x}" cy="{y}" r="3.4" fill="{ORANGE}"/>')
-    b.append('<text x="230" y="214" text-anchor="middle" class="hf-s">sparse sets in NP ∖ P</text>')
+    b.append('<text x="230" y="214" text-anchor="middle" class="hf-s">sparse languages in NP ∖ P</text>')
     b.append('<text x="368" y="122" class="hf-b">Mahaney:</text>')
-    b.append('<text x="368" y="137" class="hf-s">no sparse set</text>')
+    b.append('<text x="368" y="137" class="hf-s">no sparse language</text>')
     b.append('<text x="368" y="150" class="hf-s">crosses this line</text>')
     b.append(f'<path d="M364 132 Q348 124 340 116" fill="none" stroke="{INK}" stroke-width="1"/>')
     b.append('<text x="368" y="236" class="hf-b">They exist</text>')
@@ -279,19 +279,19 @@ def consequences():
     b.append('<text x="368" y="290" class="hf-s">Sewelson 1985)</text>')
     b.append('</g>')
     return fig(('viewBox="0 0 460 298"', ''.join(b)),
-               'If $\\P \\ne \\NP$, a sparse set in NP that escapes P cannot reach NP-complete, so it must sit in NPI. '
+               'If $\\P \\ne \\NP$, a sparse language in NP that escapes P cannot reach NP-complete, so it must sit in NPI. '
                'This gives intermediate problems for a structural reason rather than by diagonalization.',
-               'The P not equal NP picture. Orange dots for sparse sets fill the NPI band between P and NP-complete. A dashed line at the NP-complete boundary is labelled: no sparse set crosses this line.')
+               'The P not equal NP picture. Orange dots for sparse languages fill the NPI band between P and NP-complete. A dashed line at the NP-complete boundary is labelled: no sparse language crosses this line.')
 
 
 # ------------------------------------------------------------------ 8. Glossary: timeline
 def glossary():
-    ev = [('1975', 'Ladner', 'P ≠ NP&#160;⇒&#160;NPI ≠ ∅'),
-          ('1977', 'Berman–Hartmanis', 'conjecture: all NP-complete sets are p-isomorphic'),
-          ('1978', 'Berman', 'tally NP-hard set&#160;⇒&#160;P = NP'),
-          ('1979', 'Fortune', 'sparse coNP-hard set&#160;⇒&#160;P = NP'),
+    ev = [('1974', 'Book', 'tally languages in NP − P&#160;⇔&#160;E ≠ NE'),
+          ('1975', 'Ladner', 'P ≠ NP&#160;⇒&#160;NPI ≠ ∅'),
+          ('1977', 'Berman–Hartmanis', 'conjecture: all NP-complete languages are p-isomorphic'),
           ('1980', 'Karp–Lipton', 'NP ⊆ P/poly&#160;⇒&#160;PH = Σ₂ᵖ'),
-          ('1982', 'Mahaney', 'sparse NP-hard set&#160;⇒&#160;P = NP'),
+          ('1982', 'Mahaney', 'sparse NP-hard language&#160;⇒&#160;P = NP'),
+          ('1985', 'Hartmanis–Immerman–Sewelson', 'same as Book, for sparse languages'),
           ('1991', 'Ogihara–Watanabe', 'same for ≤btt reductions, via left sets')]
     b = [f'<line x1="66" y1="16" x2="66" y2="276" stroke="#b6c4a8" stroke-width="2"/>']
     for i, (yr, who, what) in enumerate(ev):
@@ -305,7 +305,7 @@ def glossary():
         b.append(f'<text x="84" y="{y+15}" class="hf-s">{what}</text>')
     return fig(('viewBox="0 0 460 290"', ''.join(b)),
                'The results on this site in the order they were proved. Mahaney’s Theorem, the centerpiece, settled the sparse case of the Berman–Hartmanis prediction.',
-               'Timeline from 1975 to 1991: Ladner, Berman–Hartmanis, Berman, Fortune, Karp–Lipton, Mahaney highlighted, Ogihara–Watanabe.')
+               'Timeline from 1974 to 1991: Book, Ladner, Berman–Hartmanis, Karp–Lipton, Mahaney highlighted, Hartmanis–Immerman–Sewelson, Ogihara–Watanabe.')
 
 
 PAGES = {'1_home.html': home, '2_npi.html': ladner, '3_sparse.html': sparse,

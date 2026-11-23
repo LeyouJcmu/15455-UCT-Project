@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f5f2eb">
-  <meta name="description" content="Mahaney's Theorem, Part II: the complete left-set proof that a sparse NP-hard set implies P = NP.">
+  <meta name="description" content="Mahaney's Theorem, Part II: the complete left-set proof that a sparse NP-hard language implies P = NP.">
   <title>Mahaney's Theorem, Part II — Complexity Notes</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
   <link rel="stylesheet" href="style.css">
@@ -21,13 +21,13 @@
     <section class="wrap hero" aria-labelledby="page-title">
       <div>
         <p class="eyebrow">Page 5 / Mahaney’s Theorem, Part II</p>
-        <h1 id="page-title">The <em>proof.</em></h1>
-        <p class="hero-copy">Given a sparse NP-hard set, we build a polynomial-time algorithm for SAT that walks down the self-reducibility tree keeping at most $r$ nodes per level. This page proves each lemma from <a href="4_mahaney.html">Page 4</a> and then the theorem.</p>
+        <h1 id="page-title">The <em>full proof.</em></h1>
+        <p class="hero-copy"> Given a sparse NP-hard language, we build a polynomial-time algorithm for $\SAT$, using a pruning approach on a walk down the self-reducibility tree, keeping at most $r$ (polynomially bounded) nodes per level. This page proves each lemma from <a href="4_mahaney.html">Page 4</a> and then the theorem.</p>
         <a class="button" href="#content">Start with the setup <span aria-hidden="true">↓</span></a>
       </div>
       <figure class="hero-figure">
         <svg viewBox="0 0 460 312" role="img" aria-label="A binary tree four levels deep. At each level two nodes are kept and the rest are crossed out by the collision rule or dropped by the census rule. A thick path from the root to 1000 marks the prefixes of z star."><line x1="230" y1="30" x2="130" y2="82" stroke="#aab5ae" stroke-width="1.3"/><line x1="230" y1="30" x2="330" y2="82" stroke="#245c4b" stroke-width="3.5"/><line x1="130" y1="82" x2="78" y2="134" stroke="#aab5ae" stroke-width="1.3"/><line x1="130" y1="82" x2="178" y2="134" stroke="#aab5ae" stroke-width="1.3"/><line x1="330" y1="82" x2="282" y2="134" stroke="#245c4b" stroke-width="3.5"/><line x1="330" y1="82" x2="382" y2="134" stroke="#aab5ae" stroke-width="1.3"/><line x1="178" y1="134" x2="128" y2="186" stroke="#aab5ae" stroke-width="1.3"/><line x1="178" y1="134" x2="200" y2="186" stroke="#aab5ae" stroke-width="1.3"/><line x1="282" y1="134" x2="262" y2="186" stroke="#245c4b" stroke-width="3.5"/><line x1="282" y1="134" x2="334" y2="186" stroke="#aab5ae" stroke-width="1.3"/><line x1="200" y1="186" x2="170" y2="238" stroke="#aab5ae" stroke-width="1.3"/><line x1="200" y1="186" x2="215" y2="238" stroke="#aab5ae" stroke-width="1.3"/><line x1="262" y1="186" x2="258" y2="238" stroke="#245c4b" stroke-width="3.5"/><line x1="262" y1="186" x2="302" y2="238" stroke="#aab5ae" stroke-width="1.3"/><path d="M128 194 Q195 222 262 194" fill="none" stroke="#e48b5c" stroke-width="1.4" stroke-dasharray="3 3"/><circle cx="230" cy="30" r="7" fill="#245c4b"/><circle cx="130" cy="82" r="7" fill="#245c4b"/><text x="119" y="86" text-anchor="end" class="hf-mono">0</text><circle cx="330" cy="82" r="7" fill="#245c4b"/><text x="341" y="86" text-anchor="start" class="hf-mono">1</text><circle cx="78" cy="134" r="7" fill="#fffefa" stroke="#e48b5c" stroke-width="1.6"/><path d="M74.5 130.5l7 7M81.5 130.5l-7 7" stroke="#e48b5c" stroke-width="1.6"/><text x="67" y="138" text-anchor="end" class="hf-mono">00</text><circle cx="178" cy="134" r="7" fill="#245c4b"/><text x="167" y="138" text-anchor="end" class="hf-mono">01</text><circle cx="282" cy="134" r="7" fill="#245c4b"/><text x="293" y="138" text-anchor="start" class="hf-mono">10</text><circle cx="382" cy="134" r="7" fill="#fffefa" stroke="#9aa8a0" stroke-width="1.4" stroke-dasharray="2 2"/><text x="393" y="138" text-anchor="start" class="hf-mono">11</text><circle cx="128" cy="186" r="7" fill="#fffefa" stroke="#e48b5c" stroke-width="1.6"/><path d="M124.5 182.5l7 7M131.5 182.5l-7 7" stroke="#e48b5c" stroke-width="1.6"/><text x="117" y="190" text-anchor="end" class="hf-mono">010</text><circle cx="200" cy="186" r="7" fill="#245c4b"/><text x="189" y="190" text-anchor="end" class="hf-mono">011</text><circle cx="262" cy="186" r="7" fill="#245c4b"/><text x="273" y="190" text-anchor="start" class="hf-mono">100</text><circle cx="334" cy="186" r="7" fill="#fffefa" stroke="#9aa8a0" stroke-width="1.4" stroke-dasharray="2 2"/><text x="345" y="190" text-anchor="start" class="hf-mono">101</text><circle cx="170" cy="238" r="7" fill="#fffefa" stroke="#e48b5c" stroke-width="1.6"/><path d="M166.5 234.5l7 7M173.5 234.5l-7 7" stroke="#e48b5c" stroke-width="1.6"/><text x="170" y="258" text-anchor="middle" class="hf-mono">0110</text><circle cx="215" cy="238" r="7" fill="#245c4b"/><text x="215" y="258" text-anchor="middle" class="hf-mono">0111</text><circle cx="258" cy="238" r="7" fill="#245c4b"/><text x="258" y="258" text-anchor="middle" class="hf-mono">1000</text><circle cx="302" cy="238" r="7" fill="#fffefa" stroke="#9aa8a0" stroke-width="1.4" stroke-dasharray="2 2"/><text x="302" y="258" text-anchor="middle" class="hf-mono">1001</text><text x="452" y="34" text-anchor="end" class="hf-s">k = 0</text><text x="452" y="86" text-anchor="end" class="hf-s">k = 1</text><text x="452" y="138" text-anchor="end" class="hf-s">k = 2</text><text x="452" y="190" text-anchor="end" class="hf-s">k = 3</text><text x="452" y="242" text-anchor="end" class="hf-s">k = 4</text><text x="258" y="274" text-anchor="middle" class="hf-b hf-m hf-g">z* = 1000</text><circle cx="16" cy="300" r="5" fill="#245c4b"/><text x="26" y="304" class="hf-s">kept (≤ r = 2 per level)</text><circle cx="170" cy="300" r="5" fill="#fffefa" stroke="#e48b5c" stroke-width="1.5"/><text x="180" y="304" class="hf-s">collision (- - same g)</text><circle cx="296" cy="300" r="5" fill="#fffefa" stroke="#9aa8a0" stroke-dasharray="2 2"/><text x="306" y="304" class="hf-s">census rule</text><line x1="386" y1="300" x2="406" y2="300" stroke="#245c4b" stroke-width="3.5"/><text x="412" y="304" class="hf-s">p<tspan dy="3" font-size="8">k</tspan></text></svg>
-        <figcaption>The pruned search with $r = 2$. At each level, collisions remove the smaller of two prefixes with the same $g$-value, and the census rule keeps the $r$ smallest. The true prefix $p_k$ (thick path) is never removed. Level 3 matches the worked example below.</figcaption>
+        <figcaption>The pruned search with $r = 2$. At each level, collisions remove the smaller of two prefixes with the same $g$-value, and the census rule keeps the $r$ smallest. The true prefix $p_k$ (thick path) is never removed.</figcaption>
       </figure>
     </section>
 
@@ -37,177 +37,136 @@
 <script type="text/markdown" data-md="mahaney2-setup">
 ## Setup {#setup}
 
-Assume $S$ is sparse with census $c_S(m) \le p(m)$ for a nondecreasing polynomial $p$, and $\SAT \redm S$ via $f$. Fix an input formula $\varphi$ of length $N$ with variables $x_1, \dots, x_n$. (If $n = 0$, evaluate $\varphi$ directly.)
+Assume $S$ is sparse with census $c_S(m) \leq p(m)$ for polynomial $p$, and $\SAT \redm S$ via $f$.
 
-:::definition (left set)
+:::definition (left-set language)
 $$
-L \;=\; \{\, \enc{\varphi, y} \;:\; y \in \bits^n \text{ and some } z \in \bits^n \text{ with } z \ge y \text{ satisfies } \varphi \,\}.
+L = \{\enc{\varphi, y} | y \in \bits^n \text{ and some } z \in \bits^n \text{ with } z \ge y \text{ satisfies } \varphi \}.
 $$
 :::
 
-Here $n$ is the number of variables of $\varphi$, and $\ge$ is lexicographic order. Picture the leaves of the self-reducibility tree laid out left to right from $0^n$ to $1^n$. Then $\enc{\varphi, y} \in L$ says “some satisfying leaf sits at $y$ or to its right,” so the “yes” points are exactly the points to the left of the rightmost satisfying leaf. That is where the name comes from.
+We treat each variable as a bit, where $n$ is the number of variables of $\varphi$, and $\ge$ is determined with lexicographic order. For some $\enc{\varphi, y} \in L$, this is saying there is some satisfying leaf sitting at $y$ or to its right, meaning the "yes" instances are all points to the left of the rightmost satisfying leaf, hence the name, the left-set.
 
-For a prefix $u \in \bits^k$, let $Q(u) = \enc{\varphi, u0^{n-k}}$, the query for the leftmost leaf below $u$. Let $z^*$ be the lexicographically largest satisfying assignment of $\varphi$, if one exists, and let $p_k = z^*[1..k]$ be its length-$k$ prefix.
-</script>
-
-<script type="text/markdown" data-md="mahaney2-plan">
-## The plan {#plan}
-
-The algorithm walks down the tree of prefixes one level at a time and throws away almost every prefix, keeping at most $r$ per level. Throwing a prefix away is safe only if it cannot be $p_k$, the prefix of our target $z^*$. Each lemma supplies one piece of that safety argument:
-
-| Lemma | The question it answers |
-| --- | --- |
-| [A](#lemma-a) | How can the sparse set say anything about prefixes at all, and how much room does $S$ have? |
-| [B](#lemma-b) | Which prefixes are “yes” for $L$, and where does $p_k$ sit among them? |
-| [C](#lemma-c) | When is it safe to delete a prefix because of a collision? |
-| [D](#lemma-d) | Once collisions are gone, why may we keep only $r$ prefixes? |
-
-Then [the algorithm](#algorithm) puts the two pruning rules together, and [the proof](#proof-of-mahaney) checks that $p_k$ survives every level.
+For a prefix $u$ of length $k$, let $Q(u) = \enc{\varphi, u0^{n-k}}$, the query for the lexicographically smallest boolean assignment in branch $u$. Let $z^*$ be the lexicographically largest satisfying assignment of $\varphi$ if one exists, and $p_k = z^*[1..k]$ be its length-$k$ prefix.
 </script>
 
 <script type="text/markdown" data-md="mahaney2-lemma-a">
 ## Lemma A: $L \in \NP$, so $L$ reduces to $S$ {#lemma-a}
 
-:::why
-The algorithm never decides $S$; it only computes reductions into $S$ and compares the results. For that we need a reduction from the question we care about (“is there a satisfying assignment at or to the right of this point?”) into $S$. Since $S$ is NP-hard, it is enough to show that this question is in NP. Along the way we get the number $r$, the most “yes” answers $S$ has room for, which is the only fact about $S$ the algorithm ever uses.
-:::
-
 :::proof
-A certificate for $\enc{\varphi, y}$ is an assignment $z$. The verifier checks that $|y| = n$, that $z \ge y$, and that $\varphi(z) = 1$, all in polynomial time. So $L \in \NP$.
+We show $L \in \NP$ by constructing a verifier for $L$. 
 
-By Cook–Levin, $L \redm \SAT$ via some $h$. Composing, $L \redm S$ via $g = f \circ h$, which is polynomial-time computable. Let $q$ be a nondecreasing polynomial with $|g(w)| \le q(|w|)$.
+Define a verifier TM that takes input $\enc{\varphi, y}$, and as a certificate, an assignment $z$. Then the verifier checks whether $\varphi$ is the correct format of a boolean variable formula with $n$ variables, $y$ being a valid assignment of $n$ variables, and $z$ being a valid assignment of $n$ variables. Then it checks if $z \ge y$, and that $\varphi(z) = 1$. This can be done in polynomial-time as we simply plug-in assignments and evaluate a boolean formula. 
+
+**Correctness**
+
+($\Rightarrow$) If $\enc{\varphi, y} \in L$, then there is an assignment $z$ that is lexicographically larger than or equal to $y$, and $\varphi(z) = 1$. Then there exists a certificate $z$ such that the verifier accepts.
+
+($\Leftarrow$) If the verifier accepts for some $\enc{\varphi, y}$ and $z$, then it must be that $\enc{\varphi, y}$ is valid, $z$ is valid, $z \ge y$, and $\varphi(z) = 1$. Thus $\enc{\varphi, y} \in L$.
+
+**Time bounds**
+The format checks are all polynomial time w.r.t. $|\enc{\varphi, y}|$, checking if $z \ge y$ is polynomial time w.r.t. $|\enc{\varphi, y}|$, and evaluating $\varphi(z) = 1$ is also polynomial time w.r.t. $|\enc{\varphi, y}|$. Thus the verifier is polynomial-time.
+
+This establishes $L \in \NP$. Then by Cook–Levin, $L \redm \SAT$ via some polynomial-time computable mapping $h$. Then since $\SAT \redm S$ via assumption, $L \redm S$ via $g = f \circ h$, which is also polynomial-time computable. Let $q$ be the polynomial with $|g(x)| \leq q(|x|)$. 
 :::
 
-**The bound $r$.** Every query $Q(u)$ has the same length $\ell = |\enc{\varphi, 0^n}|$, which is polynomial in $N$. So every $g$-value we compute has length at most $q(\ell)$, and at most
-
+**The bound $r$.** Every query $Q(u)$ has length $\ell = |\enc{\varphi, 0^n}|$, which is polynomial w.r.t. $|\varphi|$, so every value $g$ computes has length at most $q(\ell)$, and at most:
 $$
-r \;=\; p\big(q(\ell)\big)
-$$
-
-strings of that length bound lie in $S$. Note that $r$ is polynomial in $N$. The algorithm never decides $S$; $r$ is the only thing it uses about $S$.
+r = p(q(\ell))
+$$ 
+strings of that length bound lie in $S$. Note that $r$ is polynomial in $|\varphi|$.
 </script>
 
 <script type="text/markdown" data-md="mahaney2-lemma-b">
 ## Lemma B: The “yes” prefixes form an initial segment {#lemma-b}
 
-:::why
-To throw prefixes away safely, we need to know what the “yes” region of $L$ looks like on each level. Lemma B says it is as simple as possible: one contiguous block that starts at the far left and ends exactly at $p_k$. The key consequence is that $p_k$ is always the *rightmost* “yes,” and both pruning rules rely on that.
-:::
-
-**Claim.** Let $u \in \bits^k$. If $\varphi$ is unsatisfiable, then $Q(u) \notin L$. If $\varphi$ is satisfiable, then $Q(u) \in L$ if and only if $u \le p_k$.
+**Claim.** Let $u$ be a prefix of length $k$. If $\varphi$ is unsatisfiable, then $Q(u) \notin L$. If $\varphi$ is satisfiable, then $Q(u) \in L$ if and only if $u \le p_k$.
 
 :::proof
-The unsatisfiable case is immediate. In the satisfiable case, $Q(u) \in L$ means some satisfying $z$ has $z \ge u0^{n-k}$. Since $z^*$ is the largest satisfying assignment, this holds if and only if $z^* \ge u0^{n-k}$.
+If $\varphi$ unsatisfiable, then $Q(u)$ is clearly not in $L$, since no string is in $L$.
 
-It remains to show $z^* \ge u0^{n-k}$ if and only if $p_k \ge u$. Compare $z^*$ with $u0^{n-k}$ by their first $k$ bits:
+If $\varphi$ satisfiable, this means there is some $z^*$, largest satisfying assignment. Then $Q(u) \in L$ means some satisfying $z$ has $z \ge u0^{n-k}$. Thus, this case holds iff $z^* \ge u0^{n-k}$. It remains to show $z^* \ge u0^{n-k}$ iff $p_k \ge u$. We case on $p_k$ and $u$:
+  - Case a: $p_k > u$. Then they differ within the first $k$ bits, with $z^* > u0^{n-k}$.
+  - Case b: $p_k = u$. Then they agree on the first $k$ bits, but since $u0^{n-k}$ ends with trailing 0s, $z^* \ge u0^{n-k}$.
+  - Case c: $p_k < u$. Then they differ within the first $k$ bits, with $z^* < u0^{n-k}$.
 
-- If $p_k > u$, they first differ within the first $k$ bits, in $z^*$’s favor, so $z^* > u0^{n-k}$.
-- If $p_k = u$, they agree on the first $k$ bits, and the rest of $u0^{n-k}$ is all 0s, the smallest possible, so $z^* \ge u0^{n-k}$.
-- If $p_k < u$, they first differ within the first $k$ bits, against $z^*$, so $z^* < u0^{n-k}$.
+Thus, this case also holds, and our claim holds.
 :::
 </script>
 
 <script type="text/markdown" data-md="mahaney2-lemma-c">
 ## Lemma C: The collision rule is safe {#lemma-c}
 
-:::why
-Now the first pruning rule. We cannot tell whether a query $Q(u)$ is in $L$, because that would mean deciding $S$. What we *can* see is when two queries land on the same $g$-value, which means they have the same answer. Combined with Lemma B (“$p_k$ is the rightmost yes”), a collision tells us the smaller of the two prefixes cannot be $p_k$.
-:::
-
 **Claim.** Let $u < v$ be prefixes of length $k$ with $g(Q(u)) = g(Q(v))$. Then $u \ne p_k$.
 
 :::proof
-If $\varphi$ is unsatisfiable there is no $p_k$ and nothing to prove. Otherwise, suppose $u = p_k$. By Lemma B, $Q(u) \in L$, so $g(Q(u)) \in S$. The $g$-values are equal, so $g(Q(v)) \in S$, so $Q(v) \in L$. By Lemma B again, $v \le p_k = u$, contradicting $u < v$.
+If $\varphi$ is unsatisfiable, there is no $p_k$, and the claim is vacuous. 
+
+If $\varphi$ is satisfiable, AFSOC $u = p_k$. Then by Lemma B, we have that $Q(u) \in L$, so $g(Q(u)) \in S$. Then since we have that $g(Q(u)) = g(Q(v))$, we know that $g(Q(v)) \in S$, so $Q(v) \in L$. However, by Lemma B, $v \leq p_k = u$. This leads to a contradiction, since $u < v$. Thus, we have that $u \neq p_k$.
 :::
 
 :::intuition
-Equal $g$-values mean equal answers. The true prefix $p_k$ is the *rightmost* “yes,” so it can never share its answer with something to its right. Whenever two candidates collide, the smaller one cannot be $p_k$, and we delete it.
+Equal $g$-values mean the same answers (same mapping to $S$). The prefix of the lexicographically largest satisfying assignment $p_k$ is the *rightmost* “yes,” so it can never share its answer with something to its right. Whenever two candidates collide, the smaller one cannot be $p_k$, and we can safely remove it.
 :::
 </script>
 
 <script type="text/markdown" data-md="mahaney2-lemma-d">
 ## Lemma D: The census rule is safe {#lemma-d}
 
-:::why
-The collision rule alone does not bound the number of candidates: if the $g$-values happen to be all different, it deletes nothing, and the list could double at every level. This is where sparseness finally enters. Every candidate up to $p_k$ is a “yes,” so its $g$-value is a string of $S$; distinct values need distinct strings, and Lemma A says $S$ has only $r$ of them to offer.
-:::
-
-**Claim.** Suppose $\varphi$ is satisfiable, $C$ is a set of length-$k$ prefixes containing $p_k$, and the values $g(Q(u))$ for $u \in C$ are pairwise distinct. Then $p_k$ is among the $r$ smallest elements of $C$.
+**Claim.** Suppose $\varphi$ is satisfiable. Then let $C$ be a set of length-$k$ prefixes containing $p_k$, and all values $g(Q(u))$ where $u \in C$ be pairwise distinct. Then $p_k$ must be one of the first $r$ elements of $C$.
 
 :::proof
-By Lemma B, the elements of $C$ in $L$ are exactly those that are $\le p_k$. Since $p_k \in C$, they form an initial segment $u_1 < u_2 < \dots < u_t = p_k$ of $C$. Each $Q(u_i)$ is in $L$, so each $g(Q(u_i))$ is in $S$. These $t$ values are distinct and have length at most $q(\ell)$, so $t \le r$. Hence $p_k = u_t$ is among the first $r$ elements of $C$.
-:::
-
-:::intuition
-Everything up to $p_k$ is a “yes,” and distinct “yes” instances need distinct strings of $S$. The sparse set has room for at most $r$ of them, so $p_k$ cannot be far from the left end of the list. This is the only place the proof uses sparseness.
+By Lemma B, the elements of $C$ that are in $L$, are exactly those that are $u \leq p_k$. Then since $p_k \in C$, then $u_1 < u_2 < ... < u_t = p_k$ of $C$. We also know that each $Q(u_i) \in L$, meaning each $g(Q(u_i)) \in S$. Then since we assumed each of the $t$ $g$ value ($g(Q(u_i))$) are pairwise distinct are at most $q(\ell)$ length, we know that $t \leq r$. Thus, $p_k = u_t$ must be among the first $r$ elements of $C$.  
 :::
 
 :::status
-We now have everything the algorithm needs: two pruning rules that never delete $p_k$ (Lemmas C and D), a cap of $r$ prefixes per level after both rules (Lemma D), and the fact that $r$ is polynomial in $N$ (Lemma A).
+We now have everything to construct and prove the correctness and time-bounds of our polynomial-computable TM: two pruning rules that ensure $p_k$ is always a candidate (Lemmas C and D), a cap of $r$ prefixes per level after both rules (Lemma D), and the fact that $r$ is polynomial in $|\varphi|$ (Lemma A).
 :::
 </script>
 
 <script type="text/markdown" data-md="mahaney2-algorithm">
 ## The algorithm {#algorithm}
 
-1. Let $C_0 = \{\varepsilon\}$, the empty prefix.
-2. For $k = 1, 2, \dots, n$:
-   1. **Expand.** Let $C' = \{u0, u1 : u \in C_{k-1}\}$.
-   2. **Compute.** For each $u \in C'$, compute $g(Q(u))$.
-   3. **Collision rule.** For each value that is shared by several $u \in C'$, keep only the largest such $u$. *(Safe by [Lemma C](#lemma-c).)*
-   4. **Census rule.** Keep only the $r$ smallest remaining prefixes. Call the result $C_k$. *(Safe by [Lemma D](#lemma-d).)*
-3. Accept if some assignment in $C_n$ satisfies $\varphi$; otherwise reject.
+We now construct the following polynomial-time computable TM:
+
+1. Let $C_0 = \{\varepsilon\}$, being the empty prefix.
+2. Then for each level of the self-reducibility tree of $\SAT$ ($k = 1, ..., n$):
+    - Let $C' = \{u0, u1 | u \in C_{k-1}\}$.
+    - For each $u \in C'$, compute $g(Q(u))$.
+    - For values ($g(Q(u))$) that are shared by several $u \in C'$, keep only the largest $u$ lexicographically.
+    - Keep only the $r$ smallest remaining prefixes, naming this new set $C_k$. 
+3. Then check every assignment in $C_n$ (set of leaf nodes), checking whether any assignment in $C_n$ satisfies $\varphi$, accepting if any assignment is true. Otherwise we can reject.
+
+**Correctness**
+
+If $\varphi$ unsatisfiable, then no assignment in $C_n$ satisfies $\varphi$, so we reject.
+
+If $\varphi$ satisfiable, then by Lemmas C and D, our candidate set at each level $C_k$ preserves the candidate branch $p_k$. 
+- Base case: $p_0 = \varepsilon \in C_0$
+- Inductive case: $p_{k-1} \in C_{k-1}$ by IH. Since $p_k = p_{k-1}b$ where $b$ is the $k$th bit of $z^*$, $p_k \in C'$. The third step removes $u$ only if some $v \in C'$ such that $g(Q(u)) = g(Q(v))$ and $v > u$, which by Lemma C, never happens for $u = p_k$. Then since all $g(Q(u))$ are distinct for all $u$ surviving in $C'$ up until this point, and $p_k$ is present, by Lemma D, $p_k$ is within the $r$ smallest prefixes, meaning it is kept in $C_k$. 
+
+Then at level $C_n$, since $p_n = z^*$ is included in the set $C_n$, the assignment is eventually checked, and the TM accepts.
+
+**Time Bounds**
+
+First, creating the initial set is constant-time. We then have $n$ levels of the tree we must compute. At each level, we have at most $r$ branches by Lemma D, in the previous level, which is polynomial w.r.t. $|\varphi|$ by Lemma A. Then, to create the initial $C'$ set, we double the amount of branches from the previous level, which is at most $2r$. Computing $g(Q(u))$ takes polynomial time w.r.t. $|\varphi|$, and we compute this for a polynomial amount of $u$ values. Then keeping the largest $u$ values with distinct $g(Q(u))$ can be done in polynomial-time, we can create tuples $(g(Q(u)), u)$, sort by the first value, take only the largest $u$ for each $g(Q(u))$ value, and then keep only the $u$ values, sorted lexicographically. Then by the end, our set $C_n$ of leaf nodes are size at most $r$, which is polynomial w.r.t. $|\varphi|$. Then checking each leaf node assignment takes polynomial time w.r.t. $|\varphi|$, meaning checking all leaf nodes similarly is polynomial time w.r.t. $|\varphi|$. Thus, the entire algorithm runs in polynomial-time.
 
 @[viz](mahaney-search "Run the algorithm on made-up instances. Try $r = 1$: every yes-query then lands on the same string of $S$, so the collision rule alone narrows the yes-candidates on each level down to $p_k$.")
 </script>
 
 <script type="text/markdown" data-md="mahaney2-main-proof">
-## Proof of Mahaney’s Theorem {#proof-of-mahaney}
+## Wrapping up the proof of Mahaney’s Theorem {#proof-of-mahaney}
 
-**Invariant.** If $\varphi$ is satisfiable, then $p_k \in C_k$ for every $k$.
+Then since we have created a polynomial-time TM solving $\SAT$, meaning $\SAT \in \P$, and therefore $\P = \NP$. $\blacksquare$
 
-:::proof of the invariant, by induction on $k$
-For $k = 0$, $p_0 = \varepsilon \in C_0$. Suppose $p_{k-1} \in C_{k-1}$. Then $p_k$ is $p_{k-1}$ followed by one bit, so $p_k \in C'$ after expansion. The collision rule deletes only prefixes that are smaller than another prefix with the same $g$-value; by Lemma C, $p_k$ is not one of them. After the collision rule, all $g$-values are distinct and $p_k$ is still present, so by Lemma D it is among the $r$ smallest and survives the census rule. So $p_k \in C_k$.
-:::
-
-**Correctness.** If $\varphi$ is satisfiable, then $z^* = p_n \in C_n$, so the algorithm finds it and accepts. If $\varphi$ is unsatisfiable, no assignment satisfies it, so the algorithm rejects. The algorithm only accepts after checking a satisfying assignment, so it can never wrongly accept.
-
-**Running time.** Each $C_k$ has at most $r$ elements, so each $C'$ has at most $2r$. Each level computes at most $2r$ values of $g$, each in time polynomial in $\ell$, then sorts. There are $n \le N$ levels. Since $r$ and $\ell$ are polynomial in $N$, the total time is polynomial in $N$.
-
-So $\SAT \in \P$, and therefore $\P = \NP$. $\blacksquare$
-</script>
-
-<script type="text/markdown" data-md="mahaney2-example">
-## A worked example {#example}
-
-No real example can exist unless $\P = \NP$, so this one is hypothetical: it shows what one level of the algorithm does with made-up $g$-values. Take $r = 2$ and $C_2 = \{01, 10\}$. Expansion gives four candidates at level 3.
-
-| Candidate $u$ (in order) | $g(Q(u))$ | After collision rule | After census rule ($r = 2$) |
-| --- | --- | --- | --- |
-| 010 | $a$ | deleted: collides with the larger 100 | — |
-| 011 | $b$ | kept | kept |
-| 100 | $a$ | kept | kept |
-| 101 | $c$ | kept | deleted: not among the 2 smallest |
-
-So $C_3 = \{011, 100\}$. The algorithm does not know which of $a, b, c$ lie in $S$, and it does not need to. If, say, $p_3 = 100$, then 010, 011 and 100 are the “yes” candidates; 010 and 100 share an answer, as their shared value $a$ requires, and $p_3$ survives both rules.
-</script>
-
-<script type="text/markdown" data-md="mahaney2-hypotheses">
-## Where each hypothesis is used {#hypotheses}
-
-| Hypothesis | Used in |
-| --- | --- |
-| $S$ is NP-hard | Lemma A, to get the reduction $g$ from $L$ to $S$ |
-| $S$ is sparse | Lemma D, to bound the number of “yes” candidates by $r$ |
-| SAT is self-reducible | The algorithm, to walk the tree one bit at a time |
-| Lexicographic order | Lemmas B–D, to make the “yes” region an initial segment ending at $p_k$ |
+The corollary then takes the contrapositive, stating that if $P \neq \NP$ then there cannot exist a sparse language $S$ that is $\NP$-hard.
 </script>
 
 <script type="text/markdown" data-md="mahaney2-takeaways">
-:::takeaways
-- The left set makes the “yes” region at each level an initial segment that ends at the true prefix $p_k$.
-- Collisions remove anything to the left of a same-valued candidate; sparseness caps the “yes” region at $r$.
-- Together they keep the search polynomial, so a sparse NP-hard set would put SAT in P.
+:::Takeaways
+- We can create left-set that allows us to prune the exponential number of branches to a polynomial number that we can handle.
+- Combining our two important rules (collision and census), we are able to ensure our $z^*$ assignment gets checked, if there exists one.
+- These results all rely on the principle that many collisions occur from mapping dense to sparse languages
 :::
 </script>
         </div>
